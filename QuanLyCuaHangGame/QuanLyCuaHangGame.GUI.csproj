@@ -76,6 +76,18 @@
     <Compile Include="frmComputer.Designer.cs">
       <DependentUpon>frmComputer.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCustomer.Designer.cs">
+      <DependentUpon>frmCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPayment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPayment.Designer.cs">
+      <DependentUpon>frmPayment.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,10 +98,15 @@
     <Compile Include="UIHelper\UICommon.cs" />
     <Compile Include="UIHelper\DashboardUIHelper.cs" />
     <Compile Include="Program.cs" />
-
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmComputer.resx">
       <DependentUpon>frmComputer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCustomer.resx">
+      <DependentUpon>frmCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPayment.resx">
+      <DependentUpon>frmPayment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDashboard.resx">
       <DependentUpon>frmDashboard.cs</DependentUpon>
