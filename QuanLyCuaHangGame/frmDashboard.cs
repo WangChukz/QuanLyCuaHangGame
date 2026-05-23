@@ -76,6 +76,15 @@ namespace QuanLyCuaHangGame
             tabPageMayTinh.Controls.Add(frmComp);
             frmComp.Show();
 
+            // Embed frmService into tabPageDichVu (Tab 9)
+            GUI.frmService frmSvc = new GUI.frmService();
+            frmSvc.TopLevel = false;
+            frmSvc.FormBorderStyle = FormBorderStyle.None;
+            frmSvc.Dock = DockStyle.Fill;
+            frmSvc.BackColor = Color.White;
+            tabPageDichVu.Controls.Add(frmSvc);
+            frmSvc.Show();
+
             // Di chuyển pnlFooter từ tabPageDashboard ra ngoài Form chính để hiển thị trên tất cả các tab
             tabPageDashboard.Controls.Remove(pnlFooter);
             this.Controls.Add(pnlFooter);
