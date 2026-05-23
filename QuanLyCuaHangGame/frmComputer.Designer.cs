@@ -23,7 +23,7 @@ namespace QuanLyCuaHangGame
             this.btnRoleStaff = new MaterialSkin.Controls.MaterialButton();
             this.mainTabControl = new MaterialSkin.Controls.MaterialTabControl();
             this.tabAdmin = new System.Windows.Forms.TabPage();
-            this.lvAdmin = new MaterialSkin.Controls.MaterialListView();
+            this.lvAdmin = new System.Windows.Forms.ListView();
             this.colAdminCode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colAdminRoom = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colAdminClass = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -59,7 +59,7 @@ namespace QuanLyCuaHangGame
             this.cboAdminType = new MaterialSkin.Controls.MaterialComboBox();
             this.txtAdminSearch = new MaterialSkin.Controls.MaterialTextBox();
             this.tabStaff = new System.Windows.Forms.TabPage();
-            this.lvStaff = new MaterialSkin.Controls.MaterialListView();
+            this.lvStaff = new System.Windows.Forms.ListView();
             this.colStaffCode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colStaffRoom = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colStaffClass = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -103,9 +103,9 @@ namespace QuanLyCuaHangGame
             this.pnlRoleToggle.Controls.Add(this.btnRoleAdmin);
             this.pnlRoleToggle.Controls.Add(this.btnRoleStaff);
             this.pnlRoleToggle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlRoleToggle.Location = new System.Drawing.Point(3, 64);
+            this.pnlRoleToggle.Location = new System.Drawing.Point(0, 0);
             this.pnlRoleToggle.Name = "pnlRoleToggle";
-            this.pnlRoleToggle.Size = new System.Drawing.Size(1194, 50);
+            this.pnlRoleToggle.Size = new System.Drawing.Size(1086, 50);
             this.pnlRoleToggle.TabIndex = 0;
             // 
             // lblRoleToggle
@@ -165,16 +165,17 @@ namespace QuanLyCuaHangGame
             this.mainTabControl.Controls.Add(this.tabStaff);
             this.mainTabControl.Depth = 0;
             this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainTabControl.Location = new System.Drawing.Point(3, 114);
+            this.mainTabControl.Location = new System.Drawing.Point(0, 50);
             this.mainTabControl.MouseState = MaterialSkin.MouseState.HOVER;
             this.mainTabControl.Multiline = true;
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(1194, 671);
+            this.mainTabControl.Size = new System.Drawing.Size(1086, 699);
             this.mainTabControl.TabIndex = 1;
             // 
             // tabAdmin
             // 
+            this.tabAdmin.AutoScroll = true;
             this.tabAdmin.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tabAdmin.Controls.Add(this.lvAdmin);
             this.tabAdmin.Controls.Add(this.cardAdminDetails);
@@ -182,13 +183,12 @@ namespace QuanLyCuaHangGame
             this.tabAdmin.Location = new System.Drawing.Point(4, 22);
             this.tabAdmin.Name = "tabAdmin";
             this.tabAdmin.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAdmin.Size = new System.Drawing.Size(1186, 645);
+            this.tabAdmin.Size = new System.Drawing.Size(1078, 673);
             this.tabAdmin.TabIndex = 0;
             this.tabAdmin.Text = "Admin";
             // 
             // lvAdmin
             // 
-            this.lvAdmin.AutoSizeTable = false;
             this.lvAdmin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.lvAdmin.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lvAdmin.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -198,49 +198,47 @@ namespace QuanLyCuaHangGame
             this.colAdminConfig,
             this.colAdminStatus,
             this.colAdminPrice});
-            this.lvAdmin.Depth = 0;
             this.lvAdmin.FullRowSelect = true;
             this.lvAdmin.HideSelection = false;
             this.lvAdmin.Location = new System.Drawing.Point(10, 65);
             this.lvAdmin.MinimumSize = new System.Drawing.Size(200, 100);
-            this.lvAdmin.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.lvAdmin.MouseState = MaterialSkin.MouseState.OUT;
             this.lvAdmin.Name = "lvAdmin";
             this.lvAdmin.OwnerDraw = true;
-            this.lvAdmin.Size = new System.Drawing.Size(560, 580);
+            this.lvAdmin.Size = new System.Drawing.Size(500, 580);
             this.lvAdmin.TabIndex = 1;
             this.lvAdmin.UseCompatibleStateImageBehavior = false;
             this.lvAdmin.View = System.Windows.Forms.View.Details;
+            this.lvAdmin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left)));
             // 
             // colAdminCode
             // 
             this.colAdminCode.Text = "Mã máy";
-            this.colAdminCode.Width = 80;
+            this.colAdminCode.Width = 70;
             // 
             // colAdminRoom
             // 
             this.colAdminRoom.Text = "Phòng";
-            this.colAdminRoom.Width = 80;
+            this.colAdminRoom.Width = 70;
             // 
             // colAdminClass
             // 
             this.colAdminClass.Text = "Hạng";
-            this.colAdminClass.Width = 80;
+            this.colAdminClass.Width = 70;
             // 
             // colAdminConfig
             // 
             this.colAdminConfig.Text = "Cấu hình";
-            this.colAdminConfig.Width = 140;
+            this.colAdminConfig.Width = 120;
             // 
             // colAdminStatus
             // 
             this.colAdminStatus.Text = "Tình trạng";
-            this.colAdminStatus.Width = 90;
+            this.colAdminStatus.Width = 80;
             // 
             // colAdminPrice
             // 
             this.colAdminPrice.Text = "Giá/h";
-            this.colAdminPrice.Width = 90;
+            this.colAdminPrice.Width = 80;
             // 
             // cardAdminDetails
             // 
@@ -260,13 +258,14 @@ namespace QuanLyCuaHangGame
             this.cardAdminDetails.Controls.Add(this.btnAdminDeleteMachine);
             this.cardAdminDetails.Depth = 0;
             this.cardAdminDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cardAdminDetails.Location = new System.Drawing.Point(590, 65);
+            this.cardAdminDetails.Location = new System.Drawing.Point(520, 65);
             this.cardAdminDetails.Margin = new System.Windows.Forms.Padding(14);
             this.cardAdminDetails.MouseState = MaterialSkin.MouseState.HOVER;
             this.cardAdminDetails.Name = "cardAdminDetails";
             this.cardAdminDetails.Padding = new System.Windows.Forms.Padding(14);
-            this.cardAdminDetails.Size = new System.Drawing.Size(570, 580);
+            this.cardAdminDetails.Size = new System.Drawing.Size(540, 460);
             this.cardAdminDetails.TabIndex = 2;
+            this.cardAdminDetails.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // lblAdminDetailsTitle
             // 
@@ -274,7 +273,7 @@ namespace QuanLyCuaHangGame
             this.lblAdminDetailsTitle.Depth = 0;
             this.lblAdminDetailsTitle.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.lblAdminDetailsTitle.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.lblAdminDetailsTitle.Location = new System.Drawing.Point(17, 14);
+            this.lblAdminDetailsTitle.Location = new System.Drawing.Point(17, 10);
             this.lblAdminDetailsTitle.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblAdminDetailsTitle.Name = "lblAdminDetailsTitle";
             this.lblAdminDetailsTitle.Size = new System.Drawing.Size(230, 29);
@@ -289,12 +288,12 @@ namespace QuanLyCuaHangGame
             this.txtAdminCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.txtAdminCode.Hint = "Mã máy";
             this.txtAdminCode.LeadingIcon = null;
-            this.txtAdminCode.Location = new System.Drawing.Point(17, 60);
+            this.txtAdminCode.Location = new System.Drawing.Point(17, 40);
             this.txtAdminCode.MaxLength = 50;
             this.txtAdminCode.MouseState = MaterialSkin.MouseState.OUT;
             this.txtAdminCode.Multiline = false;
             this.txtAdminCode.Name = "txtAdminCode";
-            this.txtAdminCode.Size = new System.Drawing.Size(536, 50);
+            this.txtAdminCode.Size = new System.Drawing.Size(506, 50);
             this.txtAdminCode.TabIndex = 1;
             this.txtAdminCode.Text = "PC01";
             this.txtAdminCode.TrailingIcon = null;
@@ -317,11 +316,11 @@ namespace QuanLyCuaHangGame
             this.cboAdminRoom.Items.AddRange(new object[] {
             "Phòng A",
             "Phòng B"});
-            this.cboAdminRoom.Location = new System.Drawing.Point(17, 130);
+            this.cboAdminRoom.Location = new System.Drawing.Point(17, 95);
             this.cboAdminRoom.MaxDropDownItems = 4;
             this.cboAdminRoom.MouseState = MaterialSkin.MouseState.OUT;
             this.cboAdminRoom.Name = "cboAdminRoom";
-            this.cboAdminRoom.Size = new System.Drawing.Size(260, 49);
+            this.cboAdminRoom.Size = new System.Drawing.Size(240, 49);
             this.cboAdminRoom.StartIndex = 0;
             this.cboAdminRoom.TabIndex = 2;
             // 
@@ -343,11 +342,11 @@ namespace QuanLyCuaHangGame
             this.cboAdminTypeClass.Items.AddRange(new object[] {
             "VIP",
             "Standard"});
-            this.cboAdminTypeClass.Location = new System.Drawing.Point(293, 130);
+            this.cboAdminTypeClass.Location = new System.Drawing.Point(277, 95);
             this.cboAdminTypeClass.MaxDropDownItems = 4;
             this.cboAdminTypeClass.MouseState = MaterialSkin.MouseState.OUT;
             this.cboAdminTypeClass.Name = "cboAdminTypeClass";
-            this.cboAdminTypeClass.Size = new System.Drawing.Size(260, 49);
+            this.cboAdminTypeClass.Size = new System.Drawing.Size(240, 49);
             this.cboAdminTypeClass.StartIndex = 0;
             this.cboAdminTypeClass.TabIndex = 3;
             // 
@@ -359,12 +358,12 @@ namespace QuanLyCuaHangGame
             this.txtAdminCPU.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.txtAdminCPU.Hint = "CPU";
             this.txtAdminCPU.LeadingIcon = null;
-            this.txtAdminCPU.Location = new System.Drawing.Point(17, 200);
+            this.txtAdminCPU.Location = new System.Drawing.Point(17, 148);
             this.txtAdminCPU.MaxLength = 50;
             this.txtAdminCPU.MouseState = MaterialSkin.MouseState.OUT;
             this.txtAdminCPU.Multiline = false;
             this.txtAdminCPU.Name = "txtAdminCPU";
-            this.txtAdminCPU.Size = new System.Drawing.Size(536, 50);
+            this.txtAdminCPU.Size = new System.Drawing.Size(506, 50);
             this.txtAdminCPU.TabIndex = 4;
             this.txtAdminCPU.Text = "Intel Core i9-13900K";
             this.txtAdminCPU.TrailingIcon = null;
@@ -377,12 +376,12 @@ namespace QuanLyCuaHangGame
             this.txtAdminGPU.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.txtAdminGPU.Hint = "GPU";
             this.txtAdminGPU.LeadingIcon = null;
-            this.txtAdminGPU.Location = new System.Drawing.Point(17, 270);
+            this.txtAdminGPU.Location = new System.Drawing.Point(17, 202);
             this.txtAdminGPU.MaxLength = 50;
             this.txtAdminGPU.MouseState = MaterialSkin.MouseState.OUT;
             this.txtAdminGPU.Multiline = false;
             this.txtAdminGPU.Name = "txtAdminGPU";
-            this.txtAdminGPU.Size = new System.Drawing.Size(260, 50);
+            this.txtAdminGPU.Size = new System.Drawing.Size(240, 50);
             this.txtAdminGPU.TabIndex = 5;
             this.txtAdminGPU.Text = "NVIDIA RTX 4070";
             this.txtAdminGPU.TrailingIcon = null;
@@ -395,12 +394,12 @@ namespace QuanLyCuaHangGame
             this.txtAdminRAM.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.txtAdminRAM.Hint = "RAM";
             this.txtAdminRAM.LeadingIcon = null;
-            this.txtAdminRAM.Location = new System.Drawing.Point(293, 270);
+            this.txtAdminRAM.Location = new System.Drawing.Point(277, 202);
             this.txtAdminRAM.MaxLength = 50;
             this.txtAdminRAM.MouseState = MaterialSkin.MouseState.OUT;
             this.txtAdminRAM.Multiline = false;
             this.txtAdminRAM.Name = "txtAdminRAM";
-            this.txtAdminRAM.Size = new System.Drawing.Size(260, 50);
+            this.txtAdminRAM.Size = new System.Drawing.Size(240, 50);
             this.txtAdminRAM.TabIndex = 6;
             this.txtAdminRAM.Text = "32GB DDR5";
             this.txtAdminRAM.TrailingIcon = null;
@@ -413,12 +412,12 @@ namespace QuanLyCuaHangGame
             this.txtAdminDisk.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.txtAdminDisk.Hint = "Ổ cứng";
             this.txtAdminDisk.LeadingIcon = null;
-            this.txtAdminDisk.Location = new System.Drawing.Point(17, 340);
+            this.txtAdminDisk.Location = new System.Drawing.Point(17, 256);
             this.txtAdminDisk.MaxLength = 50;
             this.txtAdminDisk.MouseState = MaterialSkin.MouseState.OUT;
             this.txtAdminDisk.Multiline = false;
             this.txtAdminDisk.Name = "txtAdminDisk";
-            this.txtAdminDisk.Size = new System.Drawing.Size(260, 50);
+            this.txtAdminDisk.Size = new System.Drawing.Size(240, 50);
             this.txtAdminDisk.TabIndex = 7;
             this.txtAdminDisk.Text = "1TB NVMe SSD";
             this.txtAdminDisk.TrailingIcon = null;
@@ -442,11 +441,11 @@ namespace QuanLyCuaHangGame
             "Tốt",
             "Hỏng",
             "Bảo trì"});
-            this.cboAdminStatusEdit.Location = new System.Drawing.Point(293, 340);
+            this.cboAdminStatusEdit.Location = new System.Drawing.Point(277, 256);
             this.cboAdminStatusEdit.MaxDropDownItems = 4;
             this.cboAdminStatusEdit.MouseState = MaterialSkin.MouseState.OUT;
             this.cboAdminStatusEdit.Name = "cboAdminStatusEdit";
-            this.cboAdminStatusEdit.Size = new System.Drawing.Size(260, 49);
+            this.cboAdminStatusEdit.Size = new System.Drawing.Size(240, 49);
             this.cboAdminStatusEdit.StartIndex = 0;
             this.cboAdminStatusEdit.TabIndex = 8;
             // 
@@ -457,9 +456,9 @@ namespace QuanLyCuaHangGame
             this.grpAdminPrice.Controls.Add(this.dtpAdminPriceDate);
             this.grpAdminPrice.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpAdminPrice.ForeColor = System.Drawing.Color.Gray;
-            this.grpAdminPrice.Location = new System.Drawing.Point(17, 410);
+            this.grpAdminPrice.Location = new System.Drawing.Point(17, 310);
             this.grpAdminPrice.Name = "grpAdminPrice";
-            this.grpAdminPrice.Size = new System.Drawing.Size(536, 100);
+            this.grpAdminPrice.Size = new System.Drawing.Size(506, 90);
             this.grpAdminPrice.TabIndex = 9;
             this.grpAdminPrice.TabStop = false;
             this.grpAdminPrice.Text = "Cập nhật giá thuê (ComputerPrices)";
@@ -497,7 +496,7 @@ namespace QuanLyCuaHangGame
             // dtpAdminPriceDate
             // 
             this.dtpAdminPriceDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpAdminPriceDate.Location = new System.Drawing.Point(260, 55);
+            this.dtpAdminPriceDate.Location = new System.Drawing.Point(260, 50);
             this.dtpAdminPriceDate.Name = "dtpAdminPriceDate";
             this.dtpAdminPriceDate.Size = new System.Drawing.Size(250, 25);
             this.dtpAdminPriceDate.TabIndex = 2;
@@ -509,7 +508,7 @@ namespace QuanLyCuaHangGame
             this.btnAdminSave.Depth = 0;
             this.btnAdminSave.HighEmphasis = true;
             this.btnAdminSave.Icon = null;
-            this.btnAdminSave.Location = new System.Drawing.Point(17, 525);
+            this.btnAdminSave.Location = new System.Drawing.Point(17, 410);
             this.btnAdminSave.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnAdminSave.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnAdminSave.Name = "btnAdminSave";
@@ -528,7 +527,7 @@ namespace QuanLyCuaHangGame
             this.btnAdminCancel.Depth = 0;
             this.btnAdminCancel.HighEmphasis = true;
             this.btnAdminCancel.Icon = null;
-            this.btnAdminCancel.Location = new System.Drawing.Point(150, 525);
+            this.btnAdminCancel.Location = new System.Drawing.Point(280, 410);
             this.btnAdminCancel.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnAdminCancel.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnAdminCancel.Name = "btnAdminCancel";
@@ -547,7 +546,7 @@ namespace QuanLyCuaHangGame
             this.btnAdminDeleteMachine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAdminDeleteMachine.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdminDeleteMachine.ForeColor = System.Drawing.Color.White;
-            this.btnAdminDeleteMachine.Location = new System.Drawing.Point(433, 525);
+            this.btnAdminDeleteMachine.Location = new System.Drawing.Point(403, 410);
             this.btnAdminDeleteMachine.Name = "btnAdminDeleteMachine";
             this.btnAdminDeleteMachine.Size = new System.Drawing.Size(120, 36);
             this.btnAdminDeleteMachine.TabIndex = 12;
@@ -570,7 +569,7 @@ namespace QuanLyCuaHangGame
             this.pnlAdminToolbar.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlAdminToolbar.Location = new System.Drawing.Point(3, 3);
             this.pnlAdminToolbar.Name = "pnlAdminToolbar";
-            this.pnlAdminToolbar.Size = new System.Drawing.Size(1180, 50);
+            this.pnlAdminToolbar.Size = new System.Drawing.Size(1072, 50);
             this.pnlAdminToolbar.TabIndex = 0;
             // 
             // btnAdminAdd
@@ -599,7 +598,7 @@ namespace QuanLyCuaHangGame
             this.btnAdminEditAll.Depth = 0;
             this.btnAdminEditAll.HighEmphasis = true;
             this.btnAdminEditAll.Icon = null;
-            this.btnAdminEditAll.Location = new System.Drawing.Point(113, 7);
+            this.btnAdminEditAll.Location = new System.Drawing.Point(123, 7);
             this.btnAdminEditAll.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnAdminEditAll.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnAdminEditAll.Name = "btnAdminEditAll";
@@ -618,7 +617,7 @@ namespace QuanLyCuaHangGame
             this.btnAdminDelete.Depth = 0;
             this.btnAdminDelete.HighEmphasis = true;
             this.btnAdminDelete.Icon = null;
-            this.btnAdminDelete.Location = new System.Drawing.Point(234, 7);
+            this.btnAdminDelete.Location = new System.Drawing.Point(243, 7);
             this.btnAdminDelete.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnAdminDelete.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnAdminDelete.Name = "btnAdminDelete";
@@ -637,7 +636,7 @@ namespace QuanLyCuaHangGame
             this.btnAdminManageRoom.Depth = 0;
             this.btnAdminManageRoom.HighEmphasis = true;
             this.btnAdminManageRoom.Icon = null;
-            this.btnAdminManageRoom.Location = new System.Drawing.Point(306, 7);
+            this.btnAdminManageRoom.Location = new System.Drawing.Point(311, 7);
             this.btnAdminManageRoom.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnAdminManageRoom.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnAdminManageRoom.Name = "btnAdminManageRoom";
@@ -657,7 +656,7 @@ namespace QuanLyCuaHangGame
             this.btnAdminUpdatePrice.Depth = 0;
             this.btnAdminUpdatePrice.HighEmphasis = true;
             this.btnAdminUpdatePrice.Icon = null;
-            this.btnAdminUpdatePrice.Location = new System.Drawing.Point(440, 7);
+            this.btnAdminUpdatePrice.Location = new System.Drawing.Point(451, 7);
             this.btnAdminUpdatePrice.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnAdminUpdatePrice.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnAdminUpdatePrice.Name = "btnAdminUpdatePrice";
@@ -674,7 +673,7 @@ namespace QuanLyCuaHangGame
             this.lblAdminStatus.AutoSize = true;
             this.lblAdminStatus.Depth = 0;
             this.lblAdminStatus.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblAdminStatus.Location = new System.Drawing.Point(580, 16);
+            this.lblAdminStatus.Location = new System.Drawing.Point(585, 16);
             this.lblAdminStatus.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblAdminStatus.Name = "lblAdminStatus";
             this.lblAdminStatus.Size = new System.Drawing.Size(78, 19);
@@ -697,11 +696,11 @@ namespace QuanLyCuaHangGame
             this.cboAdminStatus.ItemHeight = 29;
             this.cboAdminStatus.Items.AddRange(new object[] {
             "Tất cả"});
-            this.cboAdminStatus.Location = new System.Drawing.Point(662, 7);
+            this.cboAdminStatus.Location = new System.Drawing.Point(660, 7);
             this.cboAdminStatus.MaxDropDownItems = 4;
             this.cboAdminStatus.MouseState = MaterialSkin.MouseState.OUT;
             this.cboAdminStatus.Name = "cboAdminStatus";
-            this.cboAdminStatus.Size = new System.Drawing.Size(100, 35);
+            this.cboAdminStatus.Size = new System.Drawing.Size(90, 35);
             this.cboAdminStatus.StartIndex = 0;
             this.cboAdminStatus.TabIndex = 6;
             this.cboAdminStatus.UseTallSize = false;
@@ -711,7 +710,7 @@ namespace QuanLyCuaHangGame
             this.lblAdminClass.AutoSize = true;
             this.lblAdminClass.Depth = 0;
             this.lblAdminClass.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblAdminClass.Location = new System.Drawing.Point(775, 16);
+            this.lblAdminClass.Location = new System.Drawing.Point(760, 16);
             this.lblAdminClass.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblAdminClass.Name = "lblAdminClass";
             this.lblAdminClass.Size = new System.Drawing.Size(43, 19);
@@ -734,11 +733,11 @@ namespace QuanLyCuaHangGame
             this.cboAdminType.ItemHeight = 29;
             this.cboAdminType.Items.AddRange(new object[] {
             "Tất cả"});
-            this.cboAdminType.Location = new System.Drawing.Point(823, 7);
+            this.cboAdminType.Location = new System.Drawing.Point(805, 7);
             this.cboAdminType.MaxDropDownItems = 4;
             this.cboAdminType.MouseState = MaterialSkin.MouseState.OUT;
             this.cboAdminType.Name = "cboAdminType";
-            this.cboAdminType.Size = new System.Drawing.Size(100, 35);
+            this.cboAdminType.Size = new System.Drawing.Size(90, 35);
             this.cboAdminType.StartIndex = 0;
             this.cboAdminType.TabIndex = 8;
             this.cboAdminType.UseTallSize = false;
@@ -751,12 +750,12 @@ namespace QuanLyCuaHangGame
             this.txtAdminSearch.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtAdminSearch.Hint = "Tìm mã máy, cấu hình...";
             this.txtAdminSearch.LeadingIcon = null;
-            this.txtAdminSearch.Location = new System.Drawing.Point(940, 7);
+            this.txtAdminSearch.Location = new System.Drawing.Point(905, 7);
             this.txtAdminSearch.MaxLength = 50;
             this.txtAdminSearch.MouseState = MaterialSkin.MouseState.OUT;
             this.txtAdminSearch.Multiline = false;
             this.txtAdminSearch.Name = "txtAdminSearch";
-            this.txtAdminSearch.Size = new System.Drawing.Size(220, 36);
+            this.txtAdminSearch.Size = new System.Drawing.Size(165, 36);
             this.txtAdminSearch.TabIndex = 9;
             this.txtAdminSearch.Text = "";
             this.txtAdminSearch.TrailingIcon = null;
@@ -772,13 +771,12 @@ namespace QuanLyCuaHangGame
             this.tabStaff.Location = new System.Drawing.Point(4, 22);
             this.tabStaff.Name = "tabStaff";
             this.tabStaff.Padding = new System.Windows.Forms.Padding(3);
-            this.tabStaff.Size = new System.Drawing.Size(1186, 657);
+            this.tabStaff.Size = new System.Drawing.Size(1192, 673);
             this.tabStaff.TabIndex = 1;
             this.tabStaff.Text = "Staff";
             // 
             // lvStaff
             // 
-            this.lvStaff.AutoSizeTable = false;
             this.lvStaff.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.lvStaff.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lvStaff.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -787,34 +785,32 @@ namespace QuanLyCuaHangGame
             this.colStaffClass,
             this.colStaffStatus,
             this.colStaffState});
-            this.lvStaff.Depth = 0;
             this.lvStaff.FullRowSelect = true;
             this.lvStaff.HideSelection = false;
             this.lvStaff.Location = new System.Drawing.Point(10, 120);
             this.lvStaff.MinimumSize = new System.Drawing.Size(200, 100);
-            this.lvStaff.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.lvStaff.MouseState = MaterialSkin.MouseState.OUT;
             this.lvStaff.Name = "lvStaff";
             this.lvStaff.OwnerDraw = true;
-            this.lvStaff.Size = new System.Drawing.Size(560, 520);
+            this.lvStaff.Size = new System.Drawing.Size(500, 520);
             this.lvStaff.TabIndex = 3;
             this.lvStaff.UseCompatibleStateImageBehavior = false;
             this.lvStaff.View = System.Windows.Forms.View.Details;
+            this.lvStaff.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left)));
             // 
             // colStaffCode
             // 
             this.colStaffCode.Text = "Mã máy";
-            this.colStaffCode.Width = 100;
+            this.colStaffCode.Width = 80;
             // 
             // colStaffRoom
             // 
             this.colStaffRoom.Text = "Phòng";
-            this.colStaffRoom.Width = 100;
+            this.colStaffRoom.Width = 80;
             // 
             // colStaffClass
             // 
             this.colStaffClass.Text = "Loại máy";
-            this.colStaffClass.Width = 120;
+            this.colStaffClass.Width = 100;
             // 
             // colStaffStatus
             // 
@@ -824,7 +820,7 @@ namespace QuanLyCuaHangGame
             // colStaffState
             // 
             this.colStaffState.Text = "Trạng thái";
-            this.colStaffState.Width = 120;
+            this.colStaffState.Width = 110;
             // 
             // cardStaffDetails
             // 
@@ -840,13 +836,14 @@ namespace QuanLyCuaHangGame
             this.cardStaffDetails.Controls.Add(this.lblStaffRestrictions);
             this.cardStaffDetails.Depth = 0;
             this.cardStaffDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cardStaffDetails.Location = new System.Drawing.Point(590, 120);
+            this.cardStaffDetails.Location = new System.Drawing.Point(520, 120);
             this.cardStaffDetails.Margin = new System.Windows.Forms.Padding(14);
             this.cardStaffDetails.MouseState = MaterialSkin.MouseState.HOVER;
             this.cardStaffDetails.Name = "cardStaffDetails";
             this.cardStaffDetails.Padding = new System.Windows.Forms.Padding(14);
-            this.cardStaffDetails.Size = new System.Drawing.Size(570, 520);
+            this.cardStaffDetails.Size = new System.Drawing.Size(540, 395);
             this.cardStaffDetails.TabIndex = 4;
+            this.cardStaffDetails.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // lblStaffDetailsTitle
             // 
@@ -854,7 +851,7 @@ namespace QuanLyCuaHangGame
             this.lblStaffDetailsTitle.Depth = 0;
             this.lblStaffDetailsTitle.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.lblStaffDetailsTitle.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
-            this.lblStaffDetailsTitle.Location = new System.Drawing.Point(17, 14);
+            this.lblStaffDetailsTitle.Location = new System.Drawing.Point(17, 10);
             this.lblStaffDetailsTitle.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblStaffDetailsTitle.Name = "lblStaffDetailsTitle";
             this.lblStaffDetailsTitle.Size = new System.Drawing.Size(279, 29);
@@ -866,7 +863,7 @@ namespace QuanLyCuaHangGame
             this.lblStaffMachineInfo.AutoSize = true;
             this.lblStaffMachineInfo.Depth = 0;
             this.lblStaffMachineInfo.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblStaffMachineInfo.Location = new System.Drawing.Point(17, 60);
+            this.lblStaffMachineInfo.Location = new System.Drawing.Point(17, 42);
             this.lblStaffMachineInfo.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblStaffMachineInfo.Name = "lblStaffMachineInfo";
             this.lblStaffMachineInfo.Size = new System.Drawing.Size(155, 19);
@@ -878,7 +875,7 @@ namespace QuanLyCuaHangGame
             this.lblStaffRoomInfo.AutoSize = true;
             this.lblStaffRoomInfo.Depth = 0;
             this.lblStaffRoomInfo.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblStaffRoomInfo.Location = new System.Drawing.Point(17, 90);
+            this.lblStaffRoomInfo.Location = new System.Drawing.Point(17, 62);
             this.lblStaffRoomInfo.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblStaffRoomInfo.Name = "lblStaffRoomInfo";
             this.lblStaffRoomInfo.Size = new System.Drawing.Size(115, 19);
@@ -890,7 +887,7 @@ namespace QuanLyCuaHangGame
             this.lblStaffConfigInfo.AutoSize = true;
             this.lblStaffConfigInfo.Depth = 0;
             this.lblStaffConfigInfo.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblStaffConfigInfo.Location = new System.Drawing.Point(17, 120);
+            this.lblStaffConfigInfo.Location = new System.Drawing.Point(17, 82);
             this.lblStaffConfigInfo.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblStaffConfigInfo.Name = "lblStaffConfigInfo";
             this.lblStaffConfigInfo.Size = new System.Drawing.Size(224, 19);
@@ -916,11 +913,11 @@ namespace QuanLyCuaHangGame
             "Hỏng",
             "Đã sửa",
             "Tốt"});
-            this.cboStaffStatusEdit.Location = new System.Drawing.Point(17, 160);
+            this.cboStaffStatusEdit.Location = new System.Drawing.Point(17, 106);
             this.cboStaffStatusEdit.MaxDropDownItems = 4;
             this.cboStaffStatusEdit.MouseState = MaterialSkin.MouseState.OUT;
             this.cboStaffStatusEdit.Name = "cboStaffStatusEdit";
-            this.cboStaffStatusEdit.Size = new System.Drawing.Size(536, 49);
+            this.cboStaffStatusEdit.Size = new System.Drawing.Size(506, 49);
             this.cboStaffStatusEdit.StartIndex = 0;
             this.cboStaffStatusEdit.TabIndex = 4;
             // 
@@ -932,12 +929,12 @@ namespace QuanLyCuaHangGame
             this.txtStaffNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.txtStaffNotes.Hint = "Ghi chú tình trạng";
             this.txtStaffNotes.LeadingIcon = null;
-            this.txtStaffNotes.Location = new System.Drawing.Point(17, 230);
+            this.txtStaffNotes.Location = new System.Drawing.Point(17, 160);
             this.txtStaffNotes.MaxLength = 500;
             this.txtStaffNotes.MouseState = MaterialSkin.MouseState.OUT;
             this.txtStaffNotes.Multiline = false;
             this.txtStaffNotes.Name = "txtStaffNotes";
-            this.txtStaffNotes.Size = new System.Drawing.Size(536, 50);
+            this.txtStaffNotes.Size = new System.Drawing.Size(506, 50);
             this.txtStaffNotes.TabIndex = 5;
             this.txtStaffNotes.Text = "Màn hình bị sọc, cần thay";
             this.txtStaffNotes.TrailingIcon = null;
@@ -949,7 +946,7 @@ namespace QuanLyCuaHangGame
             this.btnStaffSaveStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStaffSaveStatus.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStaffSaveStatus.ForeColor = System.Drawing.Color.White;
-            this.btnStaffSaveStatus.Location = new System.Drawing.Point(17, 300);
+            this.btnStaffSaveStatus.Location = new System.Drawing.Point(17, 218);
             this.btnStaffSaveStatus.Name = "btnStaffSaveStatus";
             this.btnStaffSaveStatus.Size = new System.Drawing.Size(250, 40);
             this.btnStaffSaveStatus.TabIndex = 6;
@@ -963,7 +960,7 @@ namespace QuanLyCuaHangGame
             this.btnStaffCancel.Depth = 0;
             this.btnStaffCancel.HighEmphasis = true;
             this.btnStaffCancel.Icon = null;
-            this.btnStaffCancel.Location = new System.Drawing.Point(290, 302);
+            this.btnStaffCancel.Location = new System.Drawing.Point(280, 218);
             this.btnStaffCancel.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnStaffCancel.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnStaffCancel.Name = "btnStaffCancel";
@@ -979,9 +976,9 @@ namespace QuanLyCuaHangGame
             // 
             this.lblStaffRestrictions.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStaffRestrictions.ForeColor = System.Drawing.Color.DimGray;
-            this.lblStaffRestrictions.Location = new System.Drawing.Point(17, 360);
+            this.lblStaffRestrictions.Location = new System.Drawing.Point(17, 264);
             this.lblStaffRestrictions.Name = "lblStaffRestrictions";
-            this.lblStaffRestrictions.Size = new System.Drawing.Size(536, 120);
+            this.lblStaffRestrictions.Size = new System.Drawing.Size(506, 105);
             this.lblStaffRestrictions.TabIndex = 8;
             this.lblStaffRestrictions.Text = "CÁC THAO TÁC BỊ GIỚI HẠN VỚI STAFF:\n- Sửa cấu hình CPU / GPU / RAM\n- Thay đổi hạn" +
     "g máy (VIP / Standard)\n- Cập nhật giá thuê\n- Thêm / Xóa phòng máy";
@@ -993,7 +990,7 @@ namespace QuanLyCuaHangGame
             this.pnlStaffNotice.Controls.Add(this.lblStaffNotice);
             this.pnlStaffNotice.Location = new System.Drawing.Point(10, 65);
             this.pnlStaffNotice.Name = "pnlStaffNotice";
-            this.pnlStaffNotice.Size = new System.Drawing.Size(1150, 40);
+            this.pnlStaffNotice.Size = new System.Drawing.Size(1050, 40);
             this.pnlStaffNotice.TabIndex = 2;
             // 
             // lblStaffNotice
@@ -1020,7 +1017,7 @@ namespace QuanLyCuaHangGame
             this.pnlStaffToolbar.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlStaffToolbar.Location = new System.Drawing.Point(3, 3);
             this.pnlStaffToolbar.Name = "pnlStaffToolbar";
-            this.pnlStaffToolbar.Size = new System.Drawing.Size(1180, 50);
+            this.pnlStaffToolbar.Size = new System.Drawing.Size(1186, 50);
             this.pnlStaffToolbar.TabIndex = 1;
             // 
             // btnStaffUpdateStatus
@@ -1124,12 +1121,12 @@ namespace QuanLyCuaHangGame
             this.txtStaffSearch.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtStaffSearch.Hint = "Tìm mã máy, loại máy...";
             this.txtStaffSearch.LeadingIcon = null;
-            this.txtStaffSearch.Location = new System.Drawing.Point(940, 7);
+            this.txtStaffSearch.Location = new System.Drawing.Point(860, 7);
             this.txtStaffSearch.MaxLength = 50;
             this.txtStaffSearch.MouseState = MaterialSkin.MouseState.OUT;
             this.txtStaffSearch.Multiline = false;
             this.txtStaffSearch.Name = "txtStaffSearch";
-            this.txtStaffSearch.Size = new System.Drawing.Size(220, 36);
+            this.txtStaffSearch.Size = new System.Drawing.Size(200, 36);
             this.txtStaffSearch.TabIndex = 9;
             this.txtStaffSearch.Text = "";
             this.txtStaffSearch.TrailingIcon = null;
@@ -1139,10 +1136,12 @@ namespace QuanLyCuaHangGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 788);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(1086, 749);
             this.Controls.Add(this.mainTabControl);
             this.Controls.Add(this.pnlRoleToggle);
             this.Name = "frmComputer";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quản lý máy tính — Chế độ: Admin";
             this.pnlRoleToggle.ResumeLayout(false);
             this.pnlRoleToggle.PerformLayout();
@@ -1187,7 +1186,7 @@ namespace QuanLyCuaHangGame
         private MaterialSkin.Controls.MaterialLabel lblAdminClass;
         private MaterialSkin.Controls.MaterialComboBox cboAdminType;
         private MaterialSkin.Controls.MaterialTextBox txtAdminSearch;
-        private MaterialSkin.Controls.MaterialListView lvAdmin;
+        private System.Windows.Forms.ListView lvAdmin;
         private System.Windows.Forms.ColumnHeader colAdminCode;
         private System.Windows.Forms.ColumnHeader colAdminRoom;
         private System.Windows.Forms.ColumnHeader colAdminClass;
@@ -1222,7 +1221,7 @@ namespace QuanLyCuaHangGame
         private MaterialSkin.Controls.MaterialTextBox txtStaffSearch;
         private System.Windows.Forms.Panel pnlStaffNotice;
         private System.Windows.Forms.Label lblStaffNotice;
-        private MaterialSkin.Controls.MaterialListView lvStaff;
+        private System.Windows.Forms.ListView lvStaff;
         private System.Windows.Forms.ColumnHeader colStaffCode;
         private System.Windows.Forms.ColumnHeader colStaffRoom;
         private System.Windows.Forms.ColumnHeader colStaffClass;

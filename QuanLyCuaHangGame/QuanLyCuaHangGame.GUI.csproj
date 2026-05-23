@@ -82,7 +82,11 @@
     <Compile Include="frmDashboard.Designer.cs">
       <DependentUpon>frmDashboard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\RoomStore.cs" />
+    <Compile Include="UIHelper\UICommon.cs" />
+    <Compile Include="UIHelper\DashboardUIHelper.cs" />
     <Compile Include="Program.cs" />
+
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmComputer.resx">
       <DependentUpon>frmComputer.cs</DependentUpon>

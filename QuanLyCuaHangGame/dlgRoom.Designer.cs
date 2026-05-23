@@ -23,7 +23,7 @@ namespace QuanLyCuaHangGame
             this.btnDelete = new MaterialSkin.Controls.MaterialButton();
             
             this.lblListTitle = new System.Windows.Forms.Label();
-            this.lvRooms = new MaterialSkin.Controls.MaterialListView();
+            this.lvRooms = new System.Windows.Forms.ListView();
             this.colName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colFloor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colCount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -144,7 +144,6 @@ namespace QuanLyCuaHangGame
             // 
             // lvRooms
             // 
-            this.lvRooms.AutoSizeTable = false;
             this.lvRooms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.lvRooms.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lvRooms.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -152,19 +151,19 @@ namespace QuanLyCuaHangGame
             this.colFloor,
             this.colCount,
             this.colStatus});
-            this.lvRooms.Depth = 0;
             this.lvRooms.FullRowSelect = true;
             this.lvRooms.HideSelection = false;
             this.lvRooms.Location = new System.Drawing.Point(17, 155);
             this.lvRooms.MinimumSize = new System.Drawing.Size(200, 100);
-            this.lvRooms.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.lvRooms.MouseState = MaterialSkin.MouseState.OUT;
             this.lvRooms.Name = "lvRooms";
             this.lvRooms.OwnerDraw = true;
-            this.lvRooms.Size = new System.Drawing.Size(430, 240);
+            this.lvRooms.Size = new System.Drawing.Size(430, 345);
             this.lvRooms.TabIndex = 2;
             this.lvRooms.UseCompatibleStateImageBehavior = false;
             this.lvRooms.View = System.Windows.Forms.View.Details;
+            this.lvRooms.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.LvRooms_DrawColumnHeader);
+            this.lvRooms.DrawItem        += new System.Windows.Forms.DrawListViewItemEventHandler(this.LvRooms_DrawItem);
+            this.lvRooms.DrawSubItem     += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.LvRooms_DrawSubItem);
             // 
             // colName
             // 
@@ -190,7 +189,7 @@ namespace QuanLyCuaHangGame
             // 
             this.pnlWarning.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(243)))), ((int)(((byte)(224)))));
             this.pnlWarning.Controls.Add(this.lblWarning);
-            this.pnlWarning.Location = new System.Drawing.Point(17, 405);
+            this.pnlWarning.Location = new System.Drawing.Point(17, 510);
             this.pnlWarning.Name = "pnlWarning";
             this.pnlWarning.Size = new System.Drawing.Size(430, 50);
             this.pnlWarning.TabIndex = 3;
@@ -454,6 +453,7 @@ namespace QuanLyCuaHangGame
             this.btnCancel.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
             this.btnCancel.UseAccentColor = false;
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // pnlFooter
             // 
@@ -483,7 +483,11 @@ namespace QuanLyCuaHangGame
             this.btnClose.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
             this.btnClose.UseAccentColor = false;
             this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.btnClose.Click  += new System.EventHandler(this.btnClose_Click);
+            this.btnAdd.Click    += new System.EventHandler(this.btnAdd_Click);
+            this.btnEdit.Click   += new System.EventHandler(this.btnEdit_Click);
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+
             // 
             // dlgRoom
             // 
@@ -524,7 +528,7 @@ namespace QuanLyCuaHangGame
         private MaterialSkin.Controls.MaterialButton btnDelete;
         
         private System.Windows.Forms.Label lblListTitle;
-        private MaterialSkin.Controls.MaterialListView lvRooms;
+        private System.Windows.Forms.ListView lvRooms;
         private System.Windows.Forms.ColumnHeader colName;
         private System.Windows.Forms.ColumnHeader colFloor;
         private System.Windows.Forms.ColumnHeader colCount;
