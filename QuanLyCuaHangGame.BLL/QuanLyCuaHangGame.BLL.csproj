@@ -7,9 +7,6 @@
   <ItemGroup>
     <ProjectReference Include="..\QuanLyCuaHangGame.Model\QuanLyCuaHangGame.Model.csproj" />
     <ProjectReference Include="..\QuanLyCuaHangGame.DAL\QuanLyCuaHangGame.DAL.csproj" />
-  </ItemGroup>
-  
-  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
   </ItemGroup>
 </Project>
