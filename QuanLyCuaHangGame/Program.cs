@@ -16,7 +16,6 @@ namespace QuanLyCuaHangGame.GUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            
             // Seed initial database and admin user
             try
             {
@@ -32,6 +31,9 @@ namespace QuanLyCuaHangGame.GUI
                     };
                     userService.AddUser(adminUser, "123456");
                 }
+                
+                // TODO: Xóa dòng này sau khi bạn test xong nhé
+                MessageBox.Show("Kết nối cơ sở dữ liệu thành công!", "Kiểm tra kết nối", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -39,6 +41,7 @@ namespace QuanLyCuaHangGame.GUI
                 return;
             }
             Application.Run(new frmLogin());
+            // Application.Run(new frmCustomer()); // Khoa đang test dở form này
         }
     }
 }

@@ -51,7 +51,7 @@ CREATE TABLE Users (
     CONSTRAINT UQ_Users_Username UNIQUE (Username)
 );
 GO
-PRINT '✅ Tạo bảng Users';
+PRINT 'Tạo bảng Users';
 
 -- ============================================================
 -- 2. BẢNG Customers — Tài khoản hội viên
@@ -73,7 +73,7 @@ CREATE TABLE Customers (
     CONSTRAINT CHK_Customers_Balance CHECK (Balance >= 0)
 );
 GO
-PRINT '✅ Tạo bảng Customers';
+PRINT 'Tạo bảng Customers';
 
 -- ============================================================
 -- 3. BẢNG Rooms — Phòng máy
@@ -88,7 +88,7 @@ CREATE TABLE Rooms (
     CONSTRAINT UQ_Rooms_Name UNIQUE (Name)
 );
 GO
-PRINT '✅ Tạo bảng Rooms';
+PRINT 'Tạo bảng Rooms';
 
 -- ============================================================
 -- 4. BẢNG Computers — Máy tính
@@ -113,7 +113,7 @@ CREATE TABLE Computers (
     CONSTRAINT FK_Computers_Rooms FOREIGN KEY (RoomId) REFERENCES Rooms(Id)
 );
 GO
-PRINT '✅ Tạo bảng Computers';
+PRINT 'Tạo bảng Computers';
 
 -- ============================================================
 -- 5. BẢNG ComputerPrices — Lịch sử giá thuê theo máy
@@ -130,7 +130,7 @@ CREATE TABLE ComputerPrices (
     CONSTRAINT CHK_ComputerPrices_Price CHECK (PricePerHour > 0)
 );
 GO
-PRINT '✅ Tạo bảng ComputerPrices';
+PRINT 'Tạo bảng ComputerPrices';
 
 -- ============================================================
 -- 6. BẢNG ServiceItems — Danh mục dịch vụ
@@ -145,7 +145,7 @@ CREATE TABLE ServiceItems (
     CONSTRAINT CHK_ServiceItems_Price CHECK (Price > 0)
 );
 GO
-PRINT '✅ Tạo bảng ServiceItems';
+PRINT 'Tạo bảng ServiceItems';
 
 -- ============================================================
 -- 7. BẢNG Sessions — Phiên thuê máy
@@ -171,7 +171,7 @@ CREATE TABLE Sessions (
     )
 );
 GO
-PRINT '✅ Tạo bảng Sessions';
+PRINT 'Tạo bảng Sessions';
 
 -- ============================================================
 -- 8. BẢNG SessionServices — Dịch vụ phát sinh trong phiên
@@ -189,7 +189,7 @@ CREATE TABLE SessionServices (
     CONSTRAINT CHK_SessionServices_Qty         CHECK (Quantity > 0)
 );
 GO
-PRINT '✅ Tạo bảng SessionServices';
+PRINT 'Tạo bảng SessionServices';
 
 -- ============================================================
 -- 9. BẢNG Invoices — Hóa đơn thanh toán
@@ -212,7 +212,7 @@ CREATE TABLE Invoices (
     CONSTRAINT CHK_Invoices_PaidSum     CHECK (PaidByBalance + PaidByCash >= TotalAmount - 1) -- dung sai 1đ
 );
 GO
-PRINT '✅ Tạo bảng Invoices';
+PRINT 'Tạo bảng Invoices';
 
 -- ============================================================
 -- 10. BẢNG TopUpTransactions — Lịch sử nạp tiền
@@ -230,7 +230,7 @@ CREATE TABLE TopUpTransactions (
     CONSTRAINT CHK_TopUp_Amount   CHECK (Amount > 0)
 );
 GO
-PRINT '✅ Tạo bảng TopUpTransactions';
+PRINT 'Tạo bảng TopUpTransactions';
 
 -- ============================================================
 -- 11. BẢNG SpendTransactions — Lịch sử chi tiêu từ ví
@@ -248,7 +248,7 @@ CREATE TABLE SpendTransactions (
     CONSTRAINT CHK_Spend_Amount   CHECK (Amount > 0)
 );
 GO
-PRINT '✅ Tạo bảng SpendTransactions';
+PRINT 'Tạo bảng SpendTransactions';
 
 -- ============================================================
 -- INDEX — Tăng tốc các truy vấn thường xuyên
@@ -263,7 +263,7 @@ CREATE INDEX IX_TopUp_CustomerId      ON TopUpTransactions(CustomerId);
 CREATE INDEX IX_Spend_CustomerId      ON SpendTransactions(CustomerId);
 CREATE INDEX IX_ComputerPrices_Curr   ON ComputerPrices(ComputerId, IsCurrent);
 GO
-PRINT '✅ Tạo xong tất cả INDEX';
+PRINT 'Tạo xong tất cả INDEX';
 
 -- ============================================================
 -- ============================================================
@@ -285,7 +285,7 @@ INSERT INTO Users (FullName, Username, PasswordHash, Role, IsActive, CreatedAt) 
 (N'Trần Thị Hương',   'tthg',    '$2a$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Staff', 1, '2024-06-20 08:00:00'),
 (N'Lê Minh Tuấn',     'lmtuan',  '$2a$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Staff', 0, '2024-09-10 08:00:00');
 GO
-PRINT '✅ Seed Users (4 tài khoản: 1 Admin, 3 Staff, 1 bị khoá)';
+PRINT 'Seed Users (4 tài khoản: 1 Admin, 3 Staff, 1 bị khoá)';
 
 -- ============================================================
 -- ROOMS
@@ -296,7 +296,7 @@ INSERT INTO Rooms (Name, Floor, Description, IsActive) VALUES
 (N'Phòng B',   2, N'Phòng tầng 2 — 8 máy Standard',            1),
 (N'Phòng Mới', 2, N'Đang trang bị — chưa đưa vào hoạt động',   0);
 GO
-PRINT '✅ Seed Rooms (4 phòng, 1 chưa hoạt động)';
+PRINT 'Seed Rooms (4 phòng, 1 chưa hoạt động)';
 
 -- ============================================================
 -- COMPUTERS
@@ -340,7 +340,7 @@ INSERT INTO Computers (RoomId, Code, Tier, Cpu, Gpu, Ram, Storage, Condition, St
 (3, 'PC19', 'Standard', N'Intel Core i7-13700F', N'NVIDIA RTX 3060', N'16GB DDR4', N'512GB SSD', N'Tốt',   N'Đang dùng', '2024-04-01 09:00:00'),
 (3, 'PC20', 'Standard', N'Intel Core i7-13700F', N'NVIDIA RTX 3060', N'16GB DDR4', N'512GB SSD', N'Tốt',   N'Trống',     '2024-04-01 09:00:00');
 GO
-PRINT '✅ Seed Computers (20 máy: 12 Standard phòng A, 6 VIP, 8 Standard phòng B)';
+PRINT 'Seed Computers (20 máy: 12 Standard phòng A, 6 VIP, 8 Standard phòng B)';
 
 -- ============================================================
 -- COMPUTER PRICES
@@ -362,7 +362,7 @@ INSERT INTO ComputerPrices (ComputerId, PricePerHour, EffectiveFrom, IsCurrent) 
 (17, 50000, '2024-02-01 00:00:00', 1),  -- VIP05 RTX4090
 (18, 50000, '2024-02-01 00:00:00', 1);  -- VIP06 RTX4090
 GO
-PRINT '✅ Seed ComputerPrices (có lịch sử thay đổi giá VIP01/VIP02)';
+PRINT 'Seed ComputerPrices (có lịch sử thay đổi giá VIP01/VIP02)';
 
 -- ============================================================
 -- SERVICE ITEMS
@@ -385,7 +385,7 @@ INSERT INTO ServiceItems (Name, Category, Price, IsAvailable) VALUES
 (N'Cáp sạc điện thoại (thuê)',       N'Khác',    10000, 1),
 (N'Tai nghe Gaming (thuê)',          N'Khác',    20000, 0);  -- hết hàng
 GO
-PRINT '✅ Seed ServiceItems (16 dịch vụ, 1 hết hàng)';
+PRINT 'Seed ServiceItems (16 dịch vụ, 1 hết hàng)';
 
 -- ============================================================
 -- CUSTOMERS
@@ -403,7 +403,7 @@ INSERT INTO Customers (FullName, Phone, Username, PasswordHash, PinCode, Balance
 (N'Bùi Thị Lan',     '0923456789', 'btlan',   '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewEPu0jnO5PBfzXO', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 50000,  1, '2024-09-05 15:00:00', '2025-05-14 17:00:00'),
 (N'Hoàng Văn Đức',   '0948123456', 'hvduc',   '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewEPu0jnO5PBfzXO', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 0,      0, '2024-10-01 09:00:00', '2025-04-20 11:00:00'); -- bị khoá
 GO
-PRINT '✅ Seed Customers (8 hội viên, 1 bị khoá, số dư đa dạng)';
+PRINT 'Seed Customers (8 hội viên, 1 bị khoá, số dư đa dạng)';
 
 -- ============================================================
 -- TOP-UP TRANSACTIONS — Lịch sử nạp tiền
@@ -429,7 +429,7 @@ INSERT INTO TopUpTransactions (CustomerId, ProcessedByUserId, Amount, Note, Crea
 -- Lê Minh Hoàng (CustomerId=4) — đã dùng hết
 (4, 2, 100000, N'Nạp tiền mặt',                  '2025-05-01 09:00:00');
 GO
-PRINT '✅ Seed TopUpTransactions (12 lần nạp)';
+PRINT 'Seed TopUpTransactions (12 lần nạp)';
 
 -- ============================================================
 -- SESSIONS — Phiên thuê máy đã đóng (lịch sử)
@@ -463,7 +463,7 @@ INSERT INTO Sessions (ComputerId, OpenedByUserId, CustomerId, GuestName, PricePe
 -- Session 12: Vãng lai - PC14 phòng B (ĐANG CHẠY)
 (22, 3, NULL, N'Lê Anh Khoa', 20000, '2025-05-16 14:00:00', NULL, NULL, 'Active');
 GO
-PRINT '✅ Seed Sessions (6 đã đóng + 6 đang chạy)';
+PRINT 'Seed Sessions (6 đã đóng + 6 đang chạy)';
 
 -- ============================================================
 -- SESSION SERVICES — Dịch vụ trong các phiên đã đóng
@@ -486,7 +486,7 @@ INSERT INTO SessionServices (SessionId, ServiceItemId, Quantity, UnitPrice, Orde
 (9, 5, 1, 25000, '2025-05-16 14:30:00'),  -- 1 trà sữa
 (9, 7, 2, 15000, '2025-05-16 15:00:00');  -- 2 snack
 GO
-PRINT '✅ Seed SessionServices (10 dòng dịch vụ)';
+PRINT 'Seed SessionServices (10 dòng dịch vụ)';
 
 -- ============================================================
 -- INVOICES — Hóa đơn cho các Session đã đóng
@@ -505,7 +505,7 @@ INSERT INTO Invoices (SessionId, ClosedByUserId, SessionAmount, ServiceAmount, T
 -- Session 6: Hoàng, 5h × 20k = 100k, ví 0 nên tiền mặt, khách đưa 110k
 (6, 2, 100000, 0,     100000, 0,      110000, 10000, '2025-05-16 13:00:00');
 GO
-PRINT '✅ Seed Invoices (6 hóa đơn)';
+PRINT 'Seed Invoices (6 hóa đơn)';
 
 -- ============================================================
 -- SPEND TRANSACTIONS — Trừ ví sau thanh toán
@@ -517,7 +517,7 @@ INSERT INTO SpendTransactions (CustomerId, InvoiceId, Amount, Description, Creat
 (6, 5, 155000, N'Thanh toán phiên PC13  — 10:00→14:30',   '2025-05-16 14:30:00');
 -- Session 3 (vãng lai) và Session 6 (Hoàng ví=0) không có SpendTransaction
 GO
-PRINT '✅ Seed SpendTransactions (4 giao dịch chi tiêu ví)';
+PRINT 'Seed SpendTransactions (4 giao dịch chi tiêu ví)';
 
 -- ============================================================
 -- KIỂM TRA DỮ LIỆU — VERIFY
@@ -584,7 +584,7 @@ ORDER BY se.StartTime;
 GO
 PRINT '';
 PRINT '========================================';
-PRINT '✅ HOÀN TẤT! Database GameZoneProDB sẵn sàng.';
+PRINT 'HOÀN TẤT! Database GameZoneProDB sẵn sàng.';
 PRINT 'Tài khoản đăng nhập ứng dụng:';
 PRINT '  Admin : admin   / Admin@123456';
 PRINT '  Staff : nvnam   / Staff@123456';
