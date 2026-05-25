@@ -280,10 +280,10 @@ PRINT '========================================';
 -- Hash BCrypt được sinh sẵn — work factor 12
 -- ============================================================
 INSERT INTO Users (FullName, Username, PasswordHash, Role, IsActive, CreatedAt) VALUES
-(N'Admin Hệ thống',    'admin',   '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewEPu0jnO5PBfzXO', 'Admin', 1, '2024-01-01 08:00:00'),
-(N'Nguyễn Văn Nam',   'nvnam',   '$2a$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Staff', 1, '2024-03-15 08:00:00'),
-(N'Trần Thị Hương',   'tthg',    '$2a$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Staff', 1, '2024-06-20 08:00:00'),
-(N'Lê Minh Tuấn',     'lmtuan',  '$2a$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Staff', 0, '2024-09-10 08:00:00');
+(N'Admin Hệ thống',    'admin',   '$2a$12$vZNCY5PgdYf57KaZ1xFKjubmMJCFaefLV56lyo0DHNF.wBxPTBxh.', 'Admin', 1, '2024-01-01 08:00:00'),
+(N'Nguyễn Văn Nam',   'nvnam',   '$2a$12$pmZD9VClT5rXLOe6HKcRiueqGeUr0xIqjrDzjPscnC.6.gigUirxu', 'Staff', 1, '2024-03-15 08:00:00'),
+(N'Trần Thị Hương',   'tthg',    '$2a$12$pmZD9VClT5rXLOe6HKcRiueqGeUr0xIqjrDzjPscnC.6.gigUirxu', 'Staff', 1, '2024-06-20 08:00:00'),
+(N'Lê Minh Tuấn',     'lmtuan',  '$2a$12$pmZD9VClT5rXLOe6HKcRiueqGeUr0xIqjrDzjPscnC.6.gigUirxu', 'Staff', 0, '2024-09-10 08:00:00');
 GO
 PRINT 'Seed Users (4 tài khoản: 1 Admin, 3 Staff, 1 bị khoá)';
 
@@ -394,14 +394,14 @@ PRINT 'Seed ServiceItems (16 dịch vụ, 1 hết hàng)';
 -- Dùng giá trị placeholder — ứng dụng sẽ hash thật khi đăng ký
 -- ============================================================
 INSERT INTO Customers (FullName, Phone, Username, PasswordHash, PinCode, Balance, IsActive, CreatedAt, LastVisitAt) VALUES
-(N'Phạm Quốc Huy',   '0912345678', 'pqhuy',   '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewEPu0jnO5PBfzXO', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 150000, 1, '2024-03-01 10:00:00', '2025-05-16 14:30:00'),
-(N'Nguyễn Văn An',   '0987654321', 'nvana',   '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewEPu0jnO5PBfzXO', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 85000,  1, '2024-04-10 09:00:00', '2025-05-16 15:10:00'),
-(N'Trần Thị Hoa',    '0901234567', 'tthoa',   '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewEPu0jnO5PBfzXO', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 12000,  1, '2024-05-20 14:00:00', '2025-05-15 16:00:00'),
-(N'Lê Minh Hoàng',   '0908765432', 'lmhoang', '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewEPu0jnO5PBfzXO', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 0,      1, '2024-06-01 11:00:00', '2025-05-12 13:00:00'),
-(N'Võ Thị Mai',      '0935678901', 'vtmai',   '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewEPu0jnO5PBfzXO', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 200000, 1, '2024-07-15 08:00:00', '2025-05-16 13:55:00'),
-(N'Đinh Quang Sáng', '0976543210', 'dqsang',  '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewEPu0jnO5PBfzXO', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 350000, 1, '2024-08-20 10:00:00', '2025-05-16 10:00:00'),
-(N'Bùi Thị Lan',     '0923456789', 'btlan',   '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewEPu0jnO5PBfzXO', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 50000,  1, '2024-09-05 15:00:00', '2025-05-14 17:00:00'),
-(N'Hoàng Văn Đức',   '0948123456', 'hvduc',   '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewEPu0jnO5PBfzXO', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 0,      0, '2024-10-01 09:00:00', '2025-04-20 11:00:00'); -- bị khoá
+(N'Phạm Quốc Huy',   '0912345678', 'pqhuy',   '$2a$12$vZNCY5PgdYf57KaZ1xFKjubmMJCFaefLV56lyo0DHNF.wBxPTBxh.', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 150000, 1, '2024-03-01 10:00:00', '2025-05-16 14:30:00'),
+(N'Nguyễn Văn An',   '0987654321', 'nvana',   '$2a$12$vZNCY5PgdYf57KaZ1xFKjubmMJCFaefLV56lyo0DHNF.wBxPTBxh.', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 85000,  1, '2024-04-10 09:00:00', '2025-05-16 15:10:00'),
+(N'Trần Thị Hoa',    '0901234567', 'tthoa',   '$2a$12$vZNCY5PgdYf57KaZ1xFKjubmMJCFaefLV56lyo0DHNF.wBxPTBxh.', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 12000,  1, '2024-05-20 14:00:00', '2025-05-15 16:00:00'),
+(N'Lê Minh Hoàng',   '0908765432', 'lmhoang', '$2a$12$vZNCY5PgdYf57KaZ1xFKjubmMJCFaefLV56lyo0DHNF.wBxPTBxh.', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 0,      1, '2024-06-01 11:00:00', '2025-05-12 13:00:00'),
+(N'Võ Thị Mai',      '0935678901', 'vtmai',   '$2a$12$vZNCY5PgdYf57KaZ1xFKjubmMJCFaefLV56lyo0DHNF.wBxPTBxh.', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 200000, 1, '2024-07-15 08:00:00', '2025-05-16 13:55:00'),
+(N'Đinh Quang Sáng', '0976543210', 'dqsang',  '$2a$12$vZNCY5PgdYf57KaZ1xFKjubmMJCFaefLV56lyo0DHNF.wBxPTBxh.', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 350000, 1, '2024-08-20 10:00:00', '2025-05-16 10:00:00'),
+(N'Bùi Thị Lan',     '0923456789', 'btlan',   '$2a$12$vZNCY5PgdYf57KaZ1xFKjubmMJCFaefLV56lyo0DHNF.wBxPTBxh.', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 50000,  1, '2024-09-05 15:00:00', '2025-05-14 17:00:00'),
+(N'Hoàng Văn Đức',   '0948123456', 'hvduc',   '$2a$12$vZNCY5PgdYf57KaZ1xFKjubmMJCFaefLV56lyo0DHNF.wBxPTBxh.', 'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', 0,      0, '2024-10-01 09:00:00', '2025-04-20 11:00:00'); -- bị khoá
 GO
 PRINT 'Seed Customers (8 hội viên, 1 bị khoá, số dư đa dạng)';
 

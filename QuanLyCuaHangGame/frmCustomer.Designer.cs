@@ -88,6 +88,7 @@ namespace QuanLyCuaHangGame
             this.txtSearch.Hint = "Tìm theo tên, SĐT, username";
             this.txtSearch.LeadingIcon = null;
             this.txtSearch.Location = new System.Drawing.Point(220, 5);
+            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSearch.MaxLength = 50;
             this.txtSearch.MouseState = MaterialSkin.MouseState.OUT;
             this.txtSearch.Name = "txtSearch";
@@ -275,6 +276,7 @@ namespace QuanLyCuaHangGame
             this.txtMoney.Hint = "Số tiền (VNĐ)";
             this.txtMoney.LeadingIcon = null;
             this.txtMoney.Location = new System.Drawing.Point(15, 35);
+            this.txtMoney.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.txtMoney.MaxLength = 50;
             this.txtMoney.MouseState = MaterialSkin.MouseState.OUT;
             this.txtMoney.Name = "txtMoney";
@@ -303,7 +305,8 @@ namespace QuanLyCuaHangGame
             this.txtNote.HideSelection = true;
             this.txtNote.Hint = "Ghi chú";
             this.txtNote.LeadingIcon = null;
-            this.txtNote.Location = new System.Drawing.Point(15, 95);
+            this.txtNote.Location = new System.Drawing.Point(15, 105);
+            this.txtNote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNote.MaxLength = 50;
             this.txtNote.MouseState = MaterialSkin.MouseState.OUT;
             this.txtNote.Name = "txtNote";
@@ -330,7 +333,8 @@ namespace QuanLyCuaHangGame
             this.btnNapTien.Depth = 0;
             this.btnNapTien.HighEmphasis = true;
             this.btnNapTien.Icon = null;
-            this.btnNapTien.Location = new System.Drawing.Point(15, 155);
+            this.btnNapTien.Location = new System.Drawing.Point(15, 175);
+            this.btnNapTien.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNapTien.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnNapTien.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnNapTien.Name = "btnNapTien";
@@ -399,6 +403,7 @@ namespace QuanLyCuaHangGame
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(920, 720);
+            this.MinimumSize = new System.Drawing.Size(920, 720);
             this.Controls.Add(this.panelTop);
             this.Controls.Add(this.mlvHoiVien);
             this.Controls.Add(this.cardUser);

@@ -13,10 +13,7 @@ namespace QuanLyCuaHangGame.GUI
         public dlgTopUp()
         {
             InitializeComponent();
-            var materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.ColorScheme = new ColorScheme(Primary.Blue500, Primary.Blue700, Primary.Blue200, Accent.LightBlue200, TextShade.WHITE);
+            UIHelper.UICommon.ApplyTheme(this);
 
             btn50.Click += (s, e) => txtAmount.Text = "50000";
             btn100.Click += (s, e) => txtAmount.Text = "100000";

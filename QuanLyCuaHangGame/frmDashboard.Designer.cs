@@ -64,7 +64,6 @@ namespace QuanLyCuaHangGame
             this.pnlFooter = new System.Windows.Forms.Panel();
             this.lblFooter = new System.Windows.Forms.Label();
             this.mainTabControl = new MaterialSkin.Controls.MaterialTabControl();
-            this.tabPageLogin = new System.Windows.Forms.TabPage();
             this.tabPageTaiKhoan = new System.Windows.Forms.TabPage();
             this.tabPageDashboard = new System.Windows.Forms.TabPage();
             this.tabPageSoDo = new System.Windows.Forms.TabPage();
@@ -481,16 +480,15 @@ namespace QuanLyCuaHangGame
             // 
             // mainTabControl
             // 
-            this.mainTabControl.Controls.Add(this.tabPageLogin);
-            this.mainTabControl.Controls.Add(this.tabPageTaiKhoan);
             this.mainTabControl.Controls.Add(this.tabPageDashboard);
             this.mainTabControl.Controls.Add(this.tabPageSoDo);
             this.mainTabControl.Controls.Add(this.tabPageThueMay);
-            this.mainTabControl.Controls.Add(this.tabPageThanhToan);
-            this.mainTabControl.Controls.Add(this.tabPageHoiVien);
             this.mainTabControl.Controls.Add(this.tabPageMayTinh);
+            this.mainTabControl.Controls.Add(this.tabPageHoiVien);
             this.mainTabControl.Controls.Add(this.tabPageDichVu);
+            this.mainTabControl.Controls.Add(this.tabPageThanhToan);
             this.mainTabControl.Controls.Add(this.tabPageBaoCao);
+            this.mainTabControl.Controls.Add(this.tabPageTaiKhoan);
             this.mainTabControl.Depth = 0;
             this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainTabControl.Location = new System.Drawing.Point(3, 64);
@@ -500,17 +498,7 @@ namespace QuanLyCuaHangGame
             this.mainTabControl.SelectedIndex = 2;
             this.mainTabControl.Size = new System.Drawing.Size(1094, 721);
             this.mainTabControl.TabIndex = 8;
-            // 
-            // tabPageLogin
-            // 
-            this.tabPageLogin.AutoScroll = true;
-            this.tabPageLogin.Location = new System.Drawing.Point(4, 22);
-            this.tabPageLogin.Name = "tabPageLogin";
-            this.tabPageLogin.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLogin.Size = new System.Drawing.Size(1086, 695);
-            this.tabPageLogin.TabIndex = 0;
-            this.tabPageLogin.Text = "1. Login";
-            this.tabPageLogin.UseVisualStyleBackColor = true;
+
             // 
             // tabPageTaiKhoan
             // 
@@ -519,7 +507,7 @@ namespace QuanLyCuaHangGame
             this.tabPageTaiKhoan.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageTaiKhoan.Size = new System.Drawing.Size(1086, 695);
             this.tabPageTaiKhoan.TabIndex = 1;
-            this.tabPageTaiKhoan.Text = "2. Tài khoản";
+            this.tabPageTaiKhoan.Text = "Tài khoản";
             this.tabPageTaiKhoan.UseVisualStyleBackColor = true;
             // 
             // tabPageDashboard
@@ -538,7 +526,7 @@ namespace QuanLyCuaHangGame
             this.tabPageDashboard.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageDashboard.Size = new System.Drawing.Size(1086, 695);
             this.tabPageDashboard.TabIndex = 2;
-            this.tabPageDashboard.Text = "3. Dashboard";
+            this.tabPageDashboard.Text = "Dashboard";
             // 
             // tabPageSoDo
             // 
@@ -547,7 +535,7 @@ namespace QuanLyCuaHangGame
             this.tabPageSoDo.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageSoDo.Size = new System.Drawing.Size(1086, 695);
             this.tabPageSoDo.TabIndex = 3;
-            this.tabPageSoDo.Text = "4. Sơ đồ";
+            this.tabPageSoDo.Text = "Sơ đồ";
             this.tabPageSoDo.UseVisualStyleBackColor = true;
             // 
             // tabPageThueMay
@@ -557,7 +545,7 @@ namespace QuanLyCuaHangGame
             this.tabPageThueMay.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageThueMay.Size = new System.Drawing.Size(1086, 695);
             this.tabPageThueMay.TabIndex = 4;
-            this.tabPageThueMay.Text = "5. Thuê máy";
+            this.tabPageThueMay.Text = "Thuê máy";
             this.tabPageThueMay.UseVisualStyleBackColor = true;
             // 
             // tabPageThanhToan
@@ -567,7 +555,7 @@ namespace QuanLyCuaHangGame
             this.tabPageThanhToan.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageThanhToan.Size = new System.Drawing.Size(1086, 695);
             this.tabPageThanhToan.TabIndex = 5;
-            this.tabPageThanhToan.Text = "6. Thanh toán";
+            this.tabPageThanhToan.Text = "Thanh toán";
             this.tabPageThanhToan.UseVisualStyleBackColor = true;
             // 
             // tabPageHoiVien
@@ -577,7 +565,7 @@ namespace QuanLyCuaHangGame
             this.tabPageHoiVien.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageHoiVien.Size = new System.Drawing.Size(1086, 695);
             this.tabPageHoiVien.TabIndex = 6;
-            this.tabPageHoiVien.Text = "7. Hội viên";
+            this.tabPageHoiVien.Text = "Hội viên";
             this.tabPageHoiVien.UseVisualStyleBackColor = true;
             // 
             // tabPageMayTinh
@@ -588,7 +576,7 @@ namespace QuanLyCuaHangGame
             this.tabPageMayTinh.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageMayTinh.Size = new System.Drawing.Size(1086, 695);
             this.tabPageMayTinh.TabIndex = 7;
-            this.tabPageMayTinh.Text = "8. Máy tính";
+            this.tabPageMayTinh.Text = "Máy tính";
             this.tabPageMayTinh.UseVisualStyleBackColor = true;
             // 
             // tabPageDichVu
@@ -598,7 +586,7 @@ namespace QuanLyCuaHangGame
             this.tabPageDichVu.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageDichVu.Size = new System.Drawing.Size(1086, 695);
             this.tabPageDichVu.TabIndex = 8;
-            this.tabPageDichVu.Text = "9. Dịch vụ";
+            this.tabPageDichVu.Text = "Dịch vụ";
             this.tabPageDichVu.UseVisualStyleBackColor = true;
             // 
             // tabPageBaoCao
@@ -608,7 +596,7 @@ namespace QuanLyCuaHangGame
             this.tabPageBaoCao.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageBaoCao.Size = new System.Drawing.Size(1086, 695);
             this.tabPageBaoCao.TabIndex = 9;
-            this.tabPageBaoCao.Text = "10. Báo cáo";
+            this.tabPageBaoCao.Text = "Báo cáo";
             this.tabPageBaoCao.UseVisualStyleBackColor = true;
             // 
             // frmDashboard
@@ -689,7 +677,7 @@ namespace QuanLyCuaHangGame
         private System.Windows.Forms.Label lblFooter;
 
         private MaterialSkin.Controls.MaterialTabControl mainTabControl;
-        private System.Windows.Forms.TabPage tabPageLogin;
+
         private System.Windows.Forms.TabPage tabPageTaiKhoan;
         private System.Windows.Forms.TabPage tabPageDashboard;
         private System.Windows.Forms.TabPage tabPageSoDo;

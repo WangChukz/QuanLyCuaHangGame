@@ -131,6 +131,10 @@
     <Compile Include="Data\RoomStore.cs" />
     <Compile Include="UIHelper\UICommon.cs" />
     <Compile Include="UIHelper\DashboardUIHelper.cs" />
+    <Compile Include="UIHelper\UserUIHelper.cs" />
+    <Compile Include="UIHelper\GameZoneDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmComputer.resx">

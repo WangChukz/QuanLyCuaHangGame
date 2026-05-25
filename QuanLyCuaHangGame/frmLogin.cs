@@ -16,10 +16,7 @@ namespace QuanLyCuaHangGame.GUI
         public frmLogin()
         {
             InitializeComponent();
-            var materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            materialSkinManager.ColorScheme = new ColorScheme(Primary.Blue500, Primary.Blue700, Primary.Blue200, Accent.LightBlue200, TextShade.WHITE);
+            UIHelper.UICommon.ApplyTheme(this);
             
             userService = new UserService();
         }

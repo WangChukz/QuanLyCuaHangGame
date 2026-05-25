@@ -34,15 +34,7 @@ namespace QuanLyCuaHangGame
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
-            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            //materialSkinManager.ColorScheme = new ColorScheme(Primary.Blue600, Primary.Blue700, Primary.Blue200, Accent.Blue200, TextShade.WHITE);
-            materialSkinManager.ColorScheme = new ColorScheme(
-                Primary.DeepPurple500,
-                Primary.DeepPurple700,
-                Primary.DeepPurple200,
-                Accent.Purple200,
-                TextShade.WHITE
-            );
+            UICommon.ApplyTheme(this);
             this.Load += FrmDashboard_Load;
         }
 
@@ -85,6 +77,33 @@ namespace QuanLyCuaHangGame
             tabPageDichVu.Controls.Add(frmSvc);
             frmSvc.Show();
 
+            // Embed frmCustomer into tabPageHoiVien
+            frmCustomer frmCust = new frmCustomer();
+            frmCust.TopLevel = false;
+            frmCust.FormBorderStyle = FormBorderStyle.None;
+            frmCust.Dock = DockStyle.Fill;
+            frmCust.BackColor = Color.White;
+            tabPageHoiVien.Controls.Add(frmCust);
+            frmCust.Show();
+
+            // Embed frmPayment into tabPageThanhToan
+            frmPayment frmPay = new frmPayment();
+            frmPay.TopLevel = false;
+            frmPay.FormBorderStyle = FormBorderStyle.None;
+            frmPay.Dock = DockStyle.Fill;
+            frmPay.BackColor = Color.White;
+            tabPageThanhToan.Controls.Add(frmPay);
+            frmPay.Show();
+
+            // Embed frmUser into tabPageTaiKhoan
+            GUI.frmUser frmU = new GUI.frmUser();
+            frmU.TopLevel = false;
+            frmU.FormBorderStyle = FormBorderStyle.None;
+            frmU.Dock = DockStyle.Fill;
+            frmU.BackColor = Color.White;
+            tabPageTaiKhoan.Controls.Add(frmU);
+            frmU.Show();
+
             // Di chuyển pnlFooter từ tabPageDashboard ra ngoài Form chính để hiển thị trên tất cả các tab
             tabPageDashboard.Controls.Remove(pnlFooter);
             this.Controls.Add(pnlFooter);
@@ -101,6 +120,23 @@ namespace QuanLyCuaHangGame
             // Ép buộc áp dụng style chuẩn SaaS sau khi MaterialSkin load xong
             ApplyKPICardStyles();
             DashboardUIHelper.ApplyGlobalModernStyle(this);
+
+            // Add Coming Soon labels to empty tabs
+            Label lblComingSoon1 = new Label();
+            lblComingSoon1.Text = "Tính năng Đang được phát triển...";
+            lblComingSoon1.Font = new Font("Inter", 16F, FontStyle.Bold);
+            lblComingSoon1.ForeColor = Color.Gray;
+            lblComingSoon1.AutoSize = true;
+            lblComingSoon1.Location = new Point(50, 50);
+            tabPageThueMay.Controls.Add(lblComingSoon1);
+
+            Label lblComingSoon2 = new Label();
+            lblComingSoon2.Text = "Tính năng Đang được phát triển...";
+            lblComingSoon2.Font = new Font("Inter", 16F, FontStyle.Bold);
+            lblComingSoon2.ForeColor = Color.Gray;
+            lblComingSoon2.AutoSize = true;
+            lblComingSoon2.Location = new Point(50, 50);
+            tabPageBaoCao.Controls.Add(lblComingSoon2);
 
             // Khởi tạo Timer tự làm mới (Interval = 30000ms, Enabled = true)
             tmrRefresh = new System.Windows.Forms.Timer();
@@ -312,34 +348,31 @@ namespace QuanLyCuaHangGame
             switch (mainTabControl.SelectedIndex)
             {
                 case 0:
-                    this.Text = "Đăng nhập";
-                    break;
-                case 1:
-                    this.Text = "Quản lý tài khoản";
-                    break;
-                case 2:
                     this.Text = "Dashboard – Tổng quan hệ thống";
                     break;
-                case 3:
+                case 1:
                     this.Text = "Sơ đồ phòng máy";
                     break;
-                case 4:
+                case 2:
                     this.Text = "Thuê máy";
                     break;
-                case 5:
-                    this.Text = "Thanh toán";
-                    break;
-                case 6:
-                    this.Text = "Quản lý hội viên";
-                    break;
-                case 7:
+                case 3:
                     this.Text = "Quản lý máy tính — Chế độ: Admin";
                     break;
-                case 8:
+                case 4:
+                    this.Text = "Quản lý hội viên";
+                    break;
+                case 5:
                     this.Text = "Quản lý dịch vụ";
                     break;
-                case 9:
+                case 6:
+                    this.Text = "Thanh toán";
+                    break;
+                case 7:
                     this.Text = "Báo cáo";
+                    break;
+                case 8:
+                    this.Text = "Quản lý tài khoản";
                     break;
                 default:
                     this.Text = "GameStore Management";
@@ -347,7 +380,7 @@ namespace QuanLyCuaHangGame
             }
 
             // Cập nhật nội dung footer động dựa trên Tab được chọn
-            if (mainTabControl.SelectedIndex == 7) // Tab thứ 8 (Quản lý máy tính)
+            if (mainTabControl.SelectedIndex == 3) // Tab thứ 4 (Quản lý máy tính)
             {
                 lblFooter.Text = "Tổng: 20 máy    |    VIP: 6    |    Standard: 14    |    Hỏng: 2    |    Chế độ: Admin – toàn quyền";
             }
