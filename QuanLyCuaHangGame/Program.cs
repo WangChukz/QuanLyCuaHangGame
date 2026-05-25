@@ -16,7 +16,6 @@ namespace QuanLyCuaHangGame.GUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            
             // Seed initial database and admin user
             try
             {
@@ -42,6 +41,7 @@ namespace QuanLyCuaHangGame.GUI
                 return;
             }
             Application.Run(new frmLogin());
+            // Application.Run(new frmCustomer()); // Khoa đang test dở form này
         }
     }
 }
