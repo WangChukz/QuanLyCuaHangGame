@@ -39,7 +39,7 @@ namespace QuanLyCuaHangGame.GUI
                 return;
             }
 
-            Application.Run(new dlgTopUp());
+            Application.Run(new frmLogin());
         }
     }
 }
