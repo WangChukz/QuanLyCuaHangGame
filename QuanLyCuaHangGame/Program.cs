@@ -32,6 +32,9 @@ namespace QuanLyCuaHangGame.GUI
                     };
                     userService.AddUser(adminUser, "123456");
                 }
+                
+                // TODO: Xóa dòng này sau khi bạn test xong nhé
+                MessageBox.Show("Kết nối cơ sở dữ liệu thành công!", "Kiểm tra kết nối", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
