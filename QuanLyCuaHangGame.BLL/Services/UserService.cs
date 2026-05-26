@@ -59,5 +59,15 @@ namespace QuanLyCuaHangGame.BLL.Services
                 unitOfWork.Save();
             }
         }
+
+        public void DeleteUser(int id)
+        {
+            var user = unitOfWork.UserRepository.GetById(id);
+            if (user != null)
+            {
+                unitOfWork.UserRepository.Delete(id);
+                unitOfWork.Save();
+            }
+        }
     }
 }

@@ -1,12 +1,13 @@
-using System;
-using System.Drawing;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
-using QuanLyCuaHangGame.Model;
+using QuanLyCuaHangGame.BLL;
 using QuanLyCuaHangGame.BLL.Services;
+using QuanLyCuaHangGame.Model;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace QuanLyCuaHangGame.GUI
 {
@@ -29,8 +30,7 @@ namespace QuanLyCuaHangGame.GUI
 
         private void ReApplyLabelColors()
         {
-            lblUserListTitle.ForeColor = UIHelper.DashboardUIHelper.ThemeColor;
-            lblTitle.ForeColor        = UIHelper.DashboardUIHelper.ThemeColor;
+            lblTitle.ForeColor = UIHelper.DashboardUIHelper.ThemeColor;
         }
 
         private DialogResult SafeShowMessage(string text, string title, MessageBoxButtons btns, MessageBoxIcon icon)
@@ -47,10 +47,9 @@ namespace QuanLyCuaHangGame.GUI
             InitializeComponent();
             UIHelper.UICommon.ApplyTheme(this, true);
             UIHelper.UserUIHelper.StyleUserListView(this.lvUsers);
-            
-            lblUserListTitle.ForeColor = UIHelper.DashboardUIHelper.ThemeColor;
+
             lblTitle.ForeColor = UIHelper.DashboardUIHelper.ThemeColor;
-            
+
             _userService = new UserService();
             _users = new List<User>();
             
@@ -81,6 +80,12 @@ namespace QuanLyCuaHangGame.GUI
             lvUsers.SelectedIndexChanged += LvUsers_SelectedIndexChanged;
             btnSave.Click += BtnSave_Click;
             btnCancel.Click += BtnCancel_Click;
+
+            // Gắn sự kiện cho các nút trên Toolbar
+            btnAdd.Click += BtnAdd_Click;
+            btnEdit.Click += BtnEdit_Click;
+            btnDelete.Click += BtnDelete_Click;
+            btnReset.Click += BtnReset_Click;
 
             lvUsers.Resize += (s, e) =>
             {
@@ -275,6 +280,97 @@ namespace QuanLyCuaHangGame.GUI
         private void cardDetails_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        // Sự kiện nhấn nút Thêm Mới
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
+            // Gọi hàm ResetForm có sẵn để xóa trắng các ô text và bỏ chọn listview
+            ResetForm();
+            txtFullName.Focus();
+        }
+
+        // Sự kiện nhấn nút Sửa
+        private void BtnEdit_Click(object sender, EventArgs e)
+        {
+            if (lvUsers.SelectedItems.Count == 0)
+            {
+                SafeShowMessage("Vui lòng chọn một tài khoản để sửa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            // Dữ liệu đã được load lên form thông qua sự kiện LvUsers_SelectedIndexChanged
+            txtFullName.Focus();
+        }
+
+        // Sự kiện nhấn nút Xóa
+        // Sự kiện nhấn nút Xóa
+        // Sự kiện nhấn nút Xóa
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            if (lvUsers.SelectedItems.Count == 0)
+            {
+                SafeShowMessage("Vui lòng chọn một tài khoản để xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int userId = (int)lvUsers.SelectedItems[0].Tag;
+
+            // Chặn người dùng tự xóa chính tài khoản họ đang đăng nhập
+            if (SessionContext.CurrentUserId == userId)
+            {
+                SafeShowMessage("Bạn không thể xóa chính tài khoản đang đăng nhập!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var confirm = SafeShowMessage("Bạn có chắc chắn muốn xóa tài khoản này không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirm == DialogResult.Yes || confirm == DialogResult.OK)
+            {
+                try
+                {
+                    _userService.DeleteUser(userId);
+                    SafeShowMessage("Đã xóa tài khoản thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadData(); // Load lại list view
+                }
+                catch (Exception ex)
+                {
+                    // Truy vết lỗi sâu nhất từ SQL Server
+                    string errorMsg = ex.Message;
+                    Exception inner = ex.InnerException;
+                    while (inner != null)
+                    {
+                        errorMsg += "\n\nChi tiết SQL: " + inner.Message;
+                        inner = inner.InnerException;
+                    }
+                    SafeShowMessage("Lỗi không xóa được:\n" + errorMsg, "Phân tích lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        // Sự kiện nhấn nút Reset Mật Khẩu
+        private void BtnReset_Click(object sender, EventArgs e)
+        {
+            if (lvUsers.SelectedItems.Count == 0)
+            {
+                SafeShowMessage("Vui lòng chọn một tài khoản để reset mật khẩu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var confirm = SafeShowMessage("Bạn có chắc chắn muốn reset mật khẩu của tài khoản này về mặc định (12345678a) không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirm == DialogResult.Yes)
+            {
+                int userId = (int)lvUsers.SelectedItems[0].Tag;
+                try
+                {
+                    // Reset về mật khẩu mặc định, bạn có thể tự đổi nếu muốn
+                    _userService.ChangePassword(userId, "12345678a");
+                    SafeShowMessage("Reset mật khẩu thành công! Mật khẩu mới là: 12345678a", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    SafeShowMessage("Lỗi khi reset mật khẩu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

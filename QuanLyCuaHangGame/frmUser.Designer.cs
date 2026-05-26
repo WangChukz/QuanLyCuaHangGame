@@ -3,31 +3,40 @@ namespace QuanLyCuaHangGame.GUI
     partial class frmUser
     {
         private System.ComponentModel.IContainer components = null;
-        private System.Windows.Forms.ListView lvUsers;
-        private System.Windows.Forms.Label lblUserListTitle;
 
-        private MaterialSkin.Controls.MaterialTextBox txtFullName;
-        private MaterialSkin.Controls.MaterialTextBox txtUsername;
-        private MaterialSkin.Controls.MaterialTextBox txtPassword;
-        private MaterialSkin.Controls.MaterialTextBox txtConfirmPassword;
-        private System.Windows.Forms.RadioButton radAdmin;
-        private System.Windows.Forms.RadioButton radStaff;
-        private System.Windows.Forms.RadioButton radActive;
-        private System.Windows.Forms.RadioButton radLocked;
-        private MaterialSkin.Controls.MaterialButton btnSave;
-        private MaterialSkin.Controls.MaterialButton btnCancel;
+        // ── Toolbar ───────────────────────────────────────────────────
+        private System.Windows.Forms.Panel pnlToolbar;
+        private System.Windows.Forms.FlowLayoutPanel flpToolbar;
         private MaterialSkin.Controls.MaterialButton btnAdd;
         private MaterialSkin.Controls.MaterialButton btnEdit;
         private MaterialSkin.Controls.MaterialButton btnDelete;
         private MaterialSkin.Controls.MaterialButton btnReset;
-        private System.Windows.Forms.Panel pnlToolbar;
-        private System.Windows.Forms.FlowLayoutPanel flpToolbar;
+
+        // ── Body ──────────────────────────────────────────────────────
+        private System.Windows.Forms.TableLayoutPanel tblBody;
+
+        // ── Left – ListView ───────────────────────────────────────────
         private System.Windows.Forms.Panel pnlLeft;
+        private MaterialSkin.Controls.MaterialListView lvUsers;
+
+        // ── Right – Detail Card ───────────────────────────────────────
         private System.Windows.Forms.Panel pnlRight;
         private MaterialSkin.Controls.MaterialCard cardDetails;
+        private System.Windows.Forms.TableLayoutPanel tblCard;
         private MaterialSkin.Controls.MaterialLabel lblTitle;
+        private MaterialSkin.Controls.MaterialTextBox txtFullName;
+        private MaterialSkin.Controls.MaterialTextBox txtUsername;
+        private MaterialSkin.Controls.MaterialTextBox txtPassword;
+        private MaterialSkin.Controls.MaterialTextBox txtConfirmPassword;
         private System.Windows.Forms.GroupBox gbRole;
+        private MaterialSkin.Controls.MaterialRadioButton radAdmin;
+        private MaterialSkin.Controls.MaterialRadioButton radStaff;
         private System.Windows.Forms.GroupBox gbStatus;
+        private MaterialSkin.Controls.MaterialRadioButton radActive;
+        private MaterialSkin.Controls.MaterialRadioButton radLocked;
+        private System.Windows.Forms.TableLayoutPanel tblButtons;
+        private MaterialSkin.Controls.MaterialButton btnSave;
+        private MaterialSkin.Controls.MaterialButton btnCancel;
 
         protected override void Dispose(bool disposing)
         {
@@ -38,443 +47,318 @@ namespace QuanLyCuaHangGame.GUI
 
         private void InitializeComponent()
         {
-            this.lvUsers = new System.Windows.Forms.ListView();
-            this.lblUserListTitle = new System.Windows.Forms.Label();
-            this.txtFullName = new MaterialSkin.Controls.MaterialTextBox();
-            this.txtUsername = new MaterialSkin.Controls.MaterialTextBox();
-            this.txtPassword = new MaterialSkin.Controls.MaterialTextBox();
-            this.txtConfirmPassword = new MaterialSkin.Controls.MaterialTextBox();
-            this.radAdmin = new System.Windows.Forms.RadioButton();
-            this.radStaff = new System.Windows.Forms.RadioButton();
-            this.radActive = new System.Windows.Forms.RadioButton();
-            this.radLocked = new System.Windows.Forms.RadioButton();
-            this.btnSave = new MaterialSkin.Controls.MaterialButton();
-            this.btnCancel = new MaterialSkin.Controls.MaterialButton();
+            this.pnlToolbar = new System.Windows.Forms.Panel();
+            this.flpToolbar = new System.Windows.Forms.FlowLayoutPanel();
             this.btnAdd = new MaterialSkin.Controls.MaterialButton();
             this.btnEdit = new MaterialSkin.Controls.MaterialButton();
             this.btnDelete = new MaterialSkin.Controls.MaterialButton();
             this.btnReset = new MaterialSkin.Controls.MaterialButton();
-            this.pnlToolbar = new System.Windows.Forms.Panel();
-            this.flpToolbar = new System.Windows.Forms.FlowLayoutPanel();
+
+            this.tblBody = new System.Windows.Forms.TableLayoutPanel();
+
             this.pnlLeft = new System.Windows.Forms.Panel();
+            this.lvUsers = new MaterialSkin.Controls.MaterialListView();
+
             this.pnlRight = new System.Windows.Forms.Panel();
             this.cardDetails = new MaterialSkin.Controls.MaterialCard();
+            this.tblCard = new System.Windows.Forms.TableLayoutPanel();
             this.lblTitle = new MaterialSkin.Controls.MaterialLabel();
+            this.txtFullName = new MaterialSkin.Controls.MaterialTextBox();
+            this.txtUsername = new MaterialSkin.Controls.MaterialTextBox();
+            this.txtPassword = new MaterialSkin.Controls.MaterialTextBox();
+            this.txtConfirmPassword = new MaterialSkin.Controls.MaterialTextBox();
             this.gbRole = new System.Windows.Forms.GroupBox();
+            this.radAdmin = new MaterialSkin.Controls.MaterialRadioButton();
+            this.radStaff = new MaterialSkin.Controls.MaterialRadioButton();
             this.gbStatus = new System.Windows.Forms.GroupBox();
+            this.radActive = new MaterialSkin.Controls.MaterialRadioButton();
+            this.radLocked = new MaterialSkin.Controls.MaterialRadioButton();
+            this.tblButtons = new System.Windows.Forms.TableLayoutPanel();
+            this.btnSave = new MaterialSkin.Controls.MaterialButton();
+            this.btnCancel = new MaterialSkin.Controls.MaterialButton();
+
             this.pnlToolbar.SuspendLayout();
             this.flpToolbar.SuspendLayout();
+            this.tblBody.SuspendLayout();
             this.pnlLeft.SuspendLayout();
             this.pnlRight.SuspendLayout();
             this.cardDetails.SuspendLayout();
+            this.tblCard.SuspendLayout();
             this.gbRole.SuspendLayout();
             this.gbStatus.SuspendLayout();
+            this.tblButtons.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lvUsers
-            // 
-            this.lvUsers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvUsers.BackColor = System.Drawing.Color.White;
-            this.lvUsers.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lvUsers.FullRowSelect = true;
-            this.lvUsers.HideSelection = false;
-            this.lvUsers.Location = new System.Drawing.Point(10, 35);
-            this.lvUsers.Name = "lvUsers";
-            this.lvUsers.OwnerDraw = true;
-            this.lvUsers.Size = new System.Drawing.Size(521, 515);
-            this.lvUsers.TabIndex = 0;
-            this.lvUsers.UseCompatibleStateImageBehavior = false;
-            this.lvUsers.View = System.Windows.Forms.View.Details;
-            // 
-            // lblUserListTitle
-            // 
-            this.lblUserListTitle.AutoSize = true;
-            this.lblUserListTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.lblUserListTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(150)))), ((int)(((byte)(243)))));
-            this.lblUserListTitle.Location = new System.Drawing.Point(10, 10);
-            this.lblUserListTitle.Name = "lblUserListTitle";
-            this.lblUserListTitle.Size = new System.Drawing.Size(248, 17);
-            this.lblUserListTitle.TabIndex = 1;
-            this.lblUserListTitle.Text = "👥 Danh sách tài khoản hệ thống";
-            // 
-            // txtFullName
-            // 
-            this.txtFullName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFullName.AnimateReadOnly = false;
-            this.txtFullName.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtFullName.Depth = 0;
-            this.txtFullName.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtFullName.Hint = "Họ và tên";
-            this.txtFullName.LeadingIcon = null;
-            this.txtFullName.Location = new System.Drawing.Point(20, 50);
-            this.txtFullName.MaxLength = 50;
-            this.txtFullName.MouseState = MaterialSkin.MouseState.OUT;
-            this.txtFullName.Multiline = false;
-            this.txtFullName.Name = "txtFullName";
-            this.txtFullName.Size = new System.Drawing.Size(330, 50);
-            this.txtFullName.TabIndex = 1;
-            this.txtFullName.Text = "";
-            this.txtFullName.TrailingIcon = null;
-            // 
-            // txtUsername
-            // 
-            this.txtUsername.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtUsername.AnimateReadOnly = false;
-            this.txtUsername.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtUsername.Depth = 0;
-            this.txtUsername.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtUsername.Hint = "Tên đăng nhập (username)";
-            this.txtUsername.LeadingIcon = null;
-            this.txtUsername.Location = new System.Drawing.Point(20, 115);
-            this.txtUsername.MaxLength = 50;
-            this.txtUsername.MouseState = MaterialSkin.MouseState.OUT;
-            this.txtUsername.Multiline = false;
-            this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(330, 50);
-            this.txtUsername.TabIndex = 2;
-            this.txtUsername.Text = "";
-            this.txtUsername.TrailingIcon = null;
-            // 
-            // txtPassword
-            // 
-            this.txtPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPassword.AnimateReadOnly = false;
-            this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtPassword.Depth = 0;
-            this.txtPassword.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtPassword.Hint = "Mật khẩu mới (để trống nếu không đổi)";
-            this.txtPassword.LeadingIcon = null;
-            this.txtPassword.Location = new System.Drawing.Point(20, 180);
-            this.txtPassword.MaxLength = 50;
-            this.txtPassword.MouseState = MaterialSkin.MouseState.OUT;
-            this.txtPassword.Multiline = false;
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Password = true;
-            this.txtPassword.Size = new System.Drawing.Size(330, 50);
-            this.txtPassword.TabIndex = 3;
-            this.txtPassword.Text = "";
-            this.txtPassword.TrailingIcon = null;
-            // 
-            // txtConfirmPassword
-            // 
-            this.txtConfirmPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtConfirmPassword.AnimateReadOnly = false;
-            this.txtConfirmPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtConfirmPassword.Depth = 0;
-            this.txtConfirmPassword.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.txtConfirmPassword.Hint = "Xác nhận mật khẩu mới";
-            this.txtConfirmPassword.LeadingIcon = null;
-            this.txtConfirmPassword.Location = new System.Drawing.Point(20, 245);
-            this.txtConfirmPassword.MaxLength = 50;
-            this.txtConfirmPassword.MouseState = MaterialSkin.MouseState.OUT;
-            this.txtConfirmPassword.Multiline = false;
-            this.txtConfirmPassword.Name = "txtConfirmPassword";
-            this.txtConfirmPassword.Password = true;
-            this.txtConfirmPassword.Size = new System.Drawing.Size(330, 50);
-            this.txtConfirmPassword.TabIndex = 4;
-            this.txtConfirmPassword.Text = "";
-            this.txtConfirmPassword.TrailingIcon = null;
-            // 
-            // radAdmin
-            // 
-            this.radAdmin.AutoSize = true;
-            this.radAdmin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.radAdmin.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.radAdmin.Location = new System.Drawing.Point(12, 22);
-            this.radAdmin.Name = "radAdmin";
-            this.radAdmin.Size = new System.Drawing.Size(186, 21);
-            this.radAdmin.TabIndex = 0;
-            this.radAdmin.Text = "Admin - Chủ cửa hàng";
-            this.radAdmin.UseVisualStyleBackColor = true;
-            // 
-            // radStaff
-            // 
-            this.radStaff.AutoSize = true;
-            this.radStaff.Checked = true;
-            this.radStaff.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.radStaff.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.radStaff.Location = new System.Drawing.Point(12, 50);
-            this.radStaff.Name = "radStaff";
-            this.radStaff.Size = new System.Drawing.Size(206, 21);
-            this.radStaff.TabIndex = 1;
-            this.radStaff.TabStop = true;
-            this.radStaff.Text = "Staff - Nhân viên phòng máy";
-            this.radStaff.UseVisualStyleBackColor = true;
-            // 
-            // radActive
-            // 
-            this.radActive.AutoSize = true;
-            this.radActive.Checked = true;
-            this.radActive.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.radActive.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F);
-            this.radActive.Location = new System.Drawing.Point(13, 22);
-            this.radActive.Name = "radActive";
-            this.radActive.Size = new System.Drawing.Size(88, 20);
-            this.radActive.TabIndex = 0;
-            this.radActive.TabStop = true;
-            this.radActive.Text = "Hoạt động";
-            this.radActive.UseVisualStyleBackColor = true;
-            // 
-            // radLocked
-            // 
-            this.radLocked.AutoSize = true;
-            this.radLocked.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.radLocked.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F);
-            this.radLocked.Location = new System.Drawing.Point(142, 22);
-            this.radLocked.Name = "radLocked";
-            this.radLocked.Size = new System.Drawing.Size(113, 20);
-            this.radLocked.TabIndex = 1;
-            this.radLocked.Text = "Khóa tài khoản";
-            this.radLocked.UseVisualStyleBackColor = true;
-            // 
-            // btnSave
-            // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnSave.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnSave.Depth = 0;
-            this.btnSave.HighEmphasis = true;
-            this.btnSave.Icon = null;
-            this.btnSave.Location = new System.Drawing.Point(218, 490);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnSave.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnSave.Name = "btnSave";
-            this.btnSave.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnSave.Size = new System.Drawing.Size(129, 36);
-            this.btnSave.TabIndex = 8;
-            this.btnSave.Text = "LƯU TÀI KHOẢN";
-            this.btnSave.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnSave.UseAccentColor = true;
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnCancel.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnCancel.Depth = 0;
-            this.btnCancel.HighEmphasis = false;
-            this.btnCancel.Icon = null;
-            this.btnCancel.Location = new System.Drawing.Point(146, 490);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnCancel.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnCancel.Size = new System.Drawing.Size(64, 36);
-            this.btnCancel.TabIndex = 7;
-            this.btnCancel.Text = "HỦY";
-            this.btnCancel.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
-            this.btnCancel.UseAccentColor = false;
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnAdd.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnAdd.Depth = 0;
-            this.btnAdd.HighEmphasis = true;
-            this.btnAdd.Icon = null;
-            this.btnAdd.Location = new System.Drawing.Point(4, 6);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnAdd.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnAdd.Size = new System.Drawing.Size(93, 36);
-            this.btnAdd.TabIndex = 0;
+
+            // ══════════════════════════════════════════════════════════
+            // TOOLBAR
+            // ══════════════════════════════════════════════════════════
+            this.pnlToolbar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlToolbar.Height = 60;
+            this.pnlToolbar.BackColor = System.Drawing.Color.White;
+            this.pnlToolbar.Padding = new System.Windows.Forms.Padding(8, 4, 8, 4);
+
+            this.flpToolbar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flpToolbar.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight;
+            this.flpToolbar.WrapContents = false;
+
             this.btnAdd.Text = "Thêm mới";
+            this.btnAdd.HighEmphasis = true;
             this.btnAdd.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnAdd.UseAccentColor = false;
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnEdit.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnEdit.Depth = 0;
-            this.btnEdit.HighEmphasis = false;
-            this.btnEdit.Icon = null;
-            this.btnEdit.Location = new System.Drawing.Point(105, 6);
-            this.btnEdit.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnEdit.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnEdit.Size = new System.Drawing.Size(64, 36);
-            this.btnEdit.TabIndex = 1;
+            this.btnAdd.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(0, 10, 6, 0);
+
             this.btnEdit.Text = "Sửa";
             this.btnEdit.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Outlined;
-            this.btnEdit.UseAccentColor = false;
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnDelete.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnDelete.Depth = 0;
-            this.btnDelete.HighEmphasis = false;
-            this.btnDelete.Icon = null;
-            this.btnDelete.Location = new System.Drawing.Point(177, 6);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnDelete.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnDelete.Size = new System.Drawing.Size(64, 36);
-            this.btnDelete.TabIndex = 2;
+            this.btnEdit.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnEdit.Margin = new System.Windows.Forms.Padding(0, 10, 6, 0);
+
             this.btnDelete.Text = "Xóa";
             this.btnDelete.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Outlined;
-            this.btnDelete.UseAccentColor = false;
-            // 
-            // btnReset
-            // 
-            this.btnReset.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnReset.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnReset.Depth = 0;
-            this.btnReset.HighEmphasis = false;
-            this.btnReset.Icon = null;
-            this.btnReset.Location = new System.Drawing.Point(249, 6);
-            this.btnReset.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnReset.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnReset.Name = "btnReset";
-            this.btnReset.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnReset.Size = new System.Drawing.Size(143, 36);
-            this.btnReset.TabIndex = 3;
+            this.btnDelete.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(0, 10, 6, 0);
+
             this.btnReset.Text = "Reset Mật Khẩu";
             this.btnReset.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Outlined;
-            this.btnReset.UseAccentColor = false;
-            // 
-            // pnlToolbar
-            // 
-            this.pnlToolbar.Controls.Add(this.flpToolbar);
-            this.pnlToolbar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlToolbar.Location = new System.Drawing.Point(3, 64);
-            this.pnlToolbar.Name = "pnlToolbar";
-            this.pnlToolbar.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlToolbar.Size = new System.Drawing.Size(941, 55);
-            this.pnlToolbar.TabIndex = 2;
-            // 
-            // flpToolbar
-            // 
+            this.btnReset.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnReset.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
+
             this.flpToolbar.Controls.Add(this.btnAdd);
             this.flpToolbar.Controls.Add(this.btnEdit);
             this.flpToolbar.Controls.Add(this.btnDelete);
             this.flpToolbar.Controls.Add(this.btnReset);
-            this.flpToolbar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flpToolbar.Location = new System.Drawing.Point(10, 10);
-            this.flpToolbar.Name = "flpToolbar";
-            this.flpToolbar.Size = new System.Drawing.Size(921, 35);
-            this.flpToolbar.TabIndex = 0;
-            // 
-            // pnlLeft
-            // 
-            this.pnlLeft.Controls.Add(this.lvUsers);
-            this.pnlLeft.Controls.Add(this.lblUserListTitle);
+
+            this.pnlToolbar.Controls.Add(this.flpToolbar);
+
+            // ══════════════════════════════════════════════════════════
+            // BODY – 55% list | 45% detail
+            // ══════════════════════════════════════════════════════════
+            this.tblBody.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblBody.ColumnCount = 2;
+            this.tblBody.RowCount = 1;
+            this.tblBody.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55f));
+            this.tblBody.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45f));
+            this.tblBody.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100f));
+            this.tblBody.Padding = new System.Windows.Forms.Padding(0);
+            this.tblBody.Margin = new System.Windows.Forms.Padding(0);
+
+            // ── LEFT PANEL ──────────────────────────────────────────
             this.pnlLeft.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlLeft.Location = new System.Drawing.Point(3, 119);
-            this.pnlLeft.Name = "pnlLeft";
-            this.pnlLeft.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlLeft.Size = new System.Drawing.Size(541, 643);
-            this.pnlLeft.TabIndex = 1;
-            // 
-            // pnlRight
-            // 
-            this.pnlRight.Controls.Add(this.cardDetails);
-            this.pnlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlRight.Location = new System.Drawing.Point(544, 119);
-            this.pnlRight.Name = "pnlRight";
-            this.pnlRight.Padding = new System.Windows.Forms.Padding(16, 16, 16, 60);
-            this.pnlRight.Size = new System.Drawing.Size(400, 643);
-            this.pnlRight.TabIndex = 0;
-            // 
-            // cardDetails
-            // 
-            this.cardDetails.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.cardDetails.Controls.Add(this.lblTitle);
-            this.cardDetails.Controls.Add(this.txtFullName);
-            this.cardDetails.Controls.Add(this.txtUsername);
-            this.cardDetails.Controls.Add(this.txtPassword);
-            this.cardDetails.Controls.Add(this.txtConfirmPassword);
-            this.cardDetails.Controls.Add(this.gbRole);
-            this.cardDetails.Controls.Add(this.gbStatus);
-            this.cardDetails.Controls.Add(this.btnCancel);
-            this.cardDetails.Controls.Add(this.btnSave);
-            this.cardDetails.Depth = 0;
+            this.pnlLeft.Padding = new System.Windows.Forms.Padding(10, 8, 6, 8);
+            this.pnlLeft.Margin = new System.Windows.Forms.Padding(0);
+
+            this.lvUsers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvUsers.FullRowSelect = true;
+            this.lvUsers.HideSelection = false;
+            this.lvUsers.View = System.Windows.Forms.View.Details;
+            this.lvUsers.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lvUsers.OwnerDraw = true;
+            this.lvUsers.AutoSizeTable = false;
+            this.lvUsers.UseCompatibleStateImageBehavior = false;
+
+            System.Windows.Forms.ColumnHeader colFullName = new System.Windows.Forms.ColumnHeader();
+            System.Windows.Forms.ColumnHeader colUsername = new System.Windows.Forms.ColumnHeader();
+            System.Windows.Forms.ColumnHeader colRole = new System.Windows.Forms.ColumnHeader();
+            System.Windows.Forms.ColumnHeader colStatus = new System.Windows.Forms.ColumnHeader();
+
+            colFullName.Text = "Họ và tên"; colFullName.Width = -2;
+            colUsername.Text = "Tên đăng nhập"; colUsername.Width = 140;
+            colRole.Text = "Vai trò"; colRole.Width = 90;
+            colStatus.Text = "Trạng thái"; colStatus.Width = 100;
+
+            this.lvUsers.Columns.AddRange(new System.Windows.Forms.ColumnHeader[]
+            {
+                colFullName, colUsername, colRole, colStatus
+            });
+
+            this.pnlLeft.Controls.Add(this.lvUsers);
+
+            // ── RIGHT PANEL ─────────────────────────────────────────
+            this.pnlRight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlRight.Padding = new System.Windows.Forms.Padding(6, 8, 10, 8);
+            this.pnlRight.Margin = new System.Windows.Forms.Padding(0);
+
             this.cardDetails.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cardDetails.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cardDetails.Location = new System.Drawing.Point(16, 16);
-            this.cardDetails.Margin = new System.Windows.Forms.Padding(14);
-            this.cardDetails.MouseState = MaterialSkin.MouseState.HOVER;
-            this.cardDetails.Name = "cardDetails";
-            this.cardDetails.Padding = new System.Windows.Forms.Padding(16);
-            this.cardDetails.Size = new System.Drawing.Size(368, 567);
-            this.cardDetails.TabIndex = 0;
-            // 
+            this.cardDetails.Padding = new System.Windows.Forms.Padding(0);
+
+            // ── tblCard: 1 cột, các row tự co giãn ─────────────────
+            this.tblCard.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblCard.ColumnCount = 1;
+            this.tblCard.RowCount = 8;
+            // row 0 = title, 1-4 = textboxes, 5 = gbRole, 6 = gbStatus, 7 = buttons (fill)
+            this.tblCard.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100f));
+            this.tblCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));      // lblTitle
+            this.tblCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));      // txtFullName
+            this.tblCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));      // txtUsername
+            this.tblCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));      // txtPassword
+            this.tblCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));      // txtConfirmPassword
+            this.tblCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));      // gbRole
+            this.tblCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));      // gbStatus
+            this.tblCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100f)); // buttons (đẩy xuống đáy)
+            this.tblCard.Padding = new System.Windows.Forms.Padding(16, 12, 16, 12);
+
             // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Depth = 0;
-            this.lblTitle.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.lblTitle.Location = new System.Drawing.Point(16, 16);
-            this.lblTitle.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(120, 19);
-            this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Chi tiết tài khoản";
-            // 
+            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTitle.Font = new System.Drawing.Font("Roboto", 14f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.lblTitle.AutoSize = true;
+
+            // txtFullName
+            this.txtFullName.Hint = "Họ và tên";
+            this.txtFullName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtFullName.MaxLength = 50;
+            this.txtFullName.Multiline = false;
+            this.txtFullName.AnimateReadOnly = false;
+            this.txtFullName.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtFullName.Font = new System.Drawing.Font("Roboto", 16f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtFullName.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
+
+            // txtUsername
+            this.txtUsername.Hint = "Tên đăng nhập (username)";
+            this.txtUsername.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtUsername.MaxLength = 50;
+            this.txtUsername.Multiline = false;
+            this.txtUsername.AnimateReadOnly = false;
+            this.txtUsername.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtUsername.Font = new System.Drawing.Font("Roboto", 16f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtUsername.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
+
+            // txtPassword
+            this.txtPassword.Hint = "Mật khẩu mới";
+            this.txtPassword.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtPassword.MaxLength = 50;
+            this.txtPassword.Multiline = false;
+            this.txtPassword.Password = true;
+            this.txtPassword.AnimateReadOnly = false;
+            this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtPassword.Font = new System.Drawing.Font("Roboto", 16f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtPassword.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
+
+            // txtConfirmPassword
+            this.txtConfirmPassword.Hint = "Xác nhận mật khẩu";
+            this.txtConfirmPassword.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtConfirmPassword.MaxLength = 50;
+            this.txtConfirmPassword.Multiline = false;
+            this.txtConfirmPassword.Password = true;
+            this.txtConfirmPassword.AnimateReadOnly = false;
+            this.txtConfirmPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtConfirmPassword.Font = new System.Drawing.Font("Roboto", 16f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.txtConfirmPassword.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
+
             // gbRole
-            // 
-            this.gbRole.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbRole.Text = "Vai trò & Quyền hạn";
+            this.gbRole.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbRole.Font = new System.Drawing.Font("Segoe UI", 9f);
+            this.gbRole.Padding = new System.Windows.Forms.Padding(6);
+            this.gbRole.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.gbRole.Height = 80;
+
+            this.radAdmin.Text = "Admin";
+            this.radAdmin.AutoSize = true;
+            this.radAdmin.Ripple = true;
+            this.radAdmin.Location = new System.Drawing.Point(8, 28);
+
+            this.radStaff.Text = "Staff";
+            this.radStaff.AutoSize = true;
+            this.radStaff.Ripple = true;
+            this.radStaff.Checked = true;
+            this.radStaff.Location = new System.Drawing.Point(160, 28);
+
             this.gbRole.Controls.Add(this.radAdmin);
             this.gbRole.Controls.Add(this.radStaff);
-            this.gbRole.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F);
-            this.gbRole.Location = new System.Drawing.Point(20, 310);
-            this.gbRole.Name = "gbRole";
-            this.gbRole.Size = new System.Drawing.Size(330, 80);
-            this.gbRole.TabIndex = 5;
-            this.gbRole.TabStop = false;
-            this.gbRole.Text = "Vai trò & Quyền hạn";
-            // 
+
             // gbStatus
-            // 
-            this.gbStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbStatus.Text = "Trạng thái";
+            this.gbStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbStatus.Font = new System.Drawing.Font("Segoe UI", 9f);
+            this.gbStatus.Padding = new System.Windows.Forms.Padding(6);
+            this.gbStatus.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
+            this.gbStatus.Height = 80;
+
+            this.radActive.Text = "Hoạt động";
+            this.radActive.AutoSize = true;
+            this.radActive.Ripple = true;
+            this.radActive.Checked = true;
+            this.radActive.Location = new System.Drawing.Point(8, 28);
+
+            this.radLocked.Text = "Khóa";
+            this.radLocked.AutoSize = true;
+            this.radLocked.Ripple = true;
+            this.radLocked.Location = new System.Drawing.Point(160, 28);
+
             this.gbStatus.Controls.Add(this.radActive);
             this.gbStatus.Controls.Add(this.radLocked);
-            this.gbStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F);
-            this.gbStatus.Location = new System.Drawing.Point(20, 405);
-            this.gbStatus.Name = "gbStatus";
-            this.gbStatus.Size = new System.Drawing.Size(330, 55);
-            this.gbStatus.TabIndex = 6;
-            this.gbStatus.TabStop = false;
-            this.gbStatus.Text = "Trạng thái tài khoản";
-            // 
-            // frmUser
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(947, 765);
-            this.Controls.Add(this.pnlLeft);
-            this.Controls.Add(this.pnlRight);
+
+            // tblButtons – LƯU (fill) | HỦY (auto)
+            this.tblButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tblButtons.ColumnCount = 2;
+            this.tblButtons.RowCount = 1;
+            this.tblButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100f));
+            this.tblButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
+            this.tblButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            this.tblButtons.Height = 52;
+            this.tblButtons.Margin = new System.Windows.Forms.Padding(0);
+            this.tblButtons.Padding = new System.Windows.Forms.Padding(0);
+
+            this.btnSave.Text = "Lưu tài khoản";
+            this.btnSave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSave.HighEmphasis = true;
+            this.btnSave.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.btnSave.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnSave.Margin = new System.Windows.Forms.Padding(0, 8, 8, 0);
+
+            this.btnCancel.Text = "Hủy";
+            this.btnCancel.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Outlined;
+            this.btnCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(0, 8, 0, 0);
+
+            this.tblButtons.Controls.Add(this.btnSave, 0, 0);
+            this.tblButtons.Controls.Add(this.btnCancel, 1, 0);
+
+            // Đưa controls vào tblCard
+            this.tblCard.Controls.Add(this.lblTitle, 0, 0);
+            this.tblCard.Controls.Add(this.txtFullName, 0, 1);
+            this.tblCard.Controls.Add(this.txtUsername, 0, 2);
+            this.tblCard.Controls.Add(this.txtPassword, 0, 3);
+            this.tblCard.Controls.Add(this.txtConfirmPassword, 0, 4);
+            this.tblCard.Controls.Add(this.gbRole, 0, 5);
+            this.tblCard.Controls.Add(this.gbStatus, 0, 6);
+            this.tblCard.Controls.Add(this.tblButtons, 0, 7);
+
+            this.cardDetails.Controls.Add(this.tblCard);
+            this.pnlRight.Controls.Add(this.cardDetails);
+
+            // Đưa panel vào tblBody
+            this.tblBody.Controls.Add(this.pnlLeft, 0, 0);
+            this.tblBody.Controls.Add(this.pnlRight, 1, 0);
+
+            // ══════════════════════════════════════════════════════════
+            // FORM
+            // ══════════════════════════════════════════════════════════
+            this.Controls.Add(this.tblBody);
             this.Controls.Add(this.pnlToolbar);
-            this.MinimumSize = new System.Drawing.Size(860, 640);
+
+            this.pnlToolbar.ResumeLayout(false);
+            this.flpToolbar.ResumeLayout(false);
+            this.tblBody.ResumeLayout(false);
+            this.pnlLeft.ResumeLayout(false);
+            this.tblCard.ResumeLayout(false);
+            this.tblButtons.ResumeLayout(false);
+            this.gbRole.ResumeLayout(false);
+            this.gbStatus.ResumeLayout(false);
+            this.cardDetails.ResumeLayout(false);
+            this.pnlRight.ResumeLayout(false);
+
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1000, 620);
+            this.MinimumSize = new System.Drawing.Size(700, 500);
             this.Name = "frmUser";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quản lý tài khoản & Phân quyền";
-            this.pnlToolbar.ResumeLayout(false);
-            this.flpToolbar.ResumeLayout(false);
-            this.flpToolbar.PerformLayout();
-            this.pnlLeft.ResumeLayout(false);
-            this.pnlLeft.PerformLayout();
-            this.pnlRight.ResumeLayout(false);
-            this.cardDetails.ResumeLayout(false);
-            this.cardDetails.PerformLayout();
-            this.gbRole.ResumeLayout(false);
-            this.gbRole.PerformLayout();
-            this.gbStatus.ResumeLayout(false);
-            this.gbStatus.PerformLayout();
-            this.ResumeLayout(false);
 
+            this.ResumeLayout(false);
+            this.PerformLayout();
         }
     }
 }

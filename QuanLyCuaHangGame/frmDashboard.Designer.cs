@@ -301,8 +301,8 @@ namespace QuanLyCuaHangGame
             // 
             // flpSoDo
             // 
-            this.flpSoDo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.flpSoDo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpSoDo.AutoScroll = true;
             this.flpSoDo.Location = new System.Drawing.Point(17, 45);
@@ -339,8 +339,8 @@ namespace QuanLyCuaHangGame
             // 
             // chartDoanhThu
             // 
-            this.chartDoanhThu.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.chartDoanhThu.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chartDoanhThu.Location = new System.Drawing.Point(17, 45);
             this.chartDoanhThu.Name = "chartDoanhThu";
@@ -377,8 +377,8 @@ namespace QuanLyCuaHangGame
             // 
             // lvPhien
             // 
-            this.lvPhien.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.lvPhien.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lvPhien.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.lvPhien.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -637,7 +637,7 @@ namespace QuanLyCuaHangGame
         private MaterialSkin.Controls.MaterialLabel lblDoanhThuTitle;
         private System.Windows.Forms.Label lblDoanhThuValue;
         private System.Windows.Forms.Label lblDoanhThuSub;
-        
+
         private MaterialSkin.Controls.MaterialCard cardMay;
         private MaterialSkin.Controls.MaterialLabel lblMayTitle;
         private System.Windows.Forms.Label lblMayValue;
