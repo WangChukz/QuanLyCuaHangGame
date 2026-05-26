@@ -12,6 +12,7 @@ using MaterialSkin.Controls;
 using LiveCharts;
 using LiveCharts.Wpf;
 using QuanLyCuaHangGame.UIHelper;
+using QuanLyCuaHangGame.BLL;
 
 namespace QuanLyCuaHangGame
 {
@@ -103,6 +104,12 @@ namespace QuanLyCuaHangGame
             frmU.BackColor = Color.White;
             tabPageTaiKhoan.Controls.Add(frmU);
             frmU.Show();
+
+            // Phân quyền: Ẩn tab Tài khoản nếu không phải Admin
+            if (!SessionContext.IsAdmin)
+            {
+                mainTabControl.TabPages.Remove(tabPageTaiKhoan);
+            }
 
             // Di chuyển pnlFooter từ tabPageDashboard ra ngoài Form chính để hiển thị trên tất cả các tab
             tabPageDashboard.Controls.Remove(pnlFooter);
