@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using QuanLyCuaHangGame.UIHelper;
+using QuanLyCuaHangGame.BLL;
 
 namespace QuanLyCuaHangGame
 {
@@ -16,7 +17,8 @@ namespace QuanLyCuaHangGame
             
             // Hide tabs header if possible, we switch programmatically
             mainTabControl.SelectedIndex = 0;
-            UpdateRoleUI(true); // true = Admin, false = Staff
+            UpdateRoleUI(SessionContext.IsAdmin); 
+            pnlRoleToggle.Visible = false;
             
             // Add dummy data for Admin
             lvAdmin.Items.Add(new ListViewItem(new[] { "PC01", "Phòng A", "VIP", "i9/RTX4070", "Tốt", "30,000đ" }));
@@ -85,11 +87,6 @@ namespace QuanLyCuaHangGame
             lvAdmin.MouseLeave += (s, ev) => ClearHover(lvAdmin, ref _hoveredAdminRow);
             lvStaff.MouseMove  += (s, ev) => UpdateHover(lvStaff, ev, ref _hoveredStaffRow);
             lvStaff.MouseLeave += (s, ev) => ClearHover(lvStaff, ref _hoveredStaffRow);
-
-            // 2. Beautiful purple branding theme for the role switcher panel
-            pnlRoleToggle.BackColor = Color.FromArgb(243, 239, 255); // Soft light purple background
-            lblRoleToggle.ForeColor = Color.FromArgb(108, 76, 241); // Deep purple theme text
-            lblRoleToggle.Font = new Font("Inter", 10F, FontStyle.Bold);
 
             // 3. Make the basic WinForms "XÓA MÁY" button ultra-clean, modern and rounded with solid red background
             btnAdminDeleteMachine.FlatStyle = FlatStyle.Flat;
@@ -289,16 +286,6 @@ namespace QuanLyCuaHangGame
             UICommon.AutoResizeListViewColumns(lvStaff, new double[] { 0.2, 0.2, 0.2, 0.2, 0.2 });
         }
 
-        private void btnRoleAdmin_Click(object sender, EventArgs e)
-        {
-            UpdateRoleUI(true);
-        }
-
-        private void btnRoleStaff_Click(object sender, EventArgs e)
-        {
-            UpdateRoleUI(false);
-        }
-
         private void UpdateRoleUI(bool isAdmin)
         {
             string newTitle = isAdmin ? "Quản lý máy tính — Chế độ: Admin" : "Quản lý máy tính — Chế độ: Staff (Nhân viên phòng máy)";
@@ -315,14 +302,10 @@ namespace QuanLyCuaHangGame
             if (isAdmin)
             {
                 mainTabControl.SelectedIndex = 0;
-                btnRoleAdmin.Type = MaterialButton.MaterialButtonType.Contained;
-                btnRoleStaff.Type = MaterialButton.MaterialButtonType.Outlined;
             }
             else
             {
                 mainTabControl.SelectedIndex = 1;
-                btnRoleAdmin.Type = MaterialButton.MaterialButtonType.Outlined;
-                btnRoleStaff.Type = MaterialButton.MaterialButtonType.Contained;
             }
         }
 
