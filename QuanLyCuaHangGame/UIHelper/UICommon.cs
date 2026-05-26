@@ -1,11 +1,35 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using MaterialSkin;
+using MaterialSkin.Controls;
 
 namespace QuanLyCuaHangGame.UIHelper
 {
     public static class UICommon
     {
+        public static void ApplyTheme(MaterialForm form, bool isEmbedded = false)
+        {
+            if (isEmbedded)
+            {
+                form.FormStyle = MaterialForm.FormStyles.StatusAndActionBar_None;
+            }
+
+            Color primaryColor = Color.FromArgb(108, 76, 241); // #6C4CF1
+            Color darkPrimaryColor = Color.FromArgb(88, 56, 221);
+            Color lightPrimaryColor = Color.FromArgb(128, 96, 255);
+
+            var materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(form);
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+            materialSkinManager.ColorScheme = new ColorScheme(
+                primaryColor, 
+                darkPrimaryColor,
+                lightPrimaryColor, 
+                primaryColor,
+                TextShade.WHITE
+            );
+        }
         // Hàm tự động căn đều cột ListView theo tỷ lệ phần trăm
         public static void AutoResizeListViewColumns(ListView lv, double[] percentages)
         {

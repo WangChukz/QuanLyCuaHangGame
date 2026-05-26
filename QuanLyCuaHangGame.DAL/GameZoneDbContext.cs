@@ -5,8 +5,35 @@ namespace QuanLyCuaHangGame.DAL
 {
     public class GameZoneDbContext : DbContext
     {
-        public GameZoneDbContext() : base("name=GameStoreContext")
+        public GameZoneDbContext() : base(GetSmartConnectionString())
         {
+        }
+
+        /// <summary>
+        /// Tự động dò tìm SQL Server phù hợp.
+        /// Thử kết nối với .\SQLEXPRESS trước, nếu lỗi sẽ tự động chuyển sang Server=. (localhost mặc định).
+        /// Tính năng này giúp team clone về là chạy được luôn.
+        /// </summary>
+        private static string GetSmartConnectionString()
+        {
+            string dbName = "GameZoneProDB";
+            string expressConn = $"Server=.\\SQLEXPRESS;Database={dbName};Integrated Security=True;TrustServerCertificate=True";
+            string defaultConn = $"Server=.;Database={dbName};Integrated Security=True;TrustServerCertificate=True";
+
+            try
+            {
+                // Thử kết nối tới SQLEXPRESS trước với timeout 2 giây để tránh treo máy lâu
+                using (var conn = new System.Data.SqlClient.SqlConnection(expressConn + ";Connection Timeout=2"))
+                {
+                    conn.Open();
+                    return expressConn; // Thành công thì trả về chuỗi của SQLEXPRESS
+                }
+            }
+            catch
+            {
+                // Nếu lỗi thì dùng server mặc định
+                return defaultConn;
+            }
         }
 
         public DbSet<User> Users { get; set; }

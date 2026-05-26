@@ -16,8 +16,6 @@ namespace QuanLyCuaHangGame.GUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            
-            // Seed initial database and admin user
             try
             {
                 var userService = new QuanLyCuaHangGame.BLL.Services.UserService();
@@ -38,8 +36,8 @@ namespace QuanLyCuaHangGame.GUI
                 MessageBox.Show("Không thể khởi tạo CSDL: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
             Application.Run(new frmLogin());
+            // Application.Run(new frmCustomer()); // Khoa đang test dở form này
         }
     }
 }
