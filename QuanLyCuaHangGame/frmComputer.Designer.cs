@@ -137,7 +137,6 @@ namespace QuanLyCuaHangGame
             this.btnRoleAdmin.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnRoleAdmin.UseAccentColor = false;
             this.btnRoleAdmin.UseVisualStyleBackColor = true;
-            this.btnRoleAdmin.Click += new System.EventHandler(this.btnRoleAdmin_Click);
             // 
             // btnRoleStaff
             // 
@@ -157,7 +156,6 @@ namespace QuanLyCuaHangGame
             this.btnRoleStaff.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Outlined;
             this.btnRoleStaff.UseAccentColor = false;
             this.btnRoleStaff.UseVisualStyleBackColor = true;
-            this.btnRoleStaff.Click += new System.EventHandler(this.btnRoleStaff_Click);
             // 
             // mainTabControl
             // 
