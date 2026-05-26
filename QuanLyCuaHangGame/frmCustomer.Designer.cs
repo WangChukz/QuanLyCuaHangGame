@@ -112,12 +112,29 @@ namespace QuanLyCuaHangGame
             this.mlvHoiVien.AutoSizeTable = false;
             this.mlvHoiVien.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.mlvHoiVien.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.mlvHoiVien.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            new System.Windows.Forms.ColumnHeader() { Text = "Họ tên", Width = 140 },
-            new System.Windows.Forms.ColumnHeader() { Text = "SĐT", Width = 110 },
-            new System.Windows.Forms.ColumnHeader() { Text = "Username", Width = 100 },
-            new System.Windows.Forms.ColumnHeader() { Text = "Số dư", Width = 100 },
-            new System.Windows.Forms.ColumnHeader() { Text = "Trạng thái", Width = 90 }});
+            this.colHoTen = new System.Windows.Forms.ColumnHeader();
+            this.colSDT = new System.Windows.Forms.ColumnHeader();
+            this.colUsername = new System.Windows.Forms.ColumnHeader();
+            this.colSoDu = new System.Windows.Forms.ColumnHeader();
+            this.colTrangThai = new System.Windows.Forms.ColumnHeader();
+            this.colHoTen.Text = "Họ tên";
+            this.colHoTen.Width = 140;
+            this.colSDT.Text = "SĐT";
+            this.colSDT.Width = 110;
+            this.colUsername.Text = "Username";
+            this.colUsername.Width = 100;
+            this.colSoDu.Text = "Số dư";
+            this.colSoDu.Width = 100;
+            this.colTrangThai.Text = "Trạng thái";
+            this.colTrangThai.Width = 90;
+            this.mlvHoiVien.Columns.AddRange(new System.Windows.Forms.ColumnHeader[]
+            {
+            this.colHoTen,
+            this.colSDT,
+            this.colUsername,
+            this.colSoDu,
+            this.colTrangThai
+            });
             this.mlvHoiVien.Depth = 0;
             this.mlvHoiVien.FullRowSelect = true;
             this.mlvHoiVien.HideSelection = false;
@@ -379,11 +396,25 @@ namespace QuanLyCuaHangGame
             this.mlvHistory.AutoSizeTable = false;
             this.mlvHistory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.mlvHistory.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.mlvHistory.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            new System.Windows.Forms.ColumnHeader() { Text = "Loại", Width = 70 },
-            new System.Windows.Forms.ColumnHeader() { Text = "Mô tả", Width = 90 },
-            new System.Windows.Forms.ColumnHeader() { Text = "Số tiền", Width = 70 },
-            new System.Windows.Forms.ColumnHeader() { Text = "Ngày", Width = 60 }});
+            this.colLoai = new System.Windows.Forms.ColumnHeader();
+            this.colMoTa = new System.Windows.Forms.ColumnHeader();
+            this.colSoTien = new System.Windows.Forms.ColumnHeader();
+            this.colNgay = new System.Windows.Forms.ColumnHeader();
+            this.colLoai.Text = "Loại";
+            this.colLoai.Width = 70;
+            this.colMoTa.Text = "Mô tả";
+            this.colMoTa.Width = 90;
+            this.colSoTien.Text = "Số tiền";
+            this.colSoTien.Width = 70;
+            this.colNgay.Text = "Ngày";
+            this.colNgay.Width = 60;
+            this.mlvHistory.Columns.AddRange(new System.Windows.Forms.ColumnHeader[]
+            {
+            this.colLoai,
+            this.colMoTa,
+            this.colSoTien,
+            this.colNgay
+            });
             this.mlvHistory.Depth = 0;
             this.mlvHistory.FullRowSelect = true;
             this.mlvHistory.HideSelection = false;
@@ -446,5 +477,15 @@ namespace QuanLyCuaHangGame
         private MaterialSkin.Controls.MaterialListView mlvHistory;
         private MaterialSkin.Controls.MaterialLabel materialLabel2;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;
+        private System.Windows.Forms.ColumnHeader colHoTen;
+        private System.Windows.Forms.ColumnHeader colSDT;
+        private System.Windows.Forms.ColumnHeader colUsername;
+        private System.Windows.Forms.ColumnHeader colSoDu;
+        private System.Windows.Forms.ColumnHeader colTrangThai;
+
+        private System.Windows.Forms.ColumnHeader colLoai;
+        private System.Windows.Forms.ColumnHeader colMoTa;
+        private System.Windows.Forms.ColumnHeader colSoTien;
+        private System.Windows.Forms.ColumnHeader colNgay;
     }
 }

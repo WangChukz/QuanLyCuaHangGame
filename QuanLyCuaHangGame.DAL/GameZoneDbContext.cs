@@ -17,7 +17,7 @@ namespace QuanLyCuaHangGame.DAL
         private static string GetSmartConnectionString()
         {
             string dbName = "GameZoneProDB";
-            string expressConn = $"Server=.\\SQLEXPRESS;Database={dbName};Integrated Security=True;TrustServerCertificate=True";
+            string expressConn = $"Server=.\\SQLEXPRESS01;Database={dbName};Integrated Security=True;TrustServerCertificate=True";
             string defaultConn = $"Server=.;Database={dbName};Integrated Security=True;TrustServerCertificate=True";
 
             try
