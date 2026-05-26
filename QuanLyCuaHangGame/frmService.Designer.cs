@@ -109,9 +109,9 @@ namespace QuanLyCuaHangGame.GUI
             this.pnlToolbar.Controls.Add(this.tblToolbar);
             this.pnlToolbar.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlToolbar.Location = new System.Drawing.Point(5, 107);
-            this.pnlToolbar.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.pnlToolbar.Margin = new System.Windows.Forms.Padding(5);
             this.pnlToolbar.Name = "pnlToolbar";
-            this.pnlToolbar.Size = new System.Drawing.Size(1704, 100);
+            this.pnlToolbar.Size = new System.Drawing.Size(1704, 83);
             this.pnlToolbar.TabIndex = 1;
             // 
             // tblToolbar
@@ -123,12 +123,12 @@ namespace QuanLyCuaHangGame.GUI
             this.tblToolbar.Controls.Add(this.flpToolbarRight, 1, 0);
             this.tblToolbar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblToolbar.Location = new System.Drawing.Point(0, 0);
-            this.tblToolbar.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.tblToolbar.Margin = new System.Windows.Forms.Padding(5);
             this.tblToolbar.Name = "tblToolbar";
             this.tblToolbar.Padding = new System.Windows.Forms.Padding(14, 7, 14, 7);
             this.tblToolbar.RowCount = 1;
             this.tblToolbar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tblToolbar.Size = new System.Drawing.Size(1704, 100);
+            this.tblToolbar.Size = new System.Drawing.Size(1704, 83);
             this.tblToolbar.TabIndex = 0;
             // 
             // flpToolbarLeft
@@ -141,9 +141,9 @@ namespace QuanLyCuaHangGame.GUI
             this.flpToolbarLeft.Controls.Add(this.cboCategoryFilter);
             this.flpToolbarLeft.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpToolbarLeft.Location = new System.Drawing.Point(19, 12);
-            this.flpToolbarLeft.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.flpToolbarLeft.Margin = new System.Windows.Forms.Padding(5);
             this.flpToolbarLeft.Name = "flpToolbarLeft";
-            this.flpToolbarLeft.Size = new System.Drawing.Size(599, 76);
+            this.flpToolbarLeft.Size = new System.Drawing.Size(599, 59);
             this.flpToolbarLeft.TabIndex = 0;
             this.flpToolbarLeft.WrapContents = false;
             // 
@@ -222,7 +222,7 @@ namespace QuanLyCuaHangGame.GUI
             this.cboCategoryFilter.DropDownHeight = 174;
             this.cboCategoryFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCategoryFilter.DropDownWidth = 121;
-            this.cboCategoryFilter.Font = new System.Drawing.Font("Roboto Medium", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.cboCategoryFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.cboCategoryFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.cboCategoryFilter.IntegralHeight = false;
             this.cboCategoryFilter.ItemHeight = 43;
@@ -247,9 +247,9 @@ namespace QuanLyCuaHangGame.GUI
             this.flpToolbarRight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpToolbarRight.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flpToolbarRight.Location = new System.Drawing.Point(628, 12);
-            this.flpToolbarRight.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.flpToolbarRight.Margin = new System.Windows.Forms.Padding(5);
             this.flpToolbarRight.Name = "flpToolbarRight";
-            this.flpToolbarRight.Size = new System.Drawing.Size(1057, 76);
+            this.flpToolbarRight.Size = new System.Drawing.Size(1057, 59);
             this.flpToolbarRight.TabIndex = 1;
             this.flpToolbarRight.WrapContents = false;
             // 
@@ -280,12 +280,12 @@ namespace QuanLyCuaHangGame.GUI
             this.tblBody.Controls.Add(this.pnlLeft, 0, 0);
             this.tblBody.Controls.Add(this.pnlRight, 1, 0);
             this.tblBody.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tblBody.Location = new System.Drawing.Point(5, 207);
-            this.tblBody.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.tblBody.Location = new System.Drawing.Point(5, 190);
+            this.tblBody.Margin = new System.Windows.Forms.Padding(5);
             this.tblBody.Name = "tblBody";
             this.tblBody.RowCount = 1;
             this.tblBody.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tblBody.Size = new System.Drawing.Size(1704, 761);
+            this.tblBody.Size = new System.Drawing.Size(1704, 778);
             this.tblBody.TabIndex = 0;
             // 
             // pnlLeft
@@ -296,7 +296,7 @@ namespace QuanLyCuaHangGame.GUI
             this.pnlLeft.Margin = new System.Windows.Forms.Padding(0);
             this.pnlLeft.Name = "pnlLeft";
             this.pnlLeft.Padding = new System.Windows.Forms.Padding(17, 13, 10, 13);
-            this.pnlLeft.Size = new System.Drawing.Size(937, 761);
+            this.pnlLeft.Size = new System.Drawing.Size(937, 778);
             this.pnlLeft.TabIndex = 0;
             // 
             // lvServices
@@ -313,9 +313,9 @@ namespace QuanLyCuaHangGame.GUI
             this.lvServices.GridLines = true;
             this.lvServices.HideSelection = false;
             this.lvServices.Location = new System.Drawing.Point(17, 13);
-            this.lvServices.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.lvServices.Margin = new System.Windows.Forms.Padding(5);
             this.lvServices.Name = "lvServices";
-            this.lvServices.Size = new System.Drawing.Size(910, 735);
+            this.lvServices.Size = new System.Drawing.Size(910, 752);
             this.lvServices.TabIndex = 0;
             this.lvServices.UseCompatibleStateImageBehavior = false;
             this.lvServices.View = System.Windows.Forms.View.Details;
@@ -348,7 +348,7 @@ namespace QuanLyCuaHangGame.GUI
             this.pnlRight.Margin = new System.Windows.Forms.Padding(0);
             this.pnlRight.Name = "pnlRight";
             this.pnlRight.Padding = new System.Windows.Forms.Padding(10, 13, 17, 13);
-            this.pnlRight.Size = new System.Drawing.Size(767, 761);
+            this.pnlRight.Size = new System.Drawing.Size(767, 778);
             this.pnlRight.TabIndex = 1;
             // 
             // cardDetails
@@ -363,7 +363,7 @@ namespace QuanLyCuaHangGame.GUI
             this.cardDetails.MouseState = MaterialSkin.MouseState.HOVER;
             this.cardDetails.Name = "cardDetails";
             this.cardDetails.Padding = new System.Windows.Forms.Padding(27, 20, 27, 27);
-            this.cardDetails.Size = new System.Drawing.Size(740, 735);
+            this.cardDetails.Size = new System.Drawing.Size(740, 752);
             this.cardDetails.TabIndex = 0;
             // 
             // tblCard
@@ -378,9 +378,9 @@ namespace QuanLyCuaHangGame.GUI
             this.tblCard.Controls.Add(this.tblButtons, 0, 5);
             this.tblCard.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblCard.Location = new System.Drawing.Point(27, 20);
-            this.tblCard.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.tblCard.Margin = new System.Windows.Forms.Padding(5);
             this.tblCard.Name = "tblCard";
-            this.tblCard.Padding = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.tblCard.Padding = new System.Windows.Forms.Padding(7);
             this.tblCard.RowCount = 6;
             this.tblCard.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tblCard.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -388,7 +388,7 @@ namespace QuanLyCuaHangGame.GUI
             this.tblCard.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tblCard.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tblCard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tblCard.Size = new System.Drawing.Size(686, 688);
+            this.tblCard.Size = new System.Drawing.Size(686, 705);
             this.tblCard.TabIndex = 0;
             // 
             // lblFormTitle
@@ -434,7 +434,7 @@ namespace QuanLyCuaHangGame.GUI
             this.cboCategory.DropDownHeight = 174;
             this.cboCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCategory.DropDownWidth = 121;
-            this.cboCategory.Font = new System.Drawing.Font("Roboto Medium", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.cboCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.cboCategory.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.cboCategory.Hint = "Danh mục";
             this.cboCategory.IntegralHeight = false;
@@ -462,7 +462,7 @@ namespace QuanLyCuaHangGame.GUI
             this.txtPrice.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtPrice.Hint = "Giá bán (VNĐ)";
             this.txtPrice.LeadingIcon = null;
-            this.txtPrice.Location = new System.Drawing.Point(7, 172);
+            this.txtPrice.Location = new System.Drawing.Point(7, 171);
             this.txtPrice.Margin = new System.Windows.Forms.Padding(0, 0, 0, 7);
             this.txtPrice.MaxLength = 50;
             this.txtPrice.MouseState = MaterialSkin.MouseState.OUT;
@@ -479,8 +479,8 @@ namespace QuanLyCuaHangGame.GUI
             this.chkAvailable.Checked = true;
             this.chkAvailable.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkAvailable.Depth = 0;
-            this.chkAvailable.Location = new System.Drawing.Point(7, 236);
-            this.chkAvailable.Margin = new System.Windows.Forms.Padding(0, 7, 0, 13);
+            this.chkAvailable.Location = new System.Drawing.Point(7, 228);
+            this.chkAvailable.Margin = new System.Windows.Forms.Padding(0);
             this.chkAvailable.MouseLocation = new System.Drawing.Point(-1, -1);
             this.chkAvailable.MouseState = MaterialSkin.MouseState.HOVER;
             this.chkAvailable.Name = "chkAvailable";
@@ -498,12 +498,12 @@ namespace QuanLyCuaHangGame.GUI
             this.tblButtons.Controls.Add(this.btnSave, 0, 0);
             this.tblButtons.Controls.Add(this.btnCancel, 1, 0);
             this.tblButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tblButtons.Location = new System.Drawing.Point(7, 679);
+            this.tblButtons.Location = new System.Drawing.Point(7, 620);
             this.tblButtons.Margin = new System.Windows.Forms.Padding(0);
             this.tblButtons.Name = "tblButtons";
             this.tblButtons.RowCount = 1;
             this.tblButtons.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tblButtons.Size = new System.Drawing.Size(672, 2);
+            this.tblButtons.Size = new System.Drawing.Size(672, 78);
             this.tblButtons.TabIndex = 5;
             // 
             // btnSave
@@ -519,7 +519,7 @@ namespace QuanLyCuaHangGame.GUI
             this.btnSave.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnSave.Name = "btnSave";
             this.btnSave.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnSave.Size = new System.Drawing.Size(594, 36);
+            this.btnSave.Size = new System.Drawing.Size(594, 71);
             this.btnSave.TabIndex = 0;
             this.btnSave.Text = "LƯU";
             this.btnSave.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -549,7 +549,7 @@ namespace QuanLyCuaHangGame.GUI
             this.pnlStatus.Controls.Add(this.flpStatus);
             this.pnlStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlStatus.Location = new System.Drawing.Point(5, 968);
-            this.pnlStatus.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.pnlStatus.Margin = new System.Windows.Forms.Padding(5);
             this.pnlStatus.Name = "pnlStatus";
             this.pnlStatus.Size = new System.Drawing.Size(1704, 60);
             this.pnlStatus.TabIndex = 2;
@@ -563,7 +563,7 @@ namespace QuanLyCuaHangGame.GUI
             this.flpStatus.Controls.Add(this.lblStatusOut);
             this.flpStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpStatus.Location = new System.Drawing.Point(0, 0);
-            this.flpStatus.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.flpStatus.Margin = new System.Windows.Forms.Padding(5);
             this.flpStatus.Name = "flpStatus";
             this.flpStatus.Padding = new System.Windows.Forms.Padding(21, 0, 0, 0);
             this.flpStatus.Size = new System.Drawing.Size(1704, 60);
@@ -612,13 +612,12 @@ namespace QuanLyCuaHangGame.GUI
             // 
             // frmService
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1714, 1033);
             this.Controls.Add(this.tblBody);
             this.Controls.Add(this.pnlToolbar);
             this.Controls.Add(this.pnlStatus);
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.MinimumSize = new System.Drawing.Size(1200, 800);
             this.Name = "frmService";
             this.Padding = new System.Windows.Forms.Padding(5, 107, 5, 5);
@@ -648,5 +647,7 @@ namespace QuanLyCuaHangGame.GUI
         private System.Windows.Forms.ColumnHeader colCat;
         private System.Windows.Forms.ColumnHeader colPrice;
         private System.Windows.Forms.ColumnHeader colAvail;
+
+
     }
 }
