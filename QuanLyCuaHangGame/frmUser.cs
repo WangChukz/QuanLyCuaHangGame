@@ -29,8 +29,7 @@ namespace QuanLyCuaHangGame.GUI
 
         private void ReApplyLabelColors()
         {
-            lblUserListTitle.ForeColor = UIHelper.DashboardUIHelper.ThemeColor;
-            lblTitle.ForeColor        = UIHelper.DashboardUIHelper.ThemeColor;
+            lblTitle.ForeColor = UIHelper.DashboardUIHelper.ThemeColor;
         }
 
         private DialogResult SafeShowMessage(string text, string title, MessageBoxButtons btns, MessageBoxIcon icon)
@@ -47,10 +46,9 @@ namespace QuanLyCuaHangGame.GUI
             InitializeComponent();
             UIHelper.UICommon.ApplyTheme(this, true);
             UIHelper.UserUIHelper.StyleUserListView(this.lvUsers);
-            
-            lblUserListTitle.ForeColor = UIHelper.DashboardUIHelper.ThemeColor;
+
             lblTitle.ForeColor = UIHelper.DashboardUIHelper.ThemeColor;
-            
+
             _userService = new UserService();
             _users = new List<User>();
             
