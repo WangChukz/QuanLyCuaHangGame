@@ -30,6 +30,7 @@ namespace QuanLyCuaHangGame.GUI
             lvServices.SelectedIndexChanged += lvServices_SelectedIndexChanged;
             cboCategoryFilter.SelectedIndexChanged += cboCategoryFilter_SelectedIndexChanged;
             txtSearch.TextChanged += txtSearch_TextChanged;
+            lvServices.DrawSubItem += lvServices_DrawSubItem;
 
             UIHelper.UICommon.ApplyTheme(this, true);
 
@@ -121,7 +122,7 @@ namespace QuanLyCuaHangGame.GUI
                 var item = new ListViewItem(service.Name);
                 item.SubItems.Add(service.Category);
                 item.SubItems.Add(service.Price.ToString("N0"));
-                item.SubItems.Add(service.IsAvailable ? "✓" : "✗");
+                item.SubItems.Add(service.IsAvailable ? "Có" : "Hết");
                 item.Tag = service.Id;
                 lvServices.Items.Add(item);
             }
@@ -372,6 +373,46 @@ namespace QuanLyCuaHangGame.GUI
                 }
             }
             catch { }
+        }
+
+        /// <summary>
+        /// Vẽ màu cho cột "Có sẵn" (Xanh = Có, Đỏ = Hết)
+        /// </summary>
+        private void lvServices_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        {
+            // Vẽ background
+            e.DrawBackground();
+
+            // Cột 3 (Index=3): "Có sẵn"
+            if (e.ColumnIndex == 3)
+            {
+                // Xác định màu dựa vào nội dung
+                System.Drawing.Color textColor = e.SubItem.Text == "Có" 
+                    ? System.Drawing.Color.Green 
+                    : System.Drawing.Color.Red;
+
+                // Vẽ chữ với màu tương ứng
+                var brush = new System.Drawing.SolidBrush(textColor);
+                var stringFormat = new System.Drawing.StringFormat
+                {
+                    Alignment = System.Drawing.StringAlignment.Center,
+                    LineAlignment = System.Drawing.StringAlignment.Center
+                };
+                
+                e.Graphics.DrawString(
+                    e.SubItem.Text,
+                    lvServices.Font,
+                    brush,
+                    e.Bounds,
+                    stringFormat);
+
+                brush.Dispose();
+            }
+            else
+            {
+                // Các cột khác vẽ bình thường
+                e.DrawText();
+            }
         }
     }
 }
