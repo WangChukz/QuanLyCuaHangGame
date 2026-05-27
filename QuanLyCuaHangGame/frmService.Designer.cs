@@ -318,6 +318,7 @@ namespace QuanLyCuaHangGame.GUI
             this.lvServices.Size = new System.Drawing.Size(910, 752);
             this.lvServices.TabIndex = 0;
             this.lvServices.UseCompatibleStateImageBehavior = false;
+            this.lvServices.OwnerDraw = true;
             this.lvServices.View = System.Windows.Forms.View.Details;
             // 
             // colName
