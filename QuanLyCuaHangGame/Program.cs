@@ -18,25 +18,15 @@ namespace QuanLyCuaHangGame.GUI
             Application.SetCompatibleTextRenderingDefault(false);
             try
             {
-                var userService = new QuanLyCuaHangGame.BLL.Services.UserService();
-                if (!userService.GetAllUsers().Any())
-                {
-                    var adminUser = new QuanLyCuaHangGame.Model.User
-                    {
-                        Username = "admin",
-                        FullName = "Quản trị viên",
-                        Role = "Admin",
-                        IsActive = true
-                    };
-                    userService.AddUser(adminUser, "123456");
-                }
+                var seeder = new QuanLyCuaHangGame.BLL.Services.DatabaseSeeder();
+                seeder.SeedData();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Không thể khởi tạo CSDL: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            Application.Run(new frmUser());
+            Application.Run(new frmComputerMap());
             // Application.Run(new frmCustomer()); // Khoa đang test dở form này
         }
     }
