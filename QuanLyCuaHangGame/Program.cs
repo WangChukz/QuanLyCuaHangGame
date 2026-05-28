@@ -37,7 +37,7 @@ namespace QuanLyCuaHangGame.GUI
                 return;
             }
             Application.Run(new frmLogin());
-            // Application.Run(new frmCustomer()); // Khoa đang test dở form này
+            //Application.Run(new frmPayment()); // Phải có phiên chơi mới chạy được frmPayment, nên để sau khi đăng nhập thành công mới chạy frmPayment
         }
     }
 }

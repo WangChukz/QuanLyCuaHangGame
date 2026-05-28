@@ -71,31 +71,21 @@ namespace QuanLyCuaHangGame.DAL
             }
         }
 
-        public List<CustomerTransactionDTO> GetTransactionHistory(int customerId)
+        public Tuple<List<TopUpTransaction>, List<SpendTransaction>> GetTransactionHistory(int customerId)
         {
             using (var context = new GameZoneDbContext())
             {
                 var topUps = context.TopUpTransactions
                     .Where(t => t.CustomerId == customerId)
-                    .Select(t => new CustomerTransactionDTO
-                    {
-                        Type = "Nạp tiền",
-                        Description = t.Note,
-                        Amount = t.Amount,
-                        Date = t.CreatedAt
-                    }).ToList();
+                    .OrderByDescending(t => t.CreatedAt)
+                    .ToList();
 
                 var spends = context.SpendTransactions
                     .Where(t => t.CustomerId == customerId)
-                    .Select(t => new CustomerTransactionDTO
-                    {
-                        Type = "Thanh toán",
-                        Description = t.Description,
-                        Amount = -t.Amount,
-                        Date = t.CreatedAt
-                    }).ToList();
+                    .OrderByDescending(t => t.CreatedAt)
+                    .ToList();
 
-                return topUps.Concat(spends).OrderByDescending(t => t.Date).ToList();
+                return new Tuple<List<TopUpTransaction>, List<SpendTransaction>>(topUps, spends);
             }
         }
     }

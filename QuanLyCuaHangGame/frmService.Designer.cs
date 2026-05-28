@@ -143,7 +143,7 @@ namespace QuanLyCuaHangGame.GUI
             this.flpToolbarLeft.Location = new System.Drawing.Point(19, 12);
             this.flpToolbarLeft.Margin = new System.Windows.Forms.Padding(5);
             this.flpToolbarLeft.Name = "flpToolbarLeft";
-            this.flpToolbarLeft.Size = new System.Drawing.Size(599, 59);
+            this.flpToolbarLeft.Size = new System.Drawing.Size(549, 59);
             this.flpToolbarLeft.TabIndex = 0;
             this.flpToolbarLeft.WrapContents = false;
             // 
@@ -209,7 +209,7 @@ namespace QuanLyCuaHangGame.GUI
             this.lblCategoryFilter.Location = new System.Drawing.Point(243, 30);
             this.lblCategoryFilter.Margin = new System.Windows.Forms.Padding(0, 30, 7, 0);
             this.lblCategoryFilter.Name = "lblCategoryFilter";
-            this.lblCategoryFilter.Size = new System.Drawing.Size(129, 32);
+            this.lblCategoryFilter.Size = new System.Drawing.Size(79, 20);
             this.lblCategoryFilter.TabIndex = 3;
             this.lblCategoryFilter.Text = "Danh mục:";
             // 
@@ -232,7 +232,7 @@ namespace QuanLyCuaHangGame.GUI
             "Đồ ăn",
             "Game",
             "Khác"});
-            this.cboCategoryFilter.Location = new System.Drawing.Point(379, 13);
+            this.cboCategoryFilter.Location = new System.Drawing.Point(329, 13);
             this.cboCategoryFilter.Margin = new System.Windows.Forms.Padding(0, 13, 0, 0);
             this.cboCategoryFilter.MaxDropDownItems = 4;
             this.cboCategoryFilter.MouseState = MaterialSkin.MouseState.OUT;
@@ -246,10 +246,10 @@ namespace QuanLyCuaHangGame.GUI
             this.flpToolbarRight.Controls.Add(this.txtSearch);
             this.flpToolbarRight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpToolbarRight.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flpToolbarRight.Location = new System.Drawing.Point(628, 12);
+            this.flpToolbarRight.Location = new System.Drawing.Point(578, 12);
             this.flpToolbarRight.Margin = new System.Windows.Forms.Padding(5);
             this.flpToolbarRight.Name = "flpToolbarRight";
-            this.flpToolbarRight.Size = new System.Drawing.Size(1057, 59);
+            this.flpToolbarRight.Size = new System.Drawing.Size(1107, 59);
             this.flpToolbarRight.TabIndex = 1;
             this.flpToolbarRight.WrapContents = false;
             // 
@@ -261,7 +261,7 @@ namespace QuanLyCuaHangGame.GUI
             this.txtSearch.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtSearch.Hint = "Tìm dịch vụ...";
             this.txtSearch.LeadingIcon = null;
-            this.txtSearch.Location = new System.Drawing.Point(680, 13);
+            this.txtSearch.Location = new System.Drawing.Point(730, 13);
             this.txtSearch.Margin = new System.Windows.Forms.Padding(0, 13, 0, 0);
             this.txtSearch.MaxLength = 50;
             this.txtSearch.MouseState = MaterialSkin.MouseState.OUT;

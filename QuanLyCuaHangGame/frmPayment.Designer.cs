@@ -62,6 +62,8 @@ namespace QuanLyCuaHangGame
             // 
             // gbPhien
             // 
+            this.gbPhien.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbPhien.Controls.Add(this.lblMayLabel);
             this.gbPhien.Controls.Add(this.lblMayValue);
             this.gbPhien.Controls.Add(this.lblBatDauLabel);
@@ -74,7 +76,7 @@ namespace QuanLyCuaHangGame
             this.gbPhien.ForeColor = System.Drawing.Color.Gray;
             this.gbPhien.Location = new System.Drawing.Point(18, 76);
             this.gbPhien.Name = "gbPhien";
-            this.gbPhien.Size = new System.Drawing.Size(350, 160);
+            this.gbPhien.Size = new System.Drawing.Size(444, 160);
             this.gbPhien.TabIndex = 0;
             this.gbPhien.TabStop = false;
             this.gbPhien.Text = "Thông tin phiên";
@@ -162,6 +164,7 @@ namespace QuanLyCuaHangGame
             // 
             // gbHoiVien
             // 
+            this.gbHoiVien.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.gbHoiVien.Controls.Add(this.lblTenLabel);
             this.gbHoiVien.Controls.Add(this.lblTenValue);
             this.gbHoiVien.Controls.Add(this.lblSDTLabel);
@@ -172,7 +175,7 @@ namespace QuanLyCuaHangGame
             this.gbHoiVien.Controls.Add(this.lblSoDuSauValue);
             this.gbHoiVien.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.gbHoiVien.ForeColor = System.Drawing.Color.Gray;
-            this.gbHoiVien.Location = new System.Drawing.Point(385, 76);
+            this.gbHoiVien.Location = new System.Drawing.Point(479, 76);
             this.gbHoiVien.Name = "gbHoiVien";
             this.gbHoiVien.Size = new System.Drawing.Size(350, 160);
             this.gbHoiVien.TabIndex = 1;
@@ -263,6 +266,9 @@ namespace QuanLyCuaHangGame
             // 
             // gbChiTiet
             // 
+            this.gbChiTiet.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbChiTiet.Controls.Add(this.lvHoaDon);
             this.gbChiTiet.Controls.Add(this.lblTongTienLabel);
             this.gbChiTiet.Controls.Add(this.lblTongTienValue);
@@ -271,13 +277,16 @@ namespace QuanLyCuaHangGame
             this.gbChiTiet.ForeColor = System.Drawing.Color.Gray;
             this.gbChiTiet.Location = new System.Drawing.Point(18, 250);
             this.gbChiTiet.Name = "gbChiTiet";
-            this.gbChiTiet.Size = new System.Drawing.Size(717, 240);
+            this.gbChiTiet.Size = new System.Drawing.Size(811, 240);
             this.gbChiTiet.TabIndex = 2;
             this.gbChiTiet.TabStop = false;
             this.gbChiTiet.Text = "Chi tiết hóa đơn";
             // 
             // lvHoaDon
             // 
+            this.lvHoaDon.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lvHoaDon.AutoSizeTable = false;
             this.lvHoaDon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.lvHoaDon.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -294,7 +303,7 @@ namespace QuanLyCuaHangGame
             this.lvHoaDon.MouseState = MaterialSkin.MouseState.OUT;
             this.lvHoaDon.Name = "lvHoaDon";
             this.lvHoaDon.OwnerDraw = true;
-            this.lvHoaDon.Size = new System.Drawing.Size(697, 150);
+            this.lvHoaDon.Size = new System.Drawing.Size(791, 150);
             this.lvHoaDon.TabIndex = 0;
             this.lvHoaDon.UseCompatibleStateImageBehavior = false;
             this.lvHoaDon.View = System.Windows.Forms.View.Details;
@@ -326,13 +335,13 @@ namespace QuanLyCuaHangGame
             // 
             // lblTongTienValue
             // 
-            this.lblTongTienValue.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblTongTienValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTongTienValue.AutoSize = true;
             this.lblTongTienValue.Depth = 0;
             this.lblTongTienValue.Font = new System.Drawing.Font("Roboto", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.lblTongTienValue.FontType = MaterialSkin.MaterialSkinManager.fontType.H5;
             this.lblTongTienValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(246)))));
-            this.lblTongTienValue.Location = new System.Drawing.Point(620, 195);
+            this.lblTongTienValue.Location = new System.Drawing.Point(714, 195);
             this.lblTongTienValue.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblTongTienValue.Name = "lblTongTienValue";
             this.lblTongTienValue.Size = new System.Drawing.Size(85, 29);
@@ -342,14 +351,18 @@ namespace QuanLyCuaHangGame
             // 
             // pnlDivider
             // 
+            this.pnlDivider.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlDivider.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(130)))), ((int)(((byte)(246)))));
             this.pnlDivider.Location = new System.Drawing.Point(10, 185);
             this.pnlDivider.Name = "pnlDivider";
-            this.pnlDivider.Size = new System.Drawing.Size(697, 2);
+            this.pnlDivider.Size = new System.Drawing.Size(791, 2);
             this.pnlDivider.TabIndex = 3;
             // 
             // gbThanhToan
             // 
+            this.gbThanhToan.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbThanhToan.Controls.Add(this.lblTruViLabel);
             this.gbThanhToan.Controls.Add(this.txtViHoiVien);
             this.gbThanhToan.Controls.Add(this.lblTienMatLabel);
@@ -359,7 +372,7 @@ namespace QuanLyCuaHangGame
             this.gbThanhToan.ForeColor = System.Drawing.Color.Gray;
             this.gbThanhToan.Location = new System.Drawing.Point(18, 500);
             this.gbThanhToan.Name = "gbThanhToan";
-            this.gbThanhToan.Size = new System.Drawing.Size(717, 190);
+            this.gbThanhToan.Size = new System.Drawing.Size(811, 190);
             this.gbThanhToan.TabIndex = 3;
             this.gbThanhToan.TabStop = false;
             this.gbThanhToan.Text = "Phương thức thanh toán";
@@ -423,6 +436,9 @@ namespace QuanLyCuaHangGame
             // 
             // cardStatus
             // 
+            this.cardStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cardStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.cardStatus.Controls.Add(this.lblStatus);
             this.cardStatus.Depth = 0;
@@ -432,7 +448,7 @@ namespace QuanLyCuaHangGame
             this.cardStatus.MouseState = MaterialSkin.MouseState.HOVER;
             this.cardStatus.Name = "cardStatus";
             this.cardStatus.Padding = new System.Windows.Forms.Padding(14);
-            this.cardStatus.Size = new System.Drawing.Size(335, 140);
+            this.cardStatus.Size = new System.Drawing.Size(429, 140);
             this.cardStatus.TabIndex = 2;
             // 
             // lblStatus
@@ -447,13 +463,14 @@ namespace QuanLyCuaHangGame
             // 
             // btnXacNhan
             // 
+            this.btnXacNhan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnXacNhan.AutoSize = false;
             this.btnXacNhan.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnXacNhan.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnXacNhan.Depth = 0;
             this.btnXacNhan.HighEmphasis = true;
             this.btnXacNhan.Icon = null;
-            this.btnXacNhan.Location = new System.Drawing.Point(535, 710);
+            this.btnXacNhan.Location = new System.Drawing.Point(629, 710);
             this.btnXacNhan.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnXacNhan.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnXacNhan.Name = "btnXacNhan";
@@ -468,13 +485,14 @@ namespace QuanLyCuaHangGame
             // 
             // btnInHoaDon
             // 
+            this.btnInHoaDon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnInHoaDon.AutoSize = false;
             this.btnInHoaDon.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnInHoaDon.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnInHoaDon.Depth = 0;
             this.btnInHoaDon.HighEmphasis = true;
             this.btnInHoaDon.Icon = null;
-            this.btnInHoaDon.Location = new System.Drawing.Point(400, 710);
+            this.btnInHoaDon.Location = new System.Drawing.Point(494, 710);
             this.btnInHoaDon.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnInHoaDon.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnInHoaDon.Name = "btnInHoaDon";
@@ -489,13 +507,14 @@ namespace QuanLyCuaHangGame
             // 
             // btnHuy
             // 
+            this.btnHuy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnHuy.AutoSize = false;
             this.btnHuy.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnHuy.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
             this.btnHuy.Depth = 0;
             this.btnHuy.HighEmphasis = false;
             this.btnHuy.Icon = null;
-            this.btnHuy.Location = new System.Drawing.Point(310, 710);
+            this.btnHuy.Location = new System.Drawing.Point(404, 710);
             this.btnHuy.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.btnHuy.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnHuy.Name = "btnHuy";
@@ -512,7 +531,7 @@ namespace QuanLyCuaHangGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(764, 770);
+            this.ClientSize = new System.Drawing.Size(858, 770);
             this.Controls.Add(this.btnHuy);
             this.Controls.Add(this.btnInHoaDon);
             this.Controls.Add(this.btnXacNhan);

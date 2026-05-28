@@ -37,7 +37,7 @@ namespace QuanLyCuaHangGame.BLL
             _customerDAL.TopUp(customerId, amount, note, processedByUserId);
         }
 
-        public List<CustomerTransactionDTO> GetTransactionHistory(int customerId)
+        public Tuple<List<TopUpTransaction>, List<SpendTransaction>> GetTransactionHistory(int customerId)
         {
             return _customerDAL.GetTransactionHistory(customerId);
         }
