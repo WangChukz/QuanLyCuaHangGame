@@ -15,9 +15,10 @@ namespace QuanLyCuaHangGame.UIHelper
                 form.FormStyle = MaterialForm.FormStyles.StatusAndActionBar_None;
             }
 
-            Color primaryColor = Color.FromArgb(108, 76, 241); // #6C4CF1
-            Color darkPrimaryColor = Color.FromArgb(88, 56, 221);
-            Color lightPrimaryColor = Color.FromArgb(128, 96, 255);
+            Color primaryColor = Color.FromArgb(21, 101, 192); // Blue 800
+            Color darkPrimaryColor = Color.FromArgb(13, 71, 161); // Blue 900
+            Color lightPrimaryColor = Color.FromArgb(33, 150, 243); // Blue 500
+            Color accentColor = Color.FromArgb(128, 222, 234); // LightBlue 200
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(form);
@@ -26,7 +27,7 @@ namespace QuanLyCuaHangGame.UIHelper
                 primaryColor, 
                 darkPrimaryColor,
                 lightPrimaryColor, 
-                primaryColor,
+                accentColor,
                 TextShade.WHITE
             );
         }
