@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using QuanLyCuaHangGame.DAL.Repositories;
 using QuanLyCuaHangGame.Model;
 
@@ -17,7 +18,7 @@ namespace QuanLyCuaHangGame.BLL.Services
 
         public IEnumerable<Computer> GetAllComputers()
         {
-            return unitOfWork.Context.Computers.Include("Room").ToList();
+            return unitOfWork.Context.Computers.AsNoTracking().Include("Room").ToList();
         }
 
         public void AddComputer(Computer computer, decimal initialPrice)

@@ -9,6 +9,8 @@ namespace QuanLyCuaHangGame.DAL
         {
         }
 
+        private static string _cachedConnectionString = null;
+
         /// <summary>
         /// Tự động dò tìm SQL Server phù hợp.
         /// Thử kết nối với .\SQLEXPRESS trước, nếu lỗi sẽ tự động chuyển sang Server=. (localhost mặc định).
@@ -16,6 +18,11 @@ namespace QuanLyCuaHangGame.DAL
         /// </summary>
         private static string GetSmartConnectionString()
         {
+            if (_cachedConnectionString != null)
+            {
+                return _cachedConnectionString;
+            }
+
             string dbName = "GameZoneProDB";
             string expressConn = $"Server=.\\SQLEXPRESS01;Database={dbName};Integrated Security=True;TrustServerCertificate=True";
             string defaultConn = $"Server=.;Database={dbName};Integrated Security=True;TrustServerCertificate=True";
@@ -26,12 +33,14 @@ namespace QuanLyCuaHangGame.DAL
                 using (var conn = new System.Data.SqlClient.SqlConnection(expressConn + ";Connection Timeout=2"))
                 {
                     conn.Open();
+                    _cachedConnectionString = expressConn;
                     return expressConn; // Thành công thì trả về chuỗi của SQLEXPRESS
                 }
             }
             catch
             {
                 // Nếu lỗi thì dùng server mặc định
+                _cachedConnectionString = defaultConn;
                 return defaultConn;
             }
         }
