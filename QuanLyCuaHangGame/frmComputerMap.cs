@@ -322,7 +322,25 @@ namespace QuanLyCuaHangGame
 
         private void BtnOrderService_Click(object sender, EventArgs e)
         {
-            MaterialSkin.Controls.MaterialMessageBox.Show("Tính năng gọi dịch vụ từ xa đang được phát triển!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (_selectedComputer == null || _selectedComputer.Status != "Đang dùng") return;
+
+            var activeSession = _sessionService.GetActiveSessions()
+                .FirstOrDefault(s => s.ComputerId == _selectedComputer.Id);
+
+            if (activeSession == null)
+            {
+                MaterialSkin.Controls.MaterialMessageBox.Show("Không tìm thấy phiên hoạt động của máy đang chọn!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            using (var dlg = new QuanLyCuaHangGame.GUI.dlgAddService(activeSession.Id))
+            {
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    UpdateDetailPanel();
+                    LoadComputerMap();
+                }
+            }
         }
 
         private void BtnHistory_Click(object sender, EventArgs e)

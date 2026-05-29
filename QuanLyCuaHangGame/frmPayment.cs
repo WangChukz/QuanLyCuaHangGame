@@ -16,6 +16,8 @@ namespace QuanLyCuaHangGame
 
         private int _sessionId;
         private int _closedByUserId;
+        private int _invoiceId = 0;   // > 0 sau khi thanh toán thành công
+        private bool _paymentDone = false;
 
         // Dữ liệu được tải từ DB
         private Session _session;
@@ -256,12 +258,16 @@ namespace QuanLyCuaHangGame
                     _services,
                     tienMatExtra);
 
-                MaterialSkin.Controls.MaterialMessageBox.Show(
-                    $"✓ Thanh toán thành công!\nHóa đơn #{invoice.Id} đã được tạo.",
-                    "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _invoiceId   = invoice.Id;
+                _paymentDone = true;
 
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                // Giữ form mở để người dùng có thể in hóa đơn
+                btnXacNhan.Enabled = false;
+                btnHuy.Text        = "ĐÓNG";
+
+                MaterialSkin.Controls.MaterialMessageBox.Show(
+                    $"✓ Thanh toán thành công!\nHóa đơn #{invoice.Id} đã được tạo.\n\nBạn có thể bấm IN HÓA ĐƠN hoặc ĐÓNG.",
+                    "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -273,17 +279,63 @@ namespace QuanLyCuaHangGame
 
         private void btnInHoaDon_Click(object sender, EventArgs e)
         {
-            MaterialSkin.Controls.MaterialMessageBox.Show("Đang in hóa đơn…\n(Tích hợp PDF/máy in tại đây)",
-                "In hóa đơn", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (_session == null)
+            {
+                MaterialSkin.Controls.MaterialMessageBox.Show("Không có dữ liệu phiên để in hóa đơn!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "PDF Files (*.pdf)|*.pdf";
+                string compCode = _session.Computer?.Code ?? "MAY";
+                sfd.FileName = $"HoaDon_{compCode}_{DateTime.Now:yyyyMMddHHmmss}.pdf";
+                
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        decimal.TryParse(txtTienMat.Text?.Replace(",", ""), out decimal tienMatExtra);
+                        _paymentBLL.GenerateInvoicePdf(
+                            sfd.FileName,
+                            _session,
+                            _services,
+                            _endTime,
+                            _sessionAmount,
+                            _totalAmount,
+                            tienMatExtra);
+                            
+                        // Mở file PDF sau khi tạo
+                        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+                        {
+                            FileName = sfd.FileName,
+                            UseShellExecute = true
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MaterialSkin.Controls.MaterialMessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
 
         private void btnHuy_Click(object sender, EventArgs e)
         {
-            if (MaterialSkin.Controls.MaterialMessageBox.Show("Bạn có chắc muốn hủy thanh toán?", "Xác nhận",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (_paymentDone)
             {
-                this.DialogResult = DialogResult.Cancel;
+                // Đã thanh toán xong – nút đã đổi thành "ĐÓNG", đóng trực tiếp
+                this.DialogResult = DialogResult.OK;
                 this.Close();
+            }
+            else
+            {
+                if (MaterialSkin.Controls.MaterialMessageBox.Show("Bạn có chắc muốn hủy thanh toán?", "Xác nhận",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    this.DialogResult = DialogResult.Cancel;
+                    this.Close();
+                }
             }
         }
     }

@@ -145,6 +145,12 @@ namespace QuanLyCuaHangGame
                 return;
             }
 
+            if(txtMoney.Text.Trim() == "")
+            {
+                MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng nhập số tiền cần nạp.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (decimal.TryParse(txtMoney.Text, out decimal amount) && amount > 0)
             {
                 try
@@ -299,6 +305,14 @@ namespace QuanLyCuaHangGame
         private void cardNapTien_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void txtMoney_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar != '\b' && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true; // Chặn ký tự không phải số và backspace
+            }
         }
     }
 }
