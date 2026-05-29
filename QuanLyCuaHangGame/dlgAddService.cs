@@ -13,10 +13,12 @@ namespace QuanLyCuaHangGame.GUI
     public partial class dlgAddService : MaterialForm
     {
         private ServiceItemService _serviceItemService;
+        private QuanLyCuaHangGame.BLL.Services.SessionService _sessionService;
         private List<ServiceItem> _allServices;
         private Dictionary<int, int> _selectedQuantities; // Key: ServiceId, Value: Quantity
+        private int _sessionId;
 
-        public dlgAddService()
+        public dlgAddService(int sessionId)
         {
             InitializeComponent();
             
@@ -25,7 +27,9 @@ namespace QuanLyCuaHangGame.GUI
             // Thừa kế màu sắc MaterialSkin hiện tại (Màu Tím như yêu cầu)
 
             _serviceItemService = new ServiceItemService();
+            _sessionService = new QuanLyCuaHangGame.BLL.Services.SessionService();
             _selectedQuantities = new Dictionary<int, int>();
+            _sessionId = sessionId;
 
             this.Load += DlgAddService_Load;
             btnCancel.Click += BtnCancel_Click;
@@ -217,9 +221,25 @@ namespace QuanLyCuaHangGame.GUI
                 return;
             }
 
-            // TODO: INSERT SessionServices
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            try
+            {
+                foreach (var kvp in _selectedQuantities)
+                {
+                    if (kvp.Value > 0)
+                    {
+                        var service = _allServices.First(s => s.Id == kvp.Key);
+                        _sessionService.AddServiceToSession(_sessionId, service.Id, kvp.Value, service.Price);
+                    }
+                }
+                
+                MaterialSkin.Controls.MaterialMessageBox.Show("Đã gọi dịch vụ thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi khi thêm dịch vụ: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
