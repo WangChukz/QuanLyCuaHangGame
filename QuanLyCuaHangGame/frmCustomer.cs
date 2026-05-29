@@ -9,7 +9,7 @@ using QuanLyCuaHangGame.UIHelper;
 
 namespace QuanLyCuaHangGame
 {
-    public partial class frmCustomer : MaterialForm
+    public partial class frmCustomer : Form
     {
         private CustomerBLL _customerBLL;
         private int _selectedCustomerId = -1;

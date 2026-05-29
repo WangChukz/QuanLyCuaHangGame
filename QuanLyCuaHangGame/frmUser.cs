@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace QuanLyCuaHangGame.GUI
 {
-    public partial class frmUser : MaterialForm
+    public partial class frmUser : Form
     {
         private UserService _userService;
         private List<User> _users;
@@ -60,7 +60,6 @@ namespace QuanLyCuaHangGame.GUI
         {
             InitializeComponent();
 
-            UIHelper.UICommon.ApplyTheme(this, true);
             UIHelper.UserUIHelper.StyleUserListView(this.lvUsers);
 
             lblTitle.ForeColor = UIHelper.DashboardUIHelper.ThemeColor;

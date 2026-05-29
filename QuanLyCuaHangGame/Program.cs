@@ -27,7 +27,6 @@ namespace QuanLyCuaHangGame.GUI
                 return;
             }
             Application.Run(new frmComputerMap());
-            // Application.Run(new frmCustomer()); // Khoa đang test dở form này
         }
     }
 }

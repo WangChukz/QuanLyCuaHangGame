@@ -10,7 +10,7 @@ using QuanLyCuaHangGame.Model;
 
 namespace QuanLyCuaHangGame
 {
-    public partial class frmPayment : MaterialForm
+    public partial class frmPayment : Form
     {
         private readonly PaymentBLL _paymentBLL = new PaymentBLL();
 

@@ -98,11 +98,23 @@
     <Compile Include="frmService.Designer.cs">
       <DependentUpon>frmService.cs</DependentUpon>
     </Compile>
+    <Compile Include="dlgAddService.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgAddService.Designer.cs">
+      <DependentUpon>dlgAddService.cs</DependentUpon>
+    </Compile>
     <Compile Include="dlgTopUp.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="dlgTopUp.Designer.cs">
       <DependentUpon>dlgTopUp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dlgRegisterCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgRegisterCustomer.Designer.cs">
+      <DependentUpon>dlgRegisterCustomer.cs</DependentUpon>
     </Compile>
     <Compile Include="dlgRoom.cs">
       <SubType>Form</SubType>
@@ -140,6 +152,12 @@
     <Compile Include="frmDashboard.Designer.cs">
       <DependentUpon>frmDashboard.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReport.Designer.cs">
+      <DependentUpon>frmReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Data\RoomStore.cs" />
     <Compile Include="UIHelper\UICommon.cs" />
     <Compile Include="UIHelper\DashboardUIHelper.cs" />
@@ -149,6 +167,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="dlgRegisterCustomer.resx">
+      <DependentUpon>dlgRegisterCustomer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmComputer.resx">
       <DependentUpon>frmComputer.cs</DependentUpon>
     </EmbeddedResource>
