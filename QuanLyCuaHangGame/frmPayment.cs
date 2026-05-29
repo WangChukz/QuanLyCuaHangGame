@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace QuanLyCuaHangGame
 {
-    public partial class frmPayment : MaterialForm
+    public partial class frmPayment : Form
     {
         // ──────────────── DỮ LIỆU GIẢ LẬP ────────────────
         private string _maMay      = "PC05";
@@ -22,8 +22,6 @@ namespace QuanLyCuaHangGame
         public frmPayment()
         {
             InitializeComponent();
-            
-            UIHelper.UICommon.ApplyTheme(this, true);
 
             LoadData();
         }

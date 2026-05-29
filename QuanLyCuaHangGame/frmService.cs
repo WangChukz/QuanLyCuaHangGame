@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -9,7 +9,7 @@ using QuanLyCuaHangGame.Model;
 
 namespace QuanLyCuaHangGame.GUI
 {
-    public partial class frmService : MaterialForm
+    public partial class frmService : Form
     {
         private ServiceItemService serviceItemService;
         private List<ServiceItem> allServices;
@@ -30,9 +30,7 @@ namespace QuanLyCuaHangGame.GUI
             lvServices.SelectedIndexChanged += lvServices_SelectedIndexChanged;
             cboCategoryFilter.SelectedIndexChanged += cboCategoryFilter_SelectedIndexChanged;
             txtSearch.TextChanged += txtSearch_TextChanged;
-            lvServices.DrawSubItem += lvServices_DrawSubItem;
-
-            UIHelper.UICommon.ApplyTheme(this, true);
+            txtPrice.KeyPress += txtPrice_KeyPress;
 
             serviceItemService = new ServiceItemService();
             allServices = new List<ServiceItem>();
@@ -42,6 +40,23 @@ namespace QuanLyCuaHangGame.GUI
         {
             try
             {
+                // Thêm thanh Header giống ảnh mockup
+                Panel pnlHeader = new Panel();
+                pnlHeader.Height = 55;
+                pnlHeader.Dock = DockStyle.Top;
+                pnlHeader.BackColor = MaterialSkinManager.Instance.ColorScheme.PrimaryColor;
+                
+                Label lblHeaderTitle = new Label();
+                lblHeaderTitle.Text = "Quản lý dịch vụ (Đồ ăn, nước uống)";
+                lblHeaderTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
+                lblHeaderTitle.ForeColor = System.Drawing.Color.White;
+                lblHeaderTitle.AutoSize = true;
+                lblHeaderTitle.Location = new System.Drawing.Point(15, 15);
+                pnlHeader.Controls.Add(lblHeaderTitle);
+
+                this.Controls.Add(pnlHeader);
+                pnlHeader.SendToBack(); // Đẩy lên đỉnh trên cùng
+
                 SetupListView();
                 LoadCategoriesToFilter();
                 LoadServices();
@@ -60,7 +75,6 @@ namespace QuanLyCuaHangGame.GUI
         {
             lvServices.View = View.Details;
             lvServices.FullRowSelect = true;
-            lvServices.GridLines = true;
             lvServices.MultiSelect = false;
 
             // Cấu hình các cột
@@ -122,7 +136,7 @@ namespace QuanLyCuaHangGame.GUI
                 var item = new ListViewItem(service.Name);
                 item.SubItems.Add(service.Category);
                 item.SubItems.Add(service.Price.ToString("N0"));
-                item.SubItems.Add(service.IsAvailable ? "Có" : "Hết");
+                item.SubItems.Add(service.IsAvailable ? "✅ Có" : "❌ Hết");
                 item.Tag = service.Id;
                 lvServices.Items.Add(item);
             }
@@ -146,6 +160,13 @@ namespace QuanLyCuaHangGame.GUI
                 lblStatusFood.Text = $"Ăn: {food}";
                 lblStatusGame.Text = $"Game: {games}";
                 lblStatusOut.Text = $"Hết hàng: {outOfStock}";
+
+                pnlStatus.BackColor = MaterialSkinManager.Instance.ColorScheme.PrimaryColor;
+                lblStatusTotal.ForeColor = System.Drawing.Color.White;
+                lblStatusDrink.ForeColor = System.Drawing.Color.White;
+                lblStatusFood.ForeColor = System.Drawing.Color.White;
+                lblStatusGame.ForeColor = System.Drawing.Color.White;
+                lblStatusOut.ForeColor = System.Drawing.Color.White;
             }
             catch { }
         }
@@ -376,42 +397,13 @@ namespace QuanLyCuaHangGame.GUI
         }
 
         /// <summary>
-        /// Vẽ màu cho cột "Có sẵn" (Xanh = Có, Đỏ = Hết)
+        /// Chỉ cho phép nhập số vào ô giá bán
         /// </summary>
-        private void lvServices_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        private void txtPrice_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Vẽ background
-            e.DrawBackground();
-
-            // Cột 3 (Index=3): "Có sẵn"
-            if (e.ColumnIndex == 3)
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
-                // Xác định màu dựa vào nội dung
-                System.Drawing.Color textColor = e.SubItem.Text == "Có" 
-                    ? System.Drawing.Color.Green 
-                    : System.Drawing.Color.Red;
-
-                // Vẽ chữ với màu tương ứng
-                var brush = new System.Drawing.SolidBrush(textColor);
-                var stringFormat = new System.Drawing.StringFormat
-                {
-                    Alignment = System.Drawing.StringAlignment.Center,
-                    LineAlignment = System.Drawing.StringAlignment.Center
-                };
-                
-                e.Graphics.DrawString(
-                    e.SubItem.Text,
-                    lvServices.Font,
-                    brush,
-                    e.Bounds,
-                    stringFormat);
-
-                brush.Dispose();
-            }
-            else
-            {
-                // Các cột khác vẽ bình thường
-                e.DrawText();
+                e.Handled = true;
             }
         }
     }

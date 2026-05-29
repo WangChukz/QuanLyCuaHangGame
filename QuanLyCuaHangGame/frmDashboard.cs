@@ -111,6 +111,14 @@ namespace QuanLyCuaHangGame
                 mainTabControl.TabPages.Remove(tabPageTaiKhoan);
             }
 
+            // Embed frmReport into tabPageBaoCao
+            frmReport frmRep = new frmReport();
+            frmRep.TopLevel = false;
+            frmRep.FormBorderStyle = FormBorderStyle.None;
+            frmRep.Dock = DockStyle.Fill;
+            tabPageBaoCao.Controls.Add(frmRep);
+            frmRep.Show();
+
             // Di chuyển pnlFooter từ tabPageDashboard ra ngoài Form chính để hiển thị trên tất cả các tab
             tabPageDashboard.Controls.Remove(pnlFooter);
             this.Controls.Add(pnlFooter);

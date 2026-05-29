@@ -21,7 +21,7 @@ namespace QuanLyCuaHangGame.GUI
 
         // ── Left panel – ListView ─────────────────────────────────────
         private System.Windows.Forms.Panel pnlLeft;
-        private System.Windows.Forms.ListView lvServices;
+        private MaterialSkin.Controls.MaterialListView lvServices;
 
         // ── Right panel – Detail Card ─────────────────────────────────
         private System.Windows.Forms.Panel pnlRight;
@@ -66,7 +66,7 @@ namespace QuanLyCuaHangGame.GUI
             this.txtSearch = new MaterialSkin.Controls.MaterialTextBox();
             this.tblBody = new System.Windows.Forms.TableLayoutPanel();
             this.pnlLeft = new System.Windows.Forms.Panel();
-            this.lvServices = new System.Windows.Forms.ListView();
+            this.lvServices = new MaterialSkin.Controls.MaterialListView();
             this.colName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colCat = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -143,7 +143,7 @@ namespace QuanLyCuaHangGame.GUI
             this.flpToolbarLeft.Location = new System.Drawing.Point(19, 12);
             this.flpToolbarLeft.Margin = new System.Windows.Forms.Padding(5);
             this.flpToolbarLeft.Name = "flpToolbarLeft";
-            this.flpToolbarLeft.Size = new System.Drawing.Size(599, 59);
+            this.flpToolbarLeft.Size = new System.Drawing.Size(549, 59);
             this.flpToolbarLeft.TabIndex = 0;
             this.flpToolbarLeft.WrapContents = false;
             // 
@@ -209,7 +209,7 @@ namespace QuanLyCuaHangGame.GUI
             this.lblCategoryFilter.Location = new System.Drawing.Point(243, 30);
             this.lblCategoryFilter.Margin = new System.Windows.Forms.Padding(0, 30, 7, 0);
             this.lblCategoryFilter.Name = "lblCategoryFilter";
-            this.lblCategoryFilter.Size = new System.Drawing.Size(129, 32);
+            this.lblCategoryFilter.Size = new System.Drawing.Size(79, 20);
             this.lblCategoryFilter.TabIndex = 3;
             this.lblCategoryFilter.Text = "Danh mục:";
             // 
@@ -232,7 +232,7 @@ namespace QuanLyCuaHangGame.GUI
             "Đồ ăn",
             "Game",
             "Khác"});
-            this.cboCategoryFilter.Location = new System.Drawing.Point(379, 13);
+            this.cboCategoryFilter.Location = new System.Drawing.Point(329, 13);
             this.cboCategoryFilter.Margin = new System.Windows.Forms.Padding(0, 13, 0, 0);
             this.cboCategoryFilter.MaxDropDownItems = 4;
             this.cboCategoryFilter.MouseState = MaterialSkin.MouseState.OUT;
@@ -246,10 +246,10 @@ namespace QuanLyCuaHangGame.GUI
             this.flpToolbarRight.Controls.Add(this.txtSearch);
             this.flpToolbarRight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpToolbarRight.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flpToolbarRight.Location = new System.Drawing.Point(628, 12);
+            this.flpToolbarRight.Location = new System.Drawing.Point(578, 12);
             this.flpToolbarRight.Margin = new System.Windows.Forms.Padding(5);
             this.flpToolbarRight.Name = "flpToolbarRight";
-            this.flpToolbarRight.Size = new System.Drawing.Size(1057, 59);
+            this.flpToolbarRight.Size = new System.Drawing.Size(1107, 59);
             this.flpToolbarRight.TabIndex = 1;
             this.flpToolbarRight.WrapContents = false;
             // 
@@ -261,7 +261,7 @@ namespace QuanLyCuaHangGame.GUI
             this.txtSearch.Font = new System.Drawing.Font("Roboto", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.txtSearch.Hint = "Tìm dịch vụ...";
             this.txtSearch.LeadingIcon = null;
-            this.txtSearch.Location = new System.Drawing.Point(680, 13);
+            this.txtSearch.Location = new System.Drawing.Point(730, 13);
             this.txtSearch.Margin = new System.Windows.Forms.Padding(0, 13, 0, 0);
             this.txtSearch.MaxLength = 50;
             this.txtSearch.MouseState = MaterialSkin.MouseState.OUT;
@@ -301,24 +301,28 @@ namespace QuanLyCuaHangGame.GUI
             // 
             // lvServices
             // 
-            this.lvServices.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lvServices.AutoSizeTable = false;
+            this.lvServices.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.lvServices.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lvServices.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colName,
             this.colCat,
             this.colPrice,
             this.colAvail});
+            this.lvServices.Depth = 0;
             this.lvServices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvServices.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.lvServices.FullRowSelect = true;
-            this.lvServices.GridLines = true;
             this.lvServices.HideSelection = false;
             this.lvServices.Location = new System.Drawing.Point(17, 13);
             this.lvServices.Margin = new System.Windows.Forms.Padding(5);
+            this.lvServices.MinimumSize = new System.Drawing.Size(200, 100);
+            this.lvServices.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.lvServices.MouseState = MaterialSkin.MouseState.OUT;
             this.lvServices.Name = "lvServices";
+            this.lvServices.OwnerDraw = true;
             this.lvServices.Size = new System.Drawing.Size(910, 752);
             this.lvServices.TabIndex = 0;
             this.lvServices.UseCompatibleStateImageBehavior = false;
-            this.lvServices.OwnerDraw = true;
             this.lvServices.View = System.Windows.Forms.View.Details;
             // 
             // colName
@@ -621,7 +625,7 @@ namespace QuanLyCuaHangGame.GUI
             this.Margin = new System.Windows.Forms.Padding(5);
             this.MinimumSize = new System.Drawing.Size(1200, 800);
             this.Name = "frmService";
-            this.Padding = new System.Windows.Forms.Padding(5, 107, 5, 5);
+            this.Padding = new System.Windows.Forms.Padding(0);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quản lý dịch vụ (Đồ ăn, nước uống)";
             this.pnlToolbar.ResumeLayout(false);

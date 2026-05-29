@@ -6,15 +6,11 @@ using System.Windows.Forms;
 
 namespace QuanLyCuaHangGame
 {
-    public partial class frmCustomer : MaterialForm
+    public partial class frmCustomer : Form
     {
         public frmCustomer()
         {
             InitializeComponent();
-
-            var materialSkinManager = MaterialSkinManager.Instance;
-            materialSkinManager.AddFormToManage(this);
-            UIHelper.UICommon.ApplyTheme(this, true);
         }
     }
 }
