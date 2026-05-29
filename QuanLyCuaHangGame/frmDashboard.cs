@@ -29,6 +29,13 @@ namespace QuanLyCuaHangGame
         private System.Windows.Forms.DataGridView dgvPhien;
         private System.Windows.Forms.Panel pnlChartFilter;
 
+        // ── Snapshot KPI — làm mới cứ 30 giây ──
+        private int     _activeMachineCount = 0;
+        private int     _totalMachineCount  = 0;
+        private int     _memberCount        = 0;
+        private int     _brokenCount        = 0;
+        private decimal _revenueToday       = 0;
+
         public frmDashboard()
         {
             InitializeComponent();
@@ -36,6 +43,12 @@ namespace QuanLyCuaHangGame
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
             UICommon.ApplyTheme(this);
+
+            // Ẩn thanh Tab mặc định của Windows để dùng Drawer (Sidebar) làm menu chính
+            mainTabControl.Appearance = TabAppearance.FlatButtons;
+            mainTabControl.ItemSize = new Size(0, 1);
+            mainTabControl.SizeMode = TabSizeMode.Fixed;
+
             this.Load += FrmDashboard_Load;
         }
 
@@ -60,50 +73,31 @@ namespace QuanLyCuaHangGame
                 tab.BackColor = Color.White;
             }
             
-            // Embed frmComputer into tabPageMayTinh (Tab 8)
-            frmComputer frmComp = new frmComputer();
-            frmComp.TopLevel = false;
-            frmComp.FormBorderStyle = FormBorderStyle.None;
-            frmComp.Dock = DockStyle.Fill;
-            frmComp.BackColor = Color.White; // Nền của form con cũng màu trắng đồng bộ
-            tabPageMayTinh.Controls.Add(frmComp);
-            frmComp.Show();
+            // ── Helper ẩn header MaterialSkin trùng lặp khi nhúng form con vào TabPage ──
+            // MaterialSkin vẽ thanh tiêu đề cao 64px ngay cả khi TopLevel=false.
+            // Giải pháp: đặt Location.Y = -64 để đẩy header ra ngoài vùng clip của TabPage.
+            void EmbedChildForm(Form childForm, TabPage targetTab)
+            {
+                if (childForm is MaterialForm matForm)
+                {
+                    matForm.FormStyle = MaterialForm.FormStyles.StatusAndActionBar_None;
+                    matForm.Padding = new Padding(3);
+                }
+                childForm.TopLevel = false;
+                childForm.FormBorderStyle = FormBorderStyle.None;
+                childForm.BackColor = Color.White;
+                childForm.Dock = DockStyle.Fill;
+                targetTab.Controls.Add(childForm);
+                childForm.Show();
+            }
 
-            // Embed frmService into tabPageDichVu (Tab 9)
-            GUI.frmService frmSvc = new GUI.frmService();
-            frmSvc.TopLevel = false;
-            frmSvc.FormBorderStyle = FormBorderStyle.None;
-            frmSvc.Dock = DockStyle.Fill;
-            frmSvc.BackColor = Color.White;
-            tabPageDichVu.Controls.Add(frmSvc);
-            frmSvc.Show();
-
-            // Embed frmCustomer into tabPageHoiVien
-            frmCustomer frmCust = new frmCustomer();
-            frmCust.TopLevel = false;
-            frmCust.FormBorderStyle = FormBorderStyle.None;
-            frmCust.Dock = DockStyle.Fill;
-            frmCust.BackColor = Color.White;
-            tabPageHoiVien.Controls.Add(frmCust);
-            frmCust.Show();
-
-            // Embed frmPayment into tabPageThanhToan
-            frmPayment frmPay = new frmPayment();
-            frmPay.TopLevel = false;
-            frmPay.FormBorderStyle = FormBorderStyle.None;
-            frmPay.Dock = DockStyle.Fill;
-            frmPay.BackColor = Color.White;
-            tabPageThanhToan.Controls.Add(frmPay);
-            frmPay.Show();
-
-            // Embed frmUser into tabPageTaiKhoan
-            GUI.frmUser frmU = new GUI.frmUser();
-            frmU.TopLevel = false;
-            frmU.FormBorderStyle = FormBorderStyle.None;
-            frmU.Dock = DockStyle.Fill;
-            frmU.BackColor = Color.White;
-            tabPageTaiKhoan.Controls.Add(frmU);
-            frmU.Show();
+            // Nhúng các Form con vào từng Tab tương ứng — header trùng đã được ẩn
+            EmbedChildForm(new frmComputerMap(),  tabPageSoDo);       // Tab 1 – Sơ đồ phòng máy
+            EmbedChildForm(new frmComputer(),     tabPageMayTinh);    // Tab 3 – Quản lý máy tính
+            EmbedChildForm(new frmCustomer(),     tabPageHoiVien);    // Tab 4 – Hội viên
+            EmbedChildForm(new GUI.frmService(),  tabPageDichVu);     // Tab 5 – Dịch vụ
+            EmbedChildForm(new frmPayment(),      tabPageThanhToan);  // Tab 6 – Thanh toán
+            EmbedChildForm(new GUI.frmUser(),     tabPageTaiKhoan);   // Tab 8 – Tài khoản (Admin)
 
             // Phân quyền: Ẩn tab Tài khoản nếu không phải Admin
             if (!SessionContext.IsAdmin)
@@ -123,18 +117,19 @@ namespace QuanLyCuaHangGame
             tabPageDashboard.Controls.Remove(pnlFooter);
             this.Controls.Add(pnlFooter);
             pnlFooter.Dock = DockStyle.Bottom;
-            pnlFooter.BringToFront();
+            pnlFooter.SendToBack(); // Quan trọng: Đưa xuống dưới cùng Z-order để nó giành không gian trước, tránh bị mainTabControl (Fill) che khuất hoặc đè lên.
+            mainTabControl.BringToFront(); // Đưa mainTabControl lên trên để nó lấp đầy phần không gian còn lại.
 
             // Bind SelectedIndexChanged to update Title and Footer
             mainTabControl.SelectedIndexChanged += MainTabControl_SelectedIndexChanged;
             MainTabControl_SelectedIndexChanged(this, EventArgs.Empty);
-
-            tabPageDashboard.SizeChanged += TabPageDashboard_SizeChanged;
-            TabPageDashboard_SizeChanged(this, EventArgs.Empty);
             
             // Ép buộc áp dụng style chuẩn SaaS sau khi MaterialSkin load xong
             ApplyKPICardStyles();
             DashboardUIHelper.ApplyGlobalModernStyle(this);
+            LoadKPIData(); // Tải số liệu KPI thực từ DB
+            
+            mainTabControl.SelectedIndex = 0; // Đặt mặc định mở tab Dashboard đầu tiên khi khởi động
 
             // Add Coming Soon labels to empty tabs
             Label lblComingSoon1 = new Label();
@@ -171,6 +166,64 @@ namespace QuanLyCuaHangGame
 
             // Áp dụng màu nền footer và style nhãn thông tin
             DashboardUIHelper.StyleFooter(pnlFooter, lblFooter);
+        }
+
+        /// <summary>Tải số liệu KPI thực từ DB và cập nhật 4 thẻ KPI + footer.</summary>
+        private void LoadKPIData()
+        {
+            try
+            {
+                var compSvc   = new BLL.Services.ComputerService();
+                var custSvc   = new BLL.Services.CustomerService();
+                var sessSvc   = new BLL.Services.SessionService();
+                var reportSvc = new BLL.Services.ReportService();
+
+                // ① Doanh thu hôm nay (Invoice đã thanh toán)
+                _revenueToday = reportSvc.GetTotalRevenue(DateTime.Today, DateTime.Now);
+                lblDoanhThuValue.Text = _revenueToday.ToString("N0") + "đ";
+                lblDoanhThuSub.Text   = "Hôm nay – " + DateTime.Today.ToString("dd/MM/yyyy");
+
+                // ② Máy đang chạy / tổng số máy
+                var allComputers    = compSvc.GetAllComputers().ToList();
+                _totalMachineCount  = allComputers.Count;
+                _activeMachineCount = sessSvc.GetActiveSessions().Count();
+                lblMayValue.Text = $"{_activeMachineCount}/{_totalMachineCount}";
+                lblMaySub.Text   = "máy đang hoạt động";
+
+                // ③ Tổng hội viên
+                _memberCount = custSvc.GetAllCustomers().Count();
+                lblHoiVienValue.Text = _memberCount.ToString();
+                lblHoiVienSub.Text   = "hội viên đã đăng ký";
+
+                // ④ Máy cần xử lý (Hỏng hoặc Dừng)
+                _brokenCount = allComputers.Count(c => c.Condition == "Hỏng" || c.Status == "Dừng");
+                lblXuLyValue.Text = _brokenCount.ToString();
+                lblXuLySub.Text   = _brokenCount > 0
+                    ? $"{_brokenCount} máy cần sửa chữa"
+                    : "Tất cả máy hoạt động tốt";
+
+                // ⑤ Đồng bộ footer
+                UpdateFooter();
+            }
+            catch
+            {
+                // Giữ nguyên giá trị hiện tại nếu DB lỗi
+            }
+        }
+
+        /// <summary>Cập nhật thanh footer theo tab đang hiển thị và snapshot KPI.</summary>
+        private void UpdateFooter()
+        {
+            if (lblFooter == null) return;
+            string userName = BLL.SessionContext.CurrentUserName ?? "Admin";
+            if (mainTabControl.SelectedIndex == 3) // Tab Quản lý máy tính
+            {
+                lblFooter.Text = $"Tổng: {_totalMachineCount} máy    |    Hỏng: {_brokenCount}    |    Chế độ: {(BLL.SessionContext.IsAdmin ? "Admin – toàn quyền" : "Nhân viên")}";
+            }
+            else
+            {
+                lblFooter.Text = $"Nhân viên: {userName}    |    Hôm nay: {DateTime.Today:dd/MM/yyyy}    |    Máy đang chạy: {_activeMachineCount}/{_totalMachineCount}    |    Doanh thu hôm nay: {_revenueToday:N0}đ";
+            }
         }
 
         private void InitializeModernDashboardUI()
@@ -248,8 +301,42 @@ namespace QuanLyCuaHangGame
 
             DashboardUIHelper.StyleModernDataGridView(dgvPhien);
 
+            // Thêm sự kiện click để Đóng phiên chơi (Thanh toán) trực tiếp từ DataGridView
+            dgvPhien.CellContentClick += (s, e) => {
+                if (e.RowIndex >= 0 && dgvPhien.Columns[e.ColumnIndex].Name == "colThaoTac")
+                {
+                    try
+                    {
+                        string compCode = dgvPhien.Rows[e.RowIndex].Cells["colMay"].Value?.ToString();
+                        if (string.IsNullOrEmpty(compCode)) return;
+
+                        var sessionService = new BLL.Services.SessionService();
+                        var activeSession = sessionService.GetActiveSessions()
+                            .FirstOrDefault(sess => sess.Computer?.Code == compCode);
+
+                        if (activeSession != null)
+                        {
+                            using (var dlg = new frmPayment(activeSession.Id, BLL.SessionContext.CurrentUserId))
+                            {
+                                if (dlg.ShowDialog() == DialogResult.OK)
+                                {
+                                    LoadSoDoPhongMay();
+                                    LoadDataGridView();
+                                    ApplyKPICardStyles();
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi khi xử lý thanh toán: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            };
+
             // Ẩn thanh cuộn mặc định của DataGridView nhưng vẫn cho phép cuộn bằng con lăn chuột (SaaS style)
             dgvPhien.ScrollBars = ScrollBars.None;
+            dgvPhien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvPhien.MouseWheel += (s, ev) => {
                 if (dgvPhien.Rows.Count == 0) return;
                 try
@@ -269,94 +356,6 @@ namespace QuanLyCuaHangGame
             };
         }
 
-        private void TabPageDashboard_SizeChanged(object sender, EventArgs e)
-        {
-            int pad = 24; // Padding chuẩn
-            int width = tabPageDashboard.ClientSize.Width;
-            int height = tabPageDashboard.ClientSize.Height;
-
-            if (width < 800) return;
-
-            // 4 thẻ KPI
-            int kpiWidth = (width - (5 * pad)) / 4;
-            int kpiHeight = 110;
-
-            cardDoanhThu.Location = new Point(pad, pad);
-            cardDoanhThu.Size = new Size(kpiWidth, kpiHeight);
-
-            cardMay.Location = new Point(pad * 2 + kpiWidth, pad);
-            cardMay.Size = new Size(kpiWidth, kpiHeight);
-
-            cardHoiVien.Location = new Point(pad * 3 + kpiWidth * 2, pad);
-            cardHoiVien.Size = new Size(kpiWidth, kpiHeight);
-
-            cardXuLy.Location = new Point(pad * 4 + kpiWidth * 3, pad);
-            cardXuLy.Size = new Size(kpiWidth, kpiHeight);
-
-            int footerGap = 36; // Khoảng cách an toàn để không dính với footer dưới cùng (Đã tăng để cách rộng rãi, đẹp mắt)
-
-            // Dòng dưới cùng: Session DataGridView (100%)
-            int bottomHeight = 240; 
-            int sessionWidth = width - (2 * pad);
-
-            cardPhien.Size = new Size(sessionWidth, bottomHeight);
-            cardPhien.Location = new Point(pad, height - pad - bottomHeight - footerGap);
-
-            // Ở giữa: Sơ đồ máy và Biểu đồ
-            int middleY = pad * 2 + kpiHeight;
-            int middleHeight = (height - pad - bottomHeight - footerGap) - middleY - pad;
-
-            // Chiều rộng cân đối 50/50 giữa Sơ đồ phòng máy và Biểu đồ doanh thu
-            int sodoWidth = (width - (3 * pad)) / 2;
-            int chartWidth = sodoWidth;
-
-            cardSoDo.Location = new Point(pad, middleY);
-            cardSoDo.Size = new Size(sodoWidth, middleHeight);
-
-            cardChart.Location = new Point(pad * 2 + sodoWidth, middleY);
-            cardChart.Size = new Size(chartWidth, middleHeight);
-
-            if (flpSoDo != null)
-            {
-                flpSoDo.AutoScroll = true;
-                flpSoDo.Size = new Size(sodoWidth - 34, middleHeight - 65); 
-                
-                // Tự động điều chỉnh kích thước nút sơ đồ phòng máy để chia đều 5 cột cân đối, không lãng phí khoảng trống bên phải
-                if (flpSoDo.Controls.Count > 0)
-                {
-                    int cols = 5; // 5 cột đều tăm tắp (20 máy / 5 = 4 hàng chẵn chằn chặn)
-                    int availWidth = flpSoDo.ClientSize.Width - 24; // Trừ thêm khoảng rộng để dự phòng cho thanh cuộn dọc
-                    int btnWidth = availWidth / cols;
-
-                    foreach (Control ctrl in flpSoDo.Controls)
-                    {
-                        if (ctrl is Button btn)
-                        {
-                            btn.Size = new Size(btnWidth - 12, 56);
-                        }
-                    }
-                }
-            }
-
-            if (chartDoanhThu != null)
-            {
-                chartDoanhThu.Location = new Point(17, 60);
-                chartDoanhThu.Size = new Size(chartWidth - 34, middleHeight - 75);
-            }
-
-            if (pnlChartFilter != null)
-            {
-                pnlChartFilter.Location = new Point(cardChart.Width - pnlChartFilter.Width - 16, 12);
-            }
-            
-            // Tự động căn chỉnh kích thước và cột DGV
-            if (dgvPhien != null)
-            {
-                dgvPhien.Location = new Point(17, 45);
-                dgvPhien.Size = new Size(sessionWidth - 34, bottomHeight - 65);
-                dgvPhien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            }
-        }
 
         private void MainTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -394,34 +393,63 @@ namespace QuanLyCuaHangGame
                     break;
             }
 
-            // Cập nhật nội dung footer động dựa trên Tab được chọn
-            if (mainTabControl.SelectedIndex == 3) // Tab thứ 4 (Quản lý máy tính)
-            {
-                lblFooter.Text = "Tổng: 20 máy    |    VIP: 6    |    Standard: 14    |    Hỏng: 2    |    Chế độ: Admin – toàn quyền";
-            }
-            else
-            {
-                lblFooter.Text = $"Nhân viên: Admin    |    Hôm nay: {DateTime.Today:dd/MM/yyyy}    |    Máy đang chạy: 8    |    Doanh thu: 2,450,000đ";
-            }
+            // Cập nhật footer theo tab hiện tại với số liệu thực
+            UpdateFooter();
         }
 
         private void LoadSoDoPhongMay()
         {
             flpSoDo.Controls.Clear();
-            
-            string[] pcs = { "PC01", "PC02", "PC03", "PC04", "PC05", "PC06", "PC07", "PC08", "PC09", "PC10", 
-                             "PC11", "PC12", "PC13", "PC14", "PC15", "PC16", "PC17", "PC18", "PC19", "PC20" };
-            string[] statuses = { "Trống", "Trống", "1g23p", "Trống", "0g43p", "Trống", "Hỏng", "Trống", "2g08p", "Trống", 
-                                  "Trống", "1g05p", "Trống", "Trống", "Trống", "0g32p", "Trống", "Trống", "Hỏng", "Trống" };
-
-            for (int i = 0; i < 20; i++)
+            try
             {
-                Button btn = new Button();
-                btn.Size = new Size(88, 55);
-                btn.Text = pcs[i] + "\n" + statuses[i];
-                DashboardUIHelper.FormatRoomMapButton(btn, statuses[i]);
+                var computerService = new BLL.Services.ComputerService();
+                var listComputers = computerService.GetAllComputers().OrderBy(c => c.Code).ToList();
+                
+                foreach (var comp in listComputers)
+                {
+                    Button btn = new Button();
+                    btn.Size = new Size(88, 55);
+                    
+                    string displayStatus = comp.Status;
+                    if (comp.Condition == "Hỏng" || comp.Status == "Dừng")
+                    {
+                        displayStatus = "Hỏng";
+                    }
+                    else if (comp.Status == "Đang dùng")
+                    {
+                        var sessionService = new BLL.Services.SessionService();
+                        var activeSession = sessionService.GetActiveSessions()
+                            .FirstOrDefault(s => s.ComputerId == comp.Id);
+                        if (activeSession != null)
+                        {
+                            double totalMinutes = (DateTime.Now - activeSession.StartTime).TotalMinutes;
+                            int h = (int)totalMinutes / 60;
+                            int m = (int)totalMinutes % 60;
+                            displayStatus = $"{h}g {m}p";
+                        }
+                    }
+                    
+                    btn.Text = $"{comp.Code}\n{displayStatus}";
+                    DashboardUIHelper.FormatRoomMapButton(btn, displayStatus);
+                    flpSoDo.Controls.Add(btn);
+                }
+            }
+            catch
+            {
+                // Fallback to static data if DB fails
+                string[] pcs = { "PC01", "PC02", "PC03", "PC04", "PC05", "PC06", "PC07", "PC08", "PC09", "PC10", 
+                                 "PC11", "PC12", "PC13", "PC14", "PC15", "PC16", "PC17", "PC18", "PC19", "PC20" };
+                string[] statuses = { "Trống", "Trống", "1g 23p", "Trống", "0g 43p", "Trống", "Hỏng", "Trống", "2g 08p", "Trống", 
+                                      "Trống", "1g 05p", "Trống", "Trống", "Trống", "0g 32p", "Trống", "Trống", "Hỏng", "Trống" };
 
-                flpSoDo.Controls.Add(btn);
+                for (int i = 0; i < Math.Min(pcs.Length, 20); i++)
+                {
+                    Button btn = new Button();
+                    btn.Size = new Size(88, 55);
+                    btn.Text = pcs[i] + "\n" + statuses[i];
+                    DashboardUIHelper.FormatRoomMapButton(btn, statuses[i]);
+                    flpSoDo.Controls.Add(btn);
+                }
             }
         }
 
@@ -574,11 +602,41 @@ namespace QuanLyCuaHangGame
             if (dgvPhien == null) return;
             
             dgvPhien.Rows.Clear();
-            
-            dgvPhien.Rows.Add("PC05", "Phạm Quốc Huy", "Hội viên", "14:30", "1g 23p", "41,000đ", "20,000đ", "ĐÓNG");
-            dgvPhien.Rows.Add("PC12", "Trần Minh Bình", "Vãng lai", "15:10", "0g 43p", "10,750đ", "-", "ĐÓNG");
-            dgvPhien.Rows.Add("PC03", "Lê Thanh Hải", "Hội viên", "13:55", "2g 08p", "32,000đ", "15,000đ", "ĐÓNG");
-            dgvPhien.Rows.Add("PC19", "Khách VIP", "Hội viên", "12:00", "4g 15p", "50,000đ", "Nước/Mì", "ĐÓNG");
+            try
+            {
+                var sessionService = new BLL.Services.SessionService();
+                var activeSessions = sessionService.GetActiveSessions().ToList();
+                
+                foreach (var session in activeSessions)
+                {
+                    string computerCode = session.Computer?.Code ?? "MAY-??";
+                    string khach = session.Customer != null ? session.Customer.FullName : (session.GuestName ?? "Khách vãng lai");
+                    string loai = session.Customer != null ? "Hội viên" : "Vãng lai";
+                    string startStr = session.StartTime.ToString("HH:mm");
+                    
+                    double totalMinutes = (DateTime.Now - session.StartTime).TotalMinutes;
+                    int h = (int)totalMinutes / 60;
+                    int m = (int)totalMinutes % 60;
+                    string timeUsed = $"{h}g {m}p";
+                    
+                    decimal sessionAmount = (decimal)(totalMinutes / 60.0) * session.PricePerHour;
+                    string tienGio = $"{sessionAmount:N0}đ";
+                    
+                    // Lấy dịch vụ
+                    var services = sessionService.GetServicesForSession(session.Id).ToList();
+                    string dichVu = services.Any() ? $"{services.Sum(s => s.Quantity * s.UnitPrice):N0}đ" : "-";
+                    
+                    dgvPhien.Rows.Add(computerCode, khach, loai, startStr, timeUsed, tienGio, dichVu, "ĐÓNG");
+                }
+            }
+            catch
+            {
+                // Fallback to static data if DB fails
+                dgvPhien.Rows.Add("PC05", "Phạm Quốc Huy", "Hội viên", "14:30", "1g 23p", "41,000đ", "20,000đ", "ĐÓNG");
+                dgvPhien.Rows.Add("PC12", "Trần Minh Bình", "Vãng lai", "15:10", "0g 43p", "10,750đ", "-", "ĐÓNG");
+                dgvPhien.Rows.Add("PC03", "Lê Thanh Hải", "Hội viên", "13:55", "2g 08p", "32,000đ", "15,000đ", "ĐÓNG");
+                dgvPhien.Rows.Add("PC19", "Khách VIP", "Hội viên", "12:00", "4g 15p", "50,000đ", "Nước/Mì", "ĐÓNG");
+            }
         }
 
         // Sự kiện Timer Tick làm mới toàn bộ dữ liệu Dashboard cứ sau 30 giây
@@ -587,9 +645,7 @@ namespace QuanLyCuaHangGame
             LoadSoDoPhongMay();
             LoadDataGridView();
             ApplyKPICardStyles();
-
-            // Đảm bảo cập nhật lại kích thước các nút trong Sơ đồ phòng máy
-            TabPageDashboard_SizeChanged(this, EventArgs.Empty);
+            LoadKPIData(); // Cập nhật KPI cards + footer với số liệu mới nhất
         }
     }
 }

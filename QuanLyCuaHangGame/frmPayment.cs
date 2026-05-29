@@ -65,6 +65,9 @@ namespace QuanLyCuaHangGame
 
         private void frmPayment_Load(object sender, EventArgs e)
         {
+            // Embedded mode (sessionId = 0): chờ LoadSession() được gọi từ bên ngoài
+            // khi người dùng chọn một phiên để thanh toán từ tab Dashboard hoặc Sơ đồ.
+            if (_sessionId <= 0) return;
             LoadPaymentDetails();
         }
 
@@ -78,7 +81,7 @@ namespace QuanLyCuaHangGame
                 var details = _paymentBLL.GetPaymentDetails(_sessionId);
                 if (details == null)
                 {
-                    MessageBox.Show("Không tìm thấy phiên chơi!", "Lỗi",
+                    MaterialSkin.Controls.MaterialMessageBox.Show("Không tìm thấy phiên chơi!", "Lỗi",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     this.Close();
                     return;
@@ -157,7 +160,7 @@ namespace QuanLyCuaHangGame
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải dữ liệu thanh toán:\n{ex.Message}", "Lỗi",
+                MaterialSkin.Controls.MaterialMessageBox.Show($"Lỗi khi tải dữ liệu thanh toán:\n{ex.Message}", "Lỗi",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -224,14 +227,14 @@ namespace QuanLyCuaHangGame
 
             if (tongDaTra < _totalAmount)
             {
-                MessageBox.Show("Số tiền thanh toán chưa đủ!\nVui lòng nhập thêm tiền mặt.",
+                MaterialSkin.Controls.MaterialMessageBox.Show("Số tiền thanh toán chưa đủ!\nVui lòng nhập thêm tiền mặt.",
                     "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             // Hỏi xác nhận
             string tenKhach = _session.Customer?.FullName ?? _session.GuestName ?? "Khách vãng lai";
-            var dr = MessageBox.Show(
+            var dr = MaterialSkin.Controls.MaterialMessageBox.Show(
                 $"Xác nhận thanh toán:\n\n" +
                 $"Khách: {tenKhach}\n" +
                 $"Tổng: {_totalAmount:N0}đ\n" +
@@ -253,7 +256,7 @@ namespace QuanLyCuaHangGame
                     _services,
                     tienMatExtra);
 
-                MessageBox.Show(
+                MaterialSkin.Controls.MaterialMessageBox.Show(
                     $"✓ Thanh toán thành công!\nHóa đơn #{invoice.Id} đã được tạo.",
                     "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -263,20 +266,20 @@ namespace QuanLyCuaHangGame
             catch (Exception ex)
             {
                 btnXacNhan.Enabled = true;
-                MessageBox.Show($"Lỗi khi xử lý thanh toán:\n{ex.Message}",
+                MaterialSkin.Controls.MaterialMessageBox.Show($"Lỗi khi xử lý thanh toán:\n{ex.Message}",
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnInHoaDon_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Đang in hóa đơn…\n(Tích hợp PDF/máy in tại đây)",
+            MaterialSkin.Controls.MaterialMessageBox.Show("Đang in hóa đơn…\n(Tích hợp PDF/máy in tại đây)",
                 "In hóa đơn", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnHuy_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Bạn có chắc muốn hủy thanh toán?", "Xác nhận",
+            if (MaterialSkin.Controls.MaterialMessageBox.Show("Bạn có chắc muốn hủy thanh toán?", "Xác nhận",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 this.DialogResult = DialogResult.Cancel;

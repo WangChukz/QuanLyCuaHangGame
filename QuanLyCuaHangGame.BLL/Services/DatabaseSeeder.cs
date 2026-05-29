@@ -23,7 +23,7 @@ namespace QuanLyCuaHangGame.BLL.Services
                     {
                         FullName = "Quản trị viên",
                         Username = "admin",
-                        PasswordHash = BCrypt.Net.BCrypt.HashPassword("12345678a"),
+                        PasswordHash = BCrypt.Net.BCrypt.HashPassword("123456789a"),
                         Role = "Admin",
                         IsActive = true
                     });
@@ -31,7 +31,7 @@ namespace QuanLyCuaHangGame.BLL.Services
                     {
                         FullName = "Nhân viên 1",
                         Username = "staff1",
-                        PasswordHash = BCrypt.Net.BCrypt.HashPassword("12345678a"),
+                        PasswordHash = BCrypt.Net.BCrypt.HashPassword("123456789a"),
                         Role = "Staff",
                         IsActive = true
                     });
@@ -54,22 +54,6 @@ namespace QuanLyCuaHangGame.BLL.Services
                     db.Rooms.Add(roomThuong);
                     db.Rooms.Add(roomVip);
                     db.SaveChanges(); // Need IDs for Computers
-
-                    // 4. Seed Computers
-                    for (int i = 1; i <= 12; i++)
-                    {
-                        string condition = "Tốt";
-                        string status = "Trống";
-                        if (i == 3) condition = "Hỏng";
-                        if (i == 4) status = "Đang dùng";
-
-                        db.Computers.Add(new Computer { Code = "MAY-" + i.ToString("D2"), RoomId = roomThuong.Id, Tier = "Thường", Cpu = "Core i5", Ram = "16GB", Gpu = "GTX 1650", Storage = "SSD 256GB", Condition = condition, Status = status });
-                    }
-                    for (int i = 1; i <= 8; i++)
-                    {
-                        db.Computers.Add(new Computer { Code = "VIP-" + i.ToString("D2"), RoomId = roomVip.Id, Tier = "VIP", Cpu = "Core i7", Ram = "32GB", Gpu = "RTX 3060", Storage = "SSD 512GB", Condition = "Tốt", Status = "Trống" });
-                    }
-                    hasChanges = true;
                 }
 
                 // 5. Seed Services

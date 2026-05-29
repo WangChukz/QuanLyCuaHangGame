@@ -35,9 +35,6 @@ namespace QuanLyCuaHangGame
             // Apply premium styles to match the Dashboard theme
             ApplyPremiumStyles();
 
-            // Gọi layout 1 lần duy nhất sau khi form đã nhận được kích thước thực từ parent
-            this.Load += (s, e) => BeginInvoke(new Action(LayoutFormControls));
-
             // Register custom draw handlers to synchronize styling with premium theme
             lvAdmin.DrawColumnHeader += Lv_DrawColumnHeader;
             lvAdmin.DrawItem += Lv_DrawItem;
@@ -365,85 +362,6 @@ namespace QuanLyCuaHangGame
         }
 
 
-        private void LayoutFormControls()
-        {
-            // Fixed inner content heights - these match the fixed positions of inner controls
-            // Admin card: grpAdminPrice at Y=310+H90=400, buttons at Y=410+H36=446, bottom pad 14 → need 460px
-            const int ADMIN_CARD_FIXED_HEIGHT = 460;
-            // Staff card: restriction label at Y=264+H105=369, bottom pad 14 → need 395px
-            const int STAFF_CARD_FIXED_HEIGHT = 395;
-
-            // --- Tab Admin Layout ---
-            int wAdmin = tabAdmin.ClientSize.Width;
-            int hAdmin = tabAdmin.ClientSize.Height;
-
-            if (wAdmin > 0 && hAdmin > 0)
-            {
-                int topMargin = 65;
-                int bottomMargin = 20; // safe margin so card bottom never touches footer
-                int availableHeight = hAdmin - topMargin - bottomMargin;
-                // Cap: never let card taller than its fixed inner content; never shorter than usable
-                int cardHeight = Math.Min(ADMIN_CARD_FIXED_HEIGHT, Math.Max(400, availableHeight));
-                int cardWidth = 540;
-                int gap = 10;
-                int sideMargin = 10;
-
-                int lvWidth = Math.Max(200, wAdmin - cardWidth - gap - (sideMargin * 2));
-
-                // Position lvAdmin - always same height as card for visual alignment
-                lvAdmin.SetBounds(sideMargin, topMargin, lvWidth, cardHeight);
-
-                // Position cardAdminDetails
-                cardAdminDetails.SetBounds(lvAdmin.Right + gap, topMargin, cardWidth, cardHeight);
-
-                // Buttons: always pinned at fixed Y=410 inside the card (within the 460px height)
-                int buttonY = 410;
-                btnAdminSave.AutoSize = false;
-                btnAdminSave.SetBounds(17, buttonY, 240, 36);
-
-                btnAdminCancel.AutoSize = false;
-                btnAdminCancel.SetBounds(280, buttonY, 100, 36);
-
-                btnAdminDeleteMachine.SetBounds(403, buttonY, 120, 36);
-            }
-
-            // --- Tab Staff Layout ---
-            int wStaff = tabStaff.ClientSize.Width;
-            int hStaff = tabStaff.ClientSize.Height;
-
-            if (wStaff > 0 && hStaff > 0)
-            {
-                // Position pnlStaffNotice banner
-                pnlStaffNotice.SetBounds(10, 65, Math.Max(200, wStaff - 20), 40);
-
-                int topMargin = 120;
-                int bottomMargin = 20; // safe margin from footer
-                int availableHeight = hStaff - topMargin - bottomMargin;
-                int cardHeight = Math.Min(STAFF_CARD_FIXED_HEIGHT, Math.Max(300, availableHeight));
-                int cardWidth = 540;
-                int gap = 10;
-                int sideMargin = 10;
-
-                int lvWidth = Math.Max(200, wStaff - cardWidth - gap - (sideMargin * 2));
-
-                // Position lvStaff
-                lvStaff.SetBounds(sideMargin, topMargin, lvWidth, cardHeight);
-
-                // Position cardStaffDetails
-                cardStaffDetails.SetBounds(lvStaff.Right + gap, topMargin, cardWidth, cardHeight);
-
-                // Fixed positions inside staff card
-                int staffButtonY = 218;
-                btnStaffSaveStatus.AutoSize = false;
-                btnStaffSaveStatus.SetBounds(17, staffButtonY, 240, 36);
-
-                btnStaffCancel.AutoSize = false;
-                btnStaffCancel.SetBounds(280, staffButtonY, 100, 36);
-
-                // Restrictions label below buttons
-                lblStaffRestrictions.SetBounds(17, 264, 506, 105);
-            }
-        }
 
         // --- Win32 P/Invoke to set ListView header height ---
         [DllImport("user32.dll")]

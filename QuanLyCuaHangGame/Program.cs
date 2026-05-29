@@ -23,10 +23,15 @@ namespace QuanLyCuaHangGame.GUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Không thể khởi tạo CSDL: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string msg = ex.Message;
+                if (ex.InnerException != null) msg += "\nInner: " + ex.InnerException.Message;
+                if (ex.InnerException?.InnerException != null) msg += "\nInner2: " + ex.InnerException.InnerException.Message;
+                System.IO.File.WriteAllText("error.txt", msg);
+                MaterialSkin.Controls.MaterialMessageBox.Show("Không thể khởi tạo CSDL: " + msg, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             Application.Run(new frmLogin());
+            // Application.Run(new frmComputerMap()); // Lưu lại tham chiếu phòng khi cần test riêng lẻ
         }
     }
 }

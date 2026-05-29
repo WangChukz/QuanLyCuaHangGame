@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
@@ -9,7 +10,7 @@ using QuanLyCuaHangGame.Model;
 
 namespace QuanLyCuaHangGame.GUI
 {
-    public partial class frmService : Form
+    public partial class frmService : MaterialForm
     {
         private ServiceItemService serviceItemService;
         private List<ServiceItem> allServices;
@@ -31,9 +32,11 @@ namespace QuanLyCuaHangGame.GUI
             cboCategoryFilter.SelectedIndexChanged += cboCategoryFilter_SelectedIndexChanged;
             txtSearch.TextChanged += txtSearch_TextChanged;
             txtPrice.KeyPress += txtPrice_KeyPress;
+            // DrawSubItem được gắn trong SetupListView() bằng DashboardUIHelper.StyleListView
+            UIHelper.UICommon.ApplyTheme(this, true);
 
             serviceItemService = new ServiceItemService();
-            allServices = new List<ServiceItem>();
+            allServices = new System.Collections.Generic.List<ServiceItem>();
         }
 
         private void frmService_Load(object sender, EventArgs e)
@@ -57,14 +60,23 @@ namespace QuanLyCuaHangGame.GUI
                 this.Controls.Add(pnlHeader);
                 pnlHeader.SendToBack(); // Đẩy lên đỉnh trên cùng
 
+                // Xoá MinimumSize khi nhúc vào tab để form tự resize
+                if (this.Parent != null)
+                    this.MinimumSize = new System.Drawing.Size(0, 0);
+
                 SetupListView();
                 LoadCategoriesToFilter();
                 LoadServices();
                 UpdateStatusBar();
+
+                // Căn lại cột ngay sau khi load
+                UIHelper.UICommon.AutoResizeListViewColumns(lvServices, new double[] { 0.40, 0.25, 0.20, 0.15 });
+                this.SizeChanged += (s, ev) =>
+                    UIHelper.UICommon.AutoResizeListViewColumns(lvServices, new double[] { 0.40, 0.25, 0.20, 0.15 });
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi tải form: " + ex.Message, "Lỗi");
+                MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi tải form: " + ex.Message, "Lỗi");
             }
         }
 
@@ -76,7 +88,6 @@ namespace QuanLyCuaHangGame.GUI
             lvServices.View = View.Details;
             lvServices.FullRowSelect = true;
             lvServices.MultiSelect = false;
-
             // Cấu hình các cột
             if (lvServices.Columns.Count == 0)
             {
@@ -85,6 +96,13 @@ namespace QuanLyCuaHangGame.GUI
                 lvServices.Columns.Add("Giá (₫)", 100);
                 lvServices.Columns.Add("Có Sẵn", 80);
             }
+
+            // Áp dụng style bảng đồng bộ Dashboard với badge cột "Có Sẵn" và "Danh Mục"
+            UIHelper.DashboardUIHelper.StyleListView(lvServices, lvServices_DrawSubItem);
+
+            // Tự căn lại độ rộng cột khi form thay đổi kích thước
+            lvServices.Resize += (s, e) =>
+                UIHelper.UICommon.AutoResizeListViewColumns(lvServices, new double[] { 0.40, 0.25, 0.20, 0.15 });
         }
 
         /// <summary>
@@ -120,7 +138,7 @@ namespace QuanLyCuaHangGame.GUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi tải dữ liệu: " + ex.Message, "Lỗi");
+                MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi tải dữ liệu: " + ex.Message, "Lỗi");
             }
         }
 
@@ -190,7 +208,7 @@ namespace QuanLyCuaHangGame.GUI
         {
             if (lvServices.SelectedItems.Count == 0)
             {
-                MessageBox.Show("Vui lòng chọn dịch vụ để sửa!", "Thông báo");
+                MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng chọn dịch vụ để sửa!", "Thông báo");
                 return;
             }
 
@@ -220,25 +238,25 @@ namespace QuanLyCuaHangGame.GUI
         {
             if (lvServices.SelectedItems.Count == 0)
             {
-                MessageBox.Show("Vui lòng chọn dịch vụ để xóa!", "Thông báo");
+                MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng chọn dịch vụ để xóa!", "Thông báo");
                 return;
             }
 
-            if (MessageBox.Show("Bạn có chắc muốn xóa dịch vụ này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MaterialSkin.Controls.MaterialMessageBox.Show("Bạn có chắc muốn xóa dịch vụ này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 try
                 {
                     int serviceId = (int)lvServices.SelectedItems[0].Tag;
                     serviceItemService.DeleteService(serviceId);
 
-                    MessageBox.Show("Xóa thành công!", "Thành công");
+                    MaterialSkin.Controls.MaterialMessageBox.Show("Xóa thành công!", "Thành công");
                     LoadServices();
                     ClearForm();
                     UpdateStatusBar();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi: " + ex.Message, "Lỗi");
+                    MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi: " + ex.Message, "Lỗi");
                 }
             }
         }
@@ -253,21 +271,21 @@ namespace QuanLyCuaHangGame.GUI
                 // Kiểm tra dữ liệu
                 if (string.IsNullOrWhiteSpace(txtName.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập tên dịch vụ!", "Lỗi");
+                    MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng nhập tên dịch vụ!", "Lỗi");
                     txtName.Focus();
                     return;
                 }
 
                 if (!decimal.TryParse(txtPrice.Text, out decimal price) || price <= 0)
                 {
-                    MessageBox.Show("Vui lòng nhập giá hợp lệ (> 0)!", "Lỗi");
+                    MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng nhập giá hợp lệ (> 0)!", "Lỗi");
                     txtPrice.Focus();
                     return;
                 }
 
                 if (cboCategory.SelectedItem == null)
                 {
-                    MessageBox.Show("Vui lòng chọn danh mục!", "Lỗi");
+                    MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng chọn danh mục!", "Lỗi");
                     return;
                 }
 
@@ -283,7 +301,7 @@ namespace QuanLyCuaHangGame.GUI
                     };
 
                     serviceItemService.AddService(newService);
-                    MessageBox.Show("Thêm dịch vụ thành công!", "Thành công");
+                    MaterialSkin.Controls.MaterialMessageBox.Show("Thêm dịch vụ thành công!", "Thành công");
                 }
                 else
                 {
@@ -297,7 +315,7 @@ namespace QuanLyCuaHangGame.GUI
                         service.IsAvailable = chkAvailable.Checked;
 
                         serviceItemService.UpdateService(service);
-                        MessageBox.Show("Cập nhật dịch vụ thành công!", "Thành công");
+                        MaterialSkin.Controls.MaterialMessageBox.Show("Cập nhật dịch vụ thành công!", "Thành công");
                     }
                 }
 
@@ -307,7 +325,7 @@ namespace QuanLyCuaHangGame.GUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi");
+                MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi: " + ex.Message, "Lỗi");
             }
         }
 
@@ -367,7 +385,7 @@ namespace QuanLyCuaHangGame.GUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi");
+                MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi: " + ex.Message, "Lỗi");
             }
         }
 
@@ -405,6 +423,41 @@ namespace QuanLyCuaHangGame.GUI
             {
                 e.Handled = true;
             }
+        }
+
+        private void lvServices_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        {
+            var lv = (System.Windows.Forms.ListView)sender;
+            Color rowBg = UIHelper.DashboardUIHelper.GetRowBackColor(lv, e.ItemIndex, e.Item.Selected);
+            using (var br = new SolidBrush(rowBg)) e.Graphics.FillRectangle(br, e.Bounds);
+
+            string val = e.SubItem.Text;
+            Rectangle textRect = e.Bounds;
+            textRect.Inflate(-10, 0);
+            TextFormatFlags flags = TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis;
+
+            if (e.ColumnIndex == 3) // Có Sẵn — badge xanh/đỏ
+            {
+                Color bg = val.Contains("Có") ? Color.FromArgb(220, 252, 231) : Color.FromArgb(254, 226, 226);
+                Color fg = val.Contains("Có") ? Color.FromArgb(22, 163, 74)   : Color.FromArgb(220, 38, 38);
+                UIHelper.DashboardUIHelper.DrawBadgePill(e.Graphics, val, e.Bounds, bg, fg);
+            }
+            else if (e.ColumnIndex == 1) // Danh Mục — badge tím nhạt
+            {
+                UIHelper.DashboardUIHelper.DrawBadgePill(e.Graphics, val, e.Bounds,
+                    UIHelper.DashboardUIHelper.ThemeColorLight,
+                    UIHelper.DashboardUIHelper.ThemeColor);
+            }
+            else if (e.ColumnIndex == 0) // Tên — bold
+            {
+                TextRenderer.DrawText(e.Graphics, val, new Font("Inter", 9.5F, FontStyle.Bold), textRect, Color.FromArgb(17, 24, 39), flags);
+            }
+            else // Giá
+            {
+                TextRenderer.DrawText(e.Graphics, val, new Font("Inter", 9.5F), textRect, Color.FromArgb(55, 65, 81), flags);
+            }
+            using (var pen = new Pen(Color.FromArgb(243, 244, 246), 1))
+                e.Graphics.DrawLine(pen, e.Bounds.Left, e.Bounds.Bottom - 1, e.Bounds.Right, e.Bounds.Bottom - 1);
         }
     }
 }
