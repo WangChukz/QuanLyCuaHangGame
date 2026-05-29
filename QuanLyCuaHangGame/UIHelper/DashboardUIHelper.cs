@@ -321,8 +321,13 @@ namespace QuanLyCuaHangGame.UIHelper
 
             foreach (Control ctrl in parent.Controls)
             {
-                // Thay đổi font cho các nhãn và control cơ bản (Bỏ qua MaterialSkin Controls vì nó tự quản lý font riêng)
-                if (ctrl is Label || ctrl is Button || ctrl is TextBox || ctrl is ComboBox || ctrl is ListView || ctrl is TreeView)
+                // Thay đổi font cho các nhãn và control cơ bản (Bỏ qua các control phức tạp của MaterialSkin như ComboBox, TextBox, Button)
+                string typeName = ctrl.GetType().Name;
+                bool isComplexMaterialControl = typeName.StartsWith("Material") && 
+                    (typeName.Contains("ComboBox") || typeName.Contains("TextBox") || typeName.Contains("Button") || typeName.Contains("Tab") || typeName.Contains("Card"));
+
+                if ((ctrl is Label || ctrl is Button || ctrl is TextBox || ctrl is ComboBox || ctrl is ListView || ctrl is TreeView)
+                    && !isComplexMaterialControl)
                 {
                     if (ctrl.Font.Bold)
                         ctrl.Font = new Font(family, ctrl.Font.Size, FontStyle.Bold);

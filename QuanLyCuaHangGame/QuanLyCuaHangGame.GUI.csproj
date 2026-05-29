@@ -74,6 +74,12 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmComputerMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmComputerMap.Designer.cs">
+      <DependentUpon>frmComputerMap.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +121,12 @@
     </Compile>
     <Compile Include="dlgRoom.Designer.cs">
       <DependentUpon>dlgRoom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dlgOpenSession.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dlgOpenSession.Designer.cs">
+      <DependentUpon>dlgOpenSession.cs</DependentUpon>
     </Compile>
     <Compile Include="frmComputer.cs">
       <SubType>Form</SubType>
@@ -160,6 +172,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmComputer.resx">
       <DependentUpon>frmComputer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmComputerMap.resx">
+      <DependentUpon>frmComputerMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dlgOpenSession.resx">
+      <DependentUpon>dlgOpenSession.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCustomer.resx">
       <DependentUpon>frmCustomer.cs</DependentUpon>
