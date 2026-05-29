@@ -67,7 +67,7 @@ namespace QuanLyCuaHangGame.GUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi tải danh sách dịch vụ: " + ex.Message);
+                MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi tải danh sách dịch vụ: " + ex.Message);
             }
         }
 
@@ -213,7 +213,7 @@ namespace QuanLyCuaHangGame.GUI
             int itemsCount = _selectedQuantities.Sum(q => q.Value);
             if (itemsCount == 0)
             {
-                MessageBox.Show("Vui lòng chọn ít nhất một dịch vụ!", "Thông báo");
+                MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng chọn ít nhất một dịch vụ!", "Thông báo");
                 return;
             }
 

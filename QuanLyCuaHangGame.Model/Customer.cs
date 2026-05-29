@@ -29,7 +29,7 @@ namespace QuanLyCuaHangGame.Model
         public string PasswordHash { get; set; }
 
         [Required]
-        [StringLength(4)]
+        [StringLength(100)]
         public string PinCode { get; set; }
 
         [Column(TypeName = "decimal")]

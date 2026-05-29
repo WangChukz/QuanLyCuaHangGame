@@ -86,7 +86,7 @@ namespace QuanLyCuaHangGame
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi tải danh sách phòng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi khi tải danh sách phòng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -164,7 +164,7 @@ namespace QuanLyCuaHangGame
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, "Lỗi khi tải sơ đồ máy: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi khi tải sơ đồ máy: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -305,27 +305,29 @@ namespace QuanLyCuaHangGame
 
             if (activeSession == null)
             {
-                MessageBox.Show(this, "Không tìm thấy phiên hoạt động của máy đang chọn!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MaterialSkin.Controls.MaterialMessageBox.Show("Không tìm thấy phiên hoạt động của máy đang chọn!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // // Sau này tích hợp frmPayment:
-            // using (var dlg = new frmPayment(activeSession.Id))
-            // {
-            //     dlg.ShowDialog();
-            // }
-
-            MessageBox.Show(this, "Tính năng thanh toán đang chờ tích hợp với Form thanh toán của nhóm!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Tích hợp form thanh toán thực tế
+            using (var dlg = new frmPayment(activeSession.Id, BLL.SessionContext.CurrentUserId))
+            {
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    LoadComputerMap();
+                    ResetDetailPanel();
+                }
+            }
         }
 
         private void BtnOrderService_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Tính năng gọi dịch vụ từ xa đang được phát triển!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MaterialSkin.Controls.MaterialMessageBox.Show("Tính năng gọi dịch vụ từ xa đang được phát triển!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void BtnHistory_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Tính năng xem lịch sử phiên máy đang được phát triển!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MaterialSkin.Controls.MaterialMessageBox.Show("Tính năng xem lịch sử phiên máy đang được phát triển!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 

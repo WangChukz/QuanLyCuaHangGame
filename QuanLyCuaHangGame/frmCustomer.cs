@@ -9,7 +9,7 @@ using QuanLyCuaHangGame.UIHelper;
 
 namespace QuanLyCuaHangGame
 {
-    public partial class frmCustomer : Form
+    public partial class frmCustomer : MaterialForm
     {
         private CustomerBLL _customerBLL;
         private int _selectedCustomerId = -1;
@@ -20,7 +20,7 @@ namespace QuanLyCuaHangGame
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
-            UIHelper.UICommon.ApplyTheme(this, true);
+            UIHelper.UICommon.ApplyTheme(this);
 
             _customerBLL = new CustomerBLL();
 
@@ -29,29 +29,53 @@ namespace QuanLyCuaHangGame
             txtSearch.TextChanged += TxtSearch_TextChanged;
             mlvHoiVien.SelectedIndexChanged += MlvHoiVien_SelectedIndexChanged;
             btnNapTien.Click += BtnNapTien_Click;
+            if (btnNapTienTop != null) btnNapTienTop.Click += (s, e) => { txtMoney.Focus(); };
+            if (btnHistoryTop != null) btnHistoryTop.Click += (s, e) => { mlvHistory.Focus(); };
+
+            // Áp dụng style bảng đồng bộ Dashboard cho cả 2 ListView
+            UIHelper.DashboardUIHelper.StyleListView(mlvHoiVien, DrawSubItem_HoiVien);
+            UIHelper.DashboardUIHelper.StyleListView(mlvHistory, DrawSubItem_History);
         }
 
         private void FrmCustomer_Load(object sender, EventArgs e)
         {
-            if (this.Parent == null)
-            {
-                this.FormStyle = FormStyles.ActionBar_56;
-            }
+            if (this.Parent != null)
+                this.MinimumSize = new System.Drawing.Size(0, 0);
+
+            // Thiết lập màu thẻ tài khoản
+            cardUser.BackColor = Color.FromArgb(25, 118, 210);
+            cardUser.ForeColor = Color.White;
+            cardUser.Paint += CardUser_Paint;
+            lblCardTitle.Font  = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblCardTitle.ForeColor = Color.WhiteSmoke;
+            lblCardName.Font   = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblCardName.ForeColor  = Color.White;
+            lblCardInfo.Font   = new Font("Segoe UI", 10F);
+            lblCardInfo.ForeColor  = Color.WhiteSmoke;
+            lblCardBalanceTitle.Font = new Font("Segoe UI", 9F);
+            lblCardBalanceTitle.ForeColor = Color.WhiteSmoke;
+            lblCardBalance.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            lblCardBalance.ForeColor = Color.White;
+            lblCardRegDate.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblCardRegDate.ForeColor = Color.White;
+            lblCardPin.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblCardPin.ForeColor = Color.White;
+            foreach (Control ctrl in cardUser.Controls)
+                if (ctrl is Label lbl) lbl.BackColor = Color.Transparent;
 
             LoadCustomerList("");
             ClearCustomerDetails();
 
-            // Auto resize columns on load
-            UICommon.AutoResizeListViewColumns(mlvHoiVien, new double[] { 0.25, 0.2, 0.2, 0.2, 0.15 });
-            UICommon.AutoResizeListViewColumns(mlvHistory, new double[] { 0.25, 0.35, 0.2, 0.2 });
+            // Resize cột
+            UICommon.AutoResizeListViewColumns(mlvHoiVien, new double[] { 0.28, 0.18, 0.18, 0.18, 0.18 });
+            UICommon.AutoResizeListViewColumns(mlvHistory,  new double[] { 0.20, 0.38, 0.20, 0.22 });
+            this.SizeChanged += (s, ev) => {
+                UICommon.AutoResizeListViewColumns(mlvHoiVien, new double[] { 0.28, 0.18, 0.18, 0.18, 0.18 });
+                UICommon.AutoResizeListViewColumns(mlvHistory,  new double[] { 0.20, 0.38, 0.20, 0.22 });
+            };
         }
 
-        protected override void OnSizeChanged(EventArgs e)
-        {
-            base.OnSizeChanged(e);
-            UICommon.AutoResizeListViewColumns(mlvHoiVien, new double[] { 0.25, 0.2, 0.2, 0.2, 0.15 });
-            UICommon.AutoResizeListViewColumns(mlvHistory, new double[] { 0.25, 0.35, 0.2, 0.2 });
-        }
+
 
         private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
@@ -71,15 +95,6 @@ namespace QuanLyCuaHangGame
                 item.SubItems.Add(c.Balance.ToString("N0") + "đ");
                 item.SubItems.Add(c.IsActive ? "Hoạt động" : "Khóa");
                 item.Tag = c.Id;
-                
-                // Color formatting
-                item.UseItemStyleForSubItems = false;
-                item.SubItems[3].ForeColor = Color.Green;
-                
-                var statusSubItem = item.SubItems[4];
-                statusSubItem.ForeColor = Color.White;
-                statusSubItem.BackColor = c.IsActive ? Color.Green : Color.Orange;
-
                 mlvHoiVien.Items.Add(item);
             }
         }
@@ -126,7 +141,7 @@ namespace QuanLyCuaHangGame
         {
             if (_selectedCustomerId <= 0)
             {
-                MessageBox.Show("Vui lòng chọn khách hàng để nạp tiền.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng chọn khách hàng để nạp tiền.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -137,7 +152,7 @@ namespace QuanLyCuaHangGame
                     int currentUserId = SessionContext.CurrentUserId;
                     _customerBLL.TopUp(_selectedCustomerId, amount, txtNote.Text, currentUserId);
                     
-                    MessageBox.Show("Nạp tiền thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MaterialSkin.Controls.MaterialMessageBox.Show("Nạp tiền thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     
                     // Refresh data
                     LoadCustomerDetails(_selectedCustomerId);
@@ -157,12 +172,12 @@ namespace QuanLyCuaHangGame
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Lỗi khi nạp tiền: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MaterialSkin.Controls.MaterialMessageBox.Show($"Lỗi khi nạp tiền: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Vui lòng nhập số tiền hợp lệ (> 0).", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng nhập số tiền hợp lệ (> 0).", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -177,37 +192,113 @@ namespace QuanLyCuaHangGame
             var merged = new System.Collections.Generic.List<Tuple<string, string, decimal, DateTime>>();
             
             foreach (var t in topUps)
-            {
                 merged.Add(new Tuple<string, string, decimal, DateTime>("+ Nạp tiền", t.Note, t.Amount, t.CreatedAt));
-            }
             
             foreach (var t in spends)
-            {
                 merged.Add(new Tuple<string, string, decimal, DateTime>("- Thanh toán", t.Description, -t.Amount, t.CreatedAt));
-            }
 
-            var sortedHistory = merged.OrderByDescending(m => m.Item4).ToList();
-
-            foreach (var t in sortedHistory)
+            foreach (var t in merged.OrderByDescending(m => m.Item4))
             {
                 var item = new ListViewItem(t.Item1);
                 item.SubItems.Add(t.Item2);
-                
-                string amountStr = (t.Item3 > 0 ? "+" : "") + t.Item3.ToString("N0") + "đ";
-                item.SubItems.Add(amountStr);
-                
+                item.SubItems.Add((t.Item3 > 0 ? "+" : "") + t.Item3.ToString("N0") + "đ");
                 item.SubItems.Add(t.Item4.ToString("dd/MM/yyyy HH:mm"));
-
-                item.UseItemStyleForSubItems = false;
-                Color amountColor = t.Item3 > 0 ? Color.Green : Color.Red;
-                item.ForeColor = amountColor;
-                foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
-                {
-                    subItem.ForeColor = amountColor;
-                }
-
                 mlvHistory.Items.Add(item);
             }
+        }
+
+        // ── Owner Draw handlers — đồng bộ Dashboard ─────────────────────────────
+
+        private void DrawSubItem_HoiVien(object sender, DrawListViewSubItemEventArgs e)
+        {
+            var lv = (System.Windows.Forms.ListView)sender;
+            Color rowBg = UIHelper.DashboardUIHelper.GetRowBackColor(lv, e.ItemIndex, e.Item.Selected);
+            using (var br = new SolidBrush(rowBg)) e.Graphics.FillRectangle(br, e.Bounds);
+
+            string val = e.SubItem.Text;
+            Rectangle textRect = e.Bounds; textRect.Inflate(-10, 0);
+            TextFormatFlags flags = TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis;
+
+            if (e.ColumnIndex == 4) // Trạng thái — badge
+            {
+                Color bg = val == "Hoạt động" ? Color.FromArgb(220, 252, 231) : Color.FromArgb(254, 226, 226);
+                Color fg = val == "Hoạt động" ? Color.FromArgb(22, 163, 74)   : Color.FromArgb(220, 38, 38);
+                UIHelper.DashboardUIHelper.DrawBadgePill(e.Graphics, val, e.Bounds, bg, fg);
+            }
+            else if (e.ColumnIndex == 3) // Số dư — xanh bold
+            {
+                TextRenderer.DrawText(e.Graphics, val, new Font("Inter", 9.5F, FontStyle.Bold), textRect, Color.FromArgb(22, 163, 74), flags);
+            }
+            else if (e.ColumnIndex == 0) // Họ tên — bold
+            {
+                TextRenderer.DrawText(e.Graphics, val, new Font("Inter", 9.5F, FontStyle.Bold), textRect, Color.FromArgb(17, 24, 39), flags);
+            }
+            else
+            {
+                TextRenderer.DrawText(e.Graphics, val, new Font("Inter", 9.5F), textRect, Color.FromArgb(55, 65, 81), flags);
+            }
+            using (var pen = new Pen(Color.FromArgb(243, 244, 246), 1))
+                e.Graphics.DrawLine(pen, e.Bounds.Left, e.Bounds.Bottom - 1, e.Bounds.Right, e.Bounds.Bottom - 1);
+        }
+
+        private void DrawSubItem_History(object sender, DrawListViewSubItemEventArgs e)
+        {
+            var lv = (System.Windows.Forms.ListView)sender;
+            Color rowBg = UIHelper.DashboardUIHelper.GetRowBackColor(lv, e.ItemIndex, e.Item.Selected);
+            using (var br = new SolidBrush(rowBg)) e.Graphics.FillRectangle(br, e.Bounds);
+
+            string val = e.SubItem.Text;
+            Rectangle textRect = e.Bounds; textRect.Inflate(-10, 0);
+            TextFormatFlags flags = TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis;
+
+            Color fg = Color.FromArgb(55, 65, 81);
+            FontStyle fs = FontStyle.Regular;
+
+            // Loại GD (col 0) và Số tiền (col 2): màu xanh/đỏ theo dấu
+            if (e.ColumnIndex == 0 || e.ColumnIndex == 2)
+            {
+                bool isPlus = val.StartsWith("+");
+                fg = isPlus ? Color.FromArgb(22, 163, 74) : Color.FromArgb(220, 38, 38);
+                fs = FontStyle.Bold;
+            }
+
+            TextRenderer.DrawText(e.Graphics, val, new Font("Inter", 9.5F, fs), textRect, fg, flags);
+            using (var pen = new Pen(Color.FromArgb(243, 244, 246), 1))
+                e.Graphics.DrawLine(pen, e.Bounds.Left, e.Bounds.Bottom - 1, e.Bounds.Right, e.Bounds.Bottom - 1);
+        }
+
+        private void CardUser_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            using (SolidBrush brush = new SolidBrush(Color.FromArgb(40, 255, 255, 255)))
+            {
+                Rectangle r1 = lblCardRegDate.Bounds;
+                r1.Inflate(8, 4);
+                FillRoundRect(e.Graphics, brush, r1, 10);
+
+                Rectangle r2 = lblCardPin.Bounds;
+                r2.Inflate(8, 4);
+                FillRoundRect(e.Graphics, brush, r2, 10);
+            }
+        }
+
+        private void FillRoundRect(Graphics g, Brush brush, Rectangle rect, int radius)
+        {
+            int d = radius * 2;
+            using (System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath())
+            {
+                path.AddArc(rect.X, rect.Y, d, d, 180, 90);
+                path.AddArc(rect.Right - d, rect.Y, d, d, 270, 90);
+                path.AddArc(rect.Right - d, rect.Bottom - d, d, d, 0, 90);
+                path.AddArc(rect.X, rect.Bottom - d, d, d, 90, 90);
+                path.CloseFigure();
+                g.FillPath(brush, path);
+            }
+        }
+
+        private void cardNapTien_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

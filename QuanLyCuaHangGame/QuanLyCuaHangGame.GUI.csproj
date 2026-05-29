@@ -160,6 +160,7 @@
     </Compile>
     <Compile Include="Data\RoomStore.cs" />
     <Compile Include="UIHelper\UICommon.cs" />
+
     <Compile Include="UIHelper\DashboardUIHelper.cs" />
     <Compile Include="UIHelper\UserUIHelper.cs" />
     <Compile Include="UIHelper\GameZoneDialog.cs">

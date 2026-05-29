@@ -280,7 +280,7 @@ PRINT '========================================';
 -- Hash BCrypt được sinh sẵn — work factor 12
 -- ============================================================
 INSERT INTO Users (FullName, Username, PasswordHash, Role, IsActive, CreatedAt) VALUES
-(N'Admin Hệ thống',    'admin',   '$2a$12$vZNCY5PgdYf57KaZ1xFKjubmMJCFaefLV56lyo0DHNF.wBxPTBxh.', 'Admin', 1, '2024-01-01 08:00:00'),
+(N'Admin Hệ thống',    'admin',   '$2a$12$/20RUzxL1iEjMSDjOuK0n.fiONeo/Bl281z05r3eLjY/kHffHPu1y', 'Admin', 1, '2024-01-01 08:00:00'),
 (N'Nguyễn Văn Nam',   'nvnam',   '$2a$12$pmZD9VClT5rXLOe6HKcRiueqGeUr0xIqjrDzjPscnC.6.gigUirxu', 'Staff', 1, '2024-03-15 08:00:00'),
 (N'Trần Thị Hương',   'tthg',    '$2a$12$pmZD9VClT5rXLOe6HKcRiueqGeUr0xIqjrDzjPscnC.6.gigUirxu', 'Staff', 1, '2024-06-20 08:00:00'),
 (N'Lê Minh Tuấn',     'lmtuan',  '$2a$12$pmZD9VClT5rXLOe6HKcRiueqGeUr0xIqjrDzjPscnC.6.gigUirxu', 'Staff', 0, '2024-09-10 08:00:00');
@@ -586,7 +586,7 @@ PRINT '';
 PRINT '========================================';
 PRINT 'HOÀN TẤT! Database GameZoneProDB sẵn sàng.';
 PRINT 'Tài khoản đăng nhập ứng dụng:';
-PRINT '  Admin : admin   / Admin@123456';
+PRINT '  Admin : admin   / 123456789a';
 PRINT '  Staff : nvnam   / Staff@123456';
 PRINT '  Staff : tthg    / Staff@123456';
 PRINT 'Hội viên mẫu:';

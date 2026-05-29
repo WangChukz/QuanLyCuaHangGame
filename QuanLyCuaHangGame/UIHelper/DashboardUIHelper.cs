@@ -9,9 +9,9 @@ namespace QuanLyCuaHangGame.UIHelper
     {
         // --- HỆ THỐNG MÀU CHỦ ĐẠO (THEME COLOR) ---
         // Sửa duy nhất mã màu dưới đây để thay đổi toàn bộ hệ thống (Header, Grid, Chart, Pills, Footer, v.v.)
-        public static Color ThemeColor = Color.FromArgb(108, 76, 241); // Màu tím đậm thương hiệu (#6C4CF1)
-        public static Color ThemeColorLight = Color.FromArgb(243, 239, 255); // Màu tím nhạt mờ cho Selection/Hover
-        public static Color ThemeColorAlternating = Color.FromArgb(250, 248, 255); // Màu tím cực nhạt cho Zebra rows
+        public static Color ThemeColor = Color.FromArgb(25, 118, 210); // Màu xanh dương đậm (#1976D2)
+        public static Color ThemeColorLight = Color.FromArgb(235, 244, 255); // Màu xanh nhạt mờ cho Selection/Hover (#EBF4FF)
+        public static Color ThemeColorAlternating = Color.FromArgb(248, 251, 255); // Màu xanh cực nhạt cho Zebra rows (#F8FBFF)
 
         public static void ApplyKPICardStyles(
             Label lblDoanhThuValue, Label lblDoanhThuSub,
@@ -344,6 +344,102 @@ namespace QuanLyCuaHangGame.UIHelper
                     ApplyGlobalModernStyle(ctrl);
                 }
             }
+        }
+
+        // ── Unified ListView Styling — đồng bộ Dashboard ─────────────────────────
+
+        /// <summary>Vẽ badge pill bo góc lên Graphics (dùng chung cho tất cả ListView OwnerDraw).</summary>
+        public static void DrawBadgePill(Graphics g, string text, Rectangle cellBounds, Color bg, Color fg)
+        {
+            int w = Math.Min(cellBounds.Width - 16, 92);
+            int h = 22;
+            int x = cellBounds.X + (cellBounds.Width - w) / 2;
+            int y = cellBounds.Y + (cellBounds.Height - h) / 2;
+            Rectangle r = new Rectangle(x, y, w, h);
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            using (var path = UICommon.GetRoundedRectPath(r, 11))
+            using (var brush = new SolidBrush(bg))
+                g.FillPath(brush, path);
+            TextRenderer.DrawText(g, text, new Font("Inter", 9F, FontStyle.Bold), r, fg,
+                TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter);
+        }
+
+        /// <summary>Trả về màu nền dòng chuẩn (zebra + hover + selected) cho DrawSubItem.</summary>
+        public static Color GetRowBackColor(ListView lv, int rowIndex, bool isSelected)
+        {
+            int hovered = lv.Tag is int t ? t : -1;
+            if (isSelected || rowIndex == hovered) return ThemeColorLight;
+            return (rowIndex % 2 == 0) ? ThemeColorAlternating : Color.White;
+        }
+
+        /// <summary>
+        /// Áp dụng style bảng đồng bộ Dashboard cho bất kỳ ListView nào.
+        /// • Header màu chủ đạo, chữ trắng, cao 45 px.
+        /// • Dòng: zebra + hover + selected, không gridlines.
+        /// • customSubItemDraw = null → dùng renderer mặc định (text thuần).
+        /// </summary>
+        public static void StyleListView(
+            ListView lv,
+            DrawListViewSubItemEventHandler customSubItemDraw = null,
+            int rowHeight = 45)
+        {
+            lv.View          = View.Details;
+            lv.FullRowSelect = true;
+            lv.MultiSelect   = false;
+            lv.GridLines     = false;
+            lv.BorderStyle   = BorderStyle.None;
+            lv.BackColor     = Color.White;
+            lv.OwnerDraw     = true;
+            lv.HeaderStyle   = ColumnHeaderStyle.Nonclickable;
+
+            // Row height: SmallImageList trick (không cần P/Invoke)
+            var bmp = new Bitmap(1, rowHeight);
+            using (var gfx = Graphics.FromImage(bmp)) gfx.Clear(Color.Transparent);
+            var il = new ImageList { ImageSize = new Size(1, rowHeight), ColorDepth = ColorDepth.Depth32Bit };
+            il.Images.Add(bmp);
+            lv.SmallImageList = il;
+
+            // Header draw (đồng bộ DrawColumnHeader của Dashboard)
+            lv.DrawColumnHeader -= DrawColumnHeader;
+            lv.DrawColumnHeader += DrawColumnHeader;
+
+            // Item — tắt default draw
+            lv.DrawItem += (s, e) => e.DrawDefault = false;
+
+            // SubItem — caller's handler hoặc built-in default
+            if (customSubItemDraw != null)
+                lv.DrawSubItem += customSubItemDraw;
+            else
+                lv.DrawSubItem += Lv_DefaultSubItem;
+
+            // Hover tracking — lưu index dòng hover vào lv.Tag
+            lv.Tag = -1;
+            lv.MouseMove += (s, e) => {
+                var l = (ListView)s;
+                int newRow = l.HitTest(e.Location).Item?.Index ?? -1;
+                if (!(l.Tag is int cur) || cur != newRow) { l.Tag = newRow; l.Invalidate(); }
+            };
+            lv.MouseLeave += (s, e) => {
+                var l = (ListView)s;
+                if (l.Tag is int cur && cur != -1) { l.Tag = -1; l.Invalidate(); }
+            };
+        }
+
+        private static void Lv_DefaultSubItem(object sender, DrawListViewSubItemEventArgs e)
+        {
+            var lv = (ListView)sender;
+            Color rowBg = GetRowBackColor(lv, e.ItemIndex, e.Item.Selected);
+            using (var br = new SolidBrush(rowBg)) e.Graphics.FillRectangle(br, e.Bounds);
+
+            Rectangle textRect = e.Bounds;
+            textRect.Inflate(-10, 0);
+            TextFormatFlags flags = TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis;
+            Font f   = new Font("Inter", 9.5F, e.ColumnIndex == 0 ? FontStyle.Bold : FontStyle.Regular);
+            Color fg = e.ColumnIndex == 0 ? Color.FromArgb(17, 24, 39) : Color.FromArgb(55, 65, 81);
+            TextRenderer.DrawText(e.Graphics, e.SubItem.Text, f, textRect, fg, flags);
+
+            using (var pen = new Pen(Color.FromArgb(243, 244, 246), 1))
+                e.Graphics.DrawLine(pen, e.Bounds.Left, e.Bounds.Bottom - 1, e.Bounds.Right, e.Bounds.Bottom - 1);
         }
     }
 }

@@ -62,11 +62,24 @@ namespace QuanLyCuaHangGame.DAL
                         Amount = amount,
                         Note = note,
                         ProcessedByUserId = processedByUserId,
-                        CreatedAt = DateTime.Now
+                        CreatedAt = DateTime.Now,
+                        Customer = customer,
+                        ProcessedByUser = context.Users.Find(processedByUserId)
                     };
                     context.TopUpTransactions.Add(transaction);
 
-                    context.SaveChanges();
+                    try
+                    {
+                        context.SaveChanges();
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+                    {
+                        var errorMessages = ex.EntityValidationErrors
+                                .SelectMany(x => x.ValidationErrors)
+                                .Select(x => x.ErrorMessage);
+                        var fullErrorMessage = string.Join("; ", errorMessages);
+                        throw new Exception("EF Validation Error: " + fullErrorMessage);
+                    }
                 }
             }
         }
