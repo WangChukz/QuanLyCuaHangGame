@@ -114,5 +114,138 @@ namespace QuanLyCuaHangGame.BLL
                 paidByBalance,
                 paidByCash);
         }
+
+        public void GenerateInvoicePdf(
+            string filePath, 
+            Session session, 
+            List<SessionService> services, 
+            DateTime endTime, 
+            decimal sessionAmount, 
+            decimal totalAmount, 
+            decimal extraCash)
+        {
+            try
+            {
+                // ── Font: dùng Tahoma (hỗ trợ tiếng Việt, cho phép embedding)
+                // Arial bị giới hạn embedding (fsType=4) → iText 7 ném PdfException khi FORCE_EMBEDDED.
+                string fontsDir = Environment.GetFolderPath(Environment.SpecialFolder.Fonts);
+
+                string fontPath       = System.IO.Path.Combine(fontsDir, "tahoma.ttf");
+                string boldFontPath   = System.IO.Path.Combine(fontsDir, "tahomabd.ttf");
+                string italicFontPath = System.IO.Path.Combine(fontsDir, "tahoma.ttf"); // Tahoma không có file italic riêng
+
+                // Kiểm tra font tồn tại; nếu thiếu tahomabd thì dùng tahoma thường
+                if (!System.IO.File.Exists(boldFontPath))
+                    boldFontPath = fontPath;
+
+                if (!System.IO.File.Exists(fontPath))
+                    throw new System.IO.FileNotFoundException(
+                        "Không tìm thấy font Tahoma trên hệ thống. Đảm bảo file tahoma.ttf tồn tại trong " + fontsDir);
+
+                // PREFER_EMBEDDED: embed nếu font cho phép, không throw nếu bị restricted
+                var embeddingStrategy = iText.Kernel.Font.PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED;
+
+                using (var document = new iText.Layout.Document(
+                    new iText.Kernel.Pdf.PdfDocument(
+                        new iText.Kernel.Pdf.PdfWriter(filePath))))
+                {
+                        iText.Kernel.Font.PdfFont font = iText.Kernel.Font.PdfFontFactory.CreateFont(
+                            fontPath, iText.IO.Font.PdfEncodings.IDENTITY_H, embeddingStrategy);
+                        iText.Kernel.Font.PdfFont boldFont = iText.Kernel.Font.PdfFontFactory.CreateFont(
+                            boldFontPath, iText.IO.Font.PdfEncodings.IDENTITY_H, embeddingStrategy);
+                        iText.Kernel.Font.PdfFont italicFont = iText.Kernel.Font.PdfFontFactory.CreateFont(
+                            italicFontPath, iText.IO.Font.PdfEncodings.IDENTITY_H, embeddingStrategy);
+                        
+                        document.SetFont(font);
+
+                        // Header
+                        var header = new iText.Layout.Element.Paragraph("HÓA ĐƠN THANH TOÁN")
+                            .SetFont(boldFont)
+                            .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                            .SetFontSize(20);
+                        document.Add(header);
+
+                        document.Add(new iText.Layout.Element.Paragraph("GAMEZONE - ĐẲNG CẤP GAMER")
+                            .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                            .SetFontSize(14));
+                        document.Add(new iText.Layout.Element.Paragraph("--------------------------------------------------")
+                            .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER));
+
+                        // Thông tin phiên chơi
+                        string tenKhach = session.Customer?.FullName ?? session.GuestName ?? "Khách vãng lai";
+                        document.Add(new iText.Layout.Element.Paragraph($"Khách hàng: {tenKhach}"));
+                        document.Add(new iText.Layout.Element.Paragraph($"Máy: {session.Computer?.Code ?? "Không rõ"}"));
+                        document.Add(new iText.Layout.Element.Paragraph($"Bắt đầu: {session.StartTime:dd/MM/yyyy HH:mm:ss}"));
+                        document.Add(new iText.Layout.Element.Paragraph($"Kết thúc: {endTime:dd/MM/yyyy HH:mm:ss}"));
+                        
+                        int totalMinutes = (int)Math.Ceiling((endTime - session.StartTime).TotalMinutes);
+                        int h = totalMinutes / 60;
+                        int m = totalMinutes % 60;
+                        string timeUsed = h > 0 ? $"{h} giờ {m} phút" : $"{m} phút";
+                        document.Add(new iText.Layout.Element.Paragraph($"Thời gian chơi: {timeUsed}"));
+
+                        document.Add(new iText.Layout.Element.Paragraph("--------------------------------------------------")
+                            .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER));
+
+                        // Bảng chi tiết dịch vụ
+                        var table = new iText.Layout.Element.Table(new float[] { 4, 1, 2, 2 }).UseAllAvailableWidth();
+                        table.AddHeaderCell(new iText.Layout.Element.Cell().Add(new iText.Layout.Element.Paragraph("Diễn giải").SetFont(boldFont)));
+                        table.AddHeaderCell(new iText.Layout.Element.Cell().Add(new iText.Layout.Element.Paragraph("SL").SetFont(boldFont)));
+                        table.AddHeaderCell(new iText.Layout.Element.Cell().Add(new iText.Layout.Element.Paragraph("Đơn giá").SetFont(boldFont)));
+                        table.AddHeaderCell(new iText.Layout.Element.Cell().Add(new iText.Layout.Element.Paragraph("Thành tiền").SetFont(boldFont)));
+
+                        // Dòng tiền giờ
+                        table.AddCell(new iText.Layout.Element.Cell().Add(new iText.Layout.Element.Paragraph("Tiền giờ chơi")));
+                        table.AddCell(new iText.Layout.Element.Cell().Add(new iText.Layout.Element.Paragraph("-")));
+                        table.AddCell(new iText.Layout.Element.Cell().Add(new iText.Layout.Element.Paragraph($"{session.PricePerHour:N0}")));
+                        table.AddCell(new iText.Layout.Element.Cell().Add(new iText.Layout.Element.Paragraph($"{sessionAmount:N0}")));
+
+                        // Dòng dịch vụ
+                        if (services != null)
+                        {
+                            foreach (var svc in services)
+                            {
+                                string tenDV = svc.ServiceItem?.Name ?? $"Dịch vụ #{svc.ServiceItemId}";
+                                table.AddCell(new iText.Layout.Element.Cell().Add(new iText.Layout.Element.Paragraph(tenDV)));
+                                table.AddCell(new iText.Layout.Element.Cell().Add(new iText.Layout.Element.Paragraph(svc.Quantity.ToString())));
+                                table.AddCell(new iText.Layout.Element.Cell().Add(new iText.Layout.Element.Paragraph($"{svc.UnitPrice:N0}")));
+                                table.AddCell(new iText.Layout.Element.Cell().Add(new iText.Layout.Element.Paragraph($"{(svc.Quantity * svc.UnitPrice):N0}")));
+                            }
+                        }
+
+                        document.Add(table);
+                        document.Add(new iText.Layout.Element.Paragraph("--------------------------------------------------")
+                            .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER));
+
+                        // Tổng cộng
+                        document.Add(new iText.Layout.Element.Paragraph($"Tổng cộng: {totalAmount:N0} đ")
+                            .SetFont(boldFont)
+                            .SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT)
+                            .SetFontSize(14));
+
+                        // Phân bổ
+                        var split = CalculatePaymentSplit(totalAmount, session.Customer?.Balance);
+                        
+                        document.Add(new iText.Layout.Element.Paragraph($"Trừ ví hội viên: {split.Item1:N0} đ")
+                            .SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT));
+                        document.Add(new iText.Layout.Element.Paragraph($"Tiền mặt thu thêm: {extraCash:N0} đ")
+                            .SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT));
+
+                        document.Add(new iText.Layout.Element.Paragraph("\nCảm ơn quý khách và hẹn gặp lại!")
+                            .SetFont(italicFont)
+                            .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER));
+
+                        // KHÔNG gọi document.Close() thủ công – using block tự xử lý Dispose()
+                }
+            }
+            catch (Exception ex)
+            {
+                // Hiển thị cả inner exception để dễ chẩn đoán lỗi iText
+                string detail = ex.InnerException != null
+                    ? $"{ex.Message}\n→ Chi tiết: {ex.InnerException.Message}"
+                    : ex.Message;
+                throw new Exception("Lỗi tạo PDF: " + detail, ex);
+            }
+        }
     }
 }

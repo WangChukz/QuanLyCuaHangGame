@@ -8,5 +8,8 @@
     <ProjectReference Include="..\QuanLyCuaHangGame.Model\QuanLyCuaHangGame.Model.csproj" />
     <ProjectReference Include="..\QuanLyCuaHangGame.DAL\QuanLyCuaHangGame.DAL.csproj" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="itext" Version="9.6.0" />
+    <PackageReference Include="itext.bouncy-castle-adapter" Version="9.6.0" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.5" />
   </ItemGroup>
 </Project>
