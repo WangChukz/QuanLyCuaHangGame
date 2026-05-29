@@ -24,25 +24,43 @@ namespace QuanLyCuaHangGame.DAL
             }
 
             string dbName = "GameZoneProDB";
-            string expressConn = $"Server=.\\SQLEXPRESS01;Database={dbName};Integrated Security=True;TrustServerCertificate=True";
-            string defaultConn = $"Server=.;Database={dbName};Integrated Security=True;TrustServerCertificate=True";
+            string expressConn = $"Server=.\\SQLEXPRESS;Database={dbName};Integrated Security=True;TrustServerCertificate=True";
+            string express01Conn = $"Server=.\\SQLEXPRESS01;Database={dbName};Integrated Security=True;TrustServerCertificate=True";
 
-            try
+            // Helper to test if a server is reachable (using master db)
+            bool IsServerReachable(string serverName)
             {
-                // Thử kết nối tới SQLEXPRESS trước với timeout 2 giây để tránh treo máy lâu
-                using (var conn = new System.Data.SqlClient.SqlConnection(expressConn + ";Connection Timeout=2"))
+                try
                 {
-                    conn.Open();
-                    _cachedConnectionString = expressConn;
-                    return expressConn; // Thành công thì trả về chuỗi của SQLEXPRESS
+                    string testConn = $"Server={serverName};Database=master;Integrated Security=True;TrustServerCertificate=True;Connection Timeout=2";
+                    using (var conn = new System.Data.SqlClient.SqlConnection(testConn))
+                    {
+                        conn.Open();
+                        return true;
+                    }
+                }
+                catch
+                {
+                    return false;
                 }
             }
-            catch
+
+            if (IsServerReachable(".\\SQLEXPRESS"))
             {
-                // Nếu lỗi thì dùng server mặc định
-                _cachedConnectionString = defaultConn;
-                return defaultConn;
+                _cachedConnectionString = expressConn;
+                return expressConn;
             }
+
+            if (IsServerReachable(".\\SQLEXPRESS01"))
+            {
+                _cachedConnectionString = express01Conn;
+                return express01Conn;
+            }
+
+            // Fallback
+            string defaultConn = $"Server=.;Database={dbName};Integrated Security=True;TrustServerCertificate=True";
+            _cachedConnectionString = defaultConn;
+            return defaultConn;
         }
 
         public DbSet<User> Users { get; set; }

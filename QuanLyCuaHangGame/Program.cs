@@ -26,7 +26,7 @@ namespace QuanLyCuaHangGame.GUI
                 MessageBox.Show("Không thể khởi tạo CSDL: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            Application.Run(new frmComputerMap());
+            Application.Run(new frmLogin());
         }
     }
 }
