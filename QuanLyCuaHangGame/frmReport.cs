@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Drawing;
 using System.Windows.Forms;
 using MaterialSkin;
@@ -21,14 +23,68 @@ namespace QuanLyCuaHangGame
         private void FrmReport_Load(object sender, EventArgs e)
         {
             ApplyStyles();
-            LoadKPIs();
-            LoadCharts();
-            LoadMachineTab();
-            LoadMemberTab();
+            ApplyStyles();
             
-            // Ẩn/hiện date picker mặc định
             cboKyBaoCao.SelectedIndex = 2; // Tháng này
             UpdateDatePickerVisibility();
+            LoadReportData();
+
+            // Trigger initial layout
+            FrmReport_SizeChanged(this, EventArgs.Empty);
+        }
+
+        private void btnXem_Click(object sender, EventArgs e)
+        {
+            LoadReportData();
+        }
+
+        private void LoadReportData()
+        {
+            DateTime from = DateTime.Today;
+            DateTime to = DateTime.Today;
+
+            string period = cboKyBaoCao.SelectedItem?.ToString() ?? "";
+            switch (period)
+            {
+                case "Hôm nay":
+                    from = DateTime.Today;
+                    to = DateTime.Today;
+                    break;
+                case "Tuần này":
+                    int diff = (7 + (DateTime.Today.DayOfWeek - DayOfWeek.Monday)) % 7;
+                    from = DateTime.Today.AddDays(-1 * diff).Date;
+                    to = from.AddDays(6);
+                    break;
+                case "Tháng này":
+                    from = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+                    to = from.AddMonths(1).AddDays(-1);
+                    break;
+                case "Quý này":
+                    int quarter = (DateTime.Today.Month - 1) / 3 + 1;
+                    from = new DateTime(DateTime.Today.Year, (quarter - 1) * 3 + 1, 1);
+                    to = from.AddMonths(3).AddDays(-1);
+                    break;
+                case "Năm nay":
+                    from = new DateTime(DateTime.Today.Year, 1, 1);
+                    to = new DateTime(DateTime.Today.Year, 12, 31);
+                    break;
+                case "Tùy chỉnh":
+                    from = dtpTuNgay.Value.Date;
+                    to = dtpDenNgay.Value.Date;
+                    break;
+                default:
+                    from = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+                    to = from.AddMonths(1).AddDays(-1);
+                    break;
+            }
+
+            var service = new QuanLyCuaHangGame.BLL.Services.ReportService();
+            var data = service.GetReportData(from, to);
+
+            LoadKPIs(data);
+            LoadCharts(data);
+            LoadMachineTab(data);
+            LoadMemberTab(data);
         }
 
         private void ApplyStyles()
@@ -60,134 +116,165 @@ namespace QuanLyCuaHangGame
             pnlFilter.BackColor = Color.White;
         }
 
-        private void LoadKPIs()
+        private void LoadKPIs(QuanLyCuaHangGame.BLL.Services.ReportData data)
         {
-            lblDoanhThuValue.Text = "48,200,000đ";
-            lblDoanhThuSub.Text = "+8% tháng trước";
+            lblDoanhThuValue.Text = data.TotalRevenue.ToString("N0") + "đ";
+            lblDoanhThuSub.Text = "Hôm nay: " + data.TotalCashRevenue.ToString("N0") + "đ";
             lblDoanhThuSub.ForeColor = Color.FromArgb(34, 197, 94); // Green
 
-            lblGioMayValue.Text = "1,240h";
-            lblGioMaySub.Text = "trung bình 62h/máy";
+            lblGioMayValue.Text = data.TotalMachineHours.ToString("N0") + "h";
+            lblGioMaySub.Text = "trung bình " + (data.TotalMachines > 0 ? (data.TotalMachineHours / data.TotalMachines).ToString("N0") : "0") + "h/máy";
             lblGioMaySub.ForeColor = Color.Gray;
 
-            lblMayHoatDongValue.Text = "18/20";
-            lblMayHoatDongSub.Text = "2 máy hỏng";
-            lblMayHoatDongSub.ForeColor = Color.FromArgb(239, 68, 68); // Red
+            lblMayHoatDongValue.Text = $"{data.TotalActiveMachines}/{data.TotalMachines}";
+            lblMayHoatDongSub.Text = $"{data.BrokenMachines} máy hỏng";
+            lblMayHoatDongSub.ForeColor = data.BrokenMachines > 0 ? Color.FromArgb(239, 68, 68) : Color.Gray;
 
-            lblHoiVienMoiValue.Text = "12";
-            lblHoiVienMoiSub.Text = "+ tháng này";
+            lblHoiVienMoiValue.Text = data.NewMembers.ToString("N0");
+            lblHoiVienMoiSub.Text = "+ hội viên mới";
             lblHoiVienMoiSub.ForeColor = Color.FromArgb(34, 197, 94);
         }
 
-        private void LoadCharts()
+        private void LoadCharts(QuanLyCuaHangGame.BLL.Services.ReportData data)
         {
             // Cartesian Chart (Left)
-            chartDoanhThu.Series.Clear();
-            chartDoanhThu.AxisX.Clear();
-            chartDoanhThu.AxisY.Clear();
-
             var wpfThemeColor = System.Windows.Media.Color.FromRgb(DashboardUIHelper.ThemeColor.R, DashboardUIHelper.ThemeColor.G, DashboardUIHelper.ThemeColor.B);
 
-            var columnSeries = new ColumnSeries
-            {
-                Title = "Doanh thu",
-                Values = new ChartValues<double> { 5.2, 6.1, 4.8, 7.5, 9.2, 8.1, 10.5, 6.4, 7.8, 12.1, 11.0, 9.5, 8.2, 7.1, 6.5 },
-                Fill = new System.Windows.Media.SolidColorBrush(wpfThemeColor),
-                MaxColumnWidth = 20,
-                DataLabels = false
-            };
+            var revenueValues = new ChartValues<double>();
+            var dateLabels = new List<string>();
 
-            chartDoanhThu.Series.Add(columnSeries);
-            chartDoanhThu.AxisX.Add(new Axis
+            foreach (var kvp in data.RevenueByDay.OrderBy(k => k.Key))
             {
-                Labels = new[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" },
-                Separator = new Separator { IsEnabled = false }
-            });
-            chartDoanhThu.AxisY.Add(new Axis
+                revenueValues.Add((double)kvp.Value);
+                dateLabels.Add(kvp.Key.ToString("dd/MM"));
+            }
+
+            if (chartDoanhThu.Series.Count == 0)
             {
-                LabelFormatter = value => value + "M",
-                Separator = new Separator
+                chartDoanhThu.Series.Add(new ColumnSeries
                 {
-                    IsEnabled = true,
-                    StrokeThickness = 1,
-                    Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(20, 0, 0, 0)),
-                    StrokeDashArray = new System.Windows.Media.DoubleCollection { 3 }
-                }
-            });
+                    Title = "Doanh thu",
+                    Fill = new System.Windows.Media.SolidColorBrush(wpfThemeColor),
+                    MaxColumnWidth = 30,
+                    DataLabels = false
+                });
+            }
+            chartDoanhThu.Series[0].Values = revenueValues;
+
+            if (chartDoanhThu.AxisX.Count == 0)
+            {
+                chartDoanhThu.AxisX.Add(new Axis
+                {
+                    Separator = new Separator { IsEnabled = false }
+                });
+            }
+            chartDoanhThu.AxisX[0].Labels = dateLabels.ToArray();
+
+            if (chartDoanhThu.AxisY.Count == 0)
+            {
+                chartDoanhThu.AxisY.Add(new Axis
+                {
+                    LabelFormatter = value => value >= 1000000 ? (value / 1000000).ToString("N1") + "M" : (value / 1000).ToString("N0") + "K",
+                    Separator = new Separator
+                    {
+                        IsEnabled = true,
+                        StrokeThickness = 1,
+                        Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(20, 0, 0, 0)),
+                        StrokeDashArray = new System.Windows.Media.DoubleCollection { 3 }
+                    }
+                });
+            }
 
             // Pie Chart (Right)
             chartCoCau.Series.Clear();
             chartCoCau.InnerRadius = 50;
             chartCoCau.LegendLocation = LegendLocation.Right;
 
-            chartCoCau.Series.Add(new PieSeries
+            if (data.TotalSessionRevenue > 0)
             {
-                Title = "Tiền giờ chơi",
-                Values = new ChartValues<double> { 60 },
-                DataLabels = true,
-                Fill = new System.Windows.Media.SolidColorBrush(wpfThemeColor)
-            });
-            chartCoCau.Series.Add(new PieSeries
+                chartCoCau.Series.Add(new PieSeries
+                {
+                    Title = "Tiền giờ chơi",
+                    Values = new ChartValues<double> { (double)data.TotalSessionRevenue },
+                    DataLabels = true,
+                    Fill = new System.Windows.Media.SolidColorBrush(wpfThemeColor)
+                });
+            }
+            if (data.TotalServiceRevenue > 0)
             {
-                Title = "Dịch vụ ăn uống",
-                Values = new ChartValues<double> { 20 },
-                DataLabels = true,
-                Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(34, 197, 94))
-            });
-            chartCoCau.Series.Add(new PieSeries
+                chartCoCau.Series.Add(new PieSeries
+                {
+                    Title = "Dịch vụ ăn uống",
+                    Values = new ChartValues<double> { (double)data.TotalServiceRevenue },
+                    DataLabels = true,
+                    Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(34, 197, 94))
+                });
+            }
+            if (data.TotalTopUpRevenue > 0)
             {
-                Title = "Nạp thẻ game",
-                Values = new ChartValues<double> { 20 },
-                DataLabels = true,
-                Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(245, 158, 11))
-            });
+                chartCoCau.Series.Add(new PieSeries
+                {
+                    Title = "Nạp tài khoản",
+                    Values = new ChartValues<double> { (double)data.TotalTopUpRevenue },
+                    DataLabels = true,
+                    Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(245, 158, 11))
+                });
+            }
         }
 
-        private void LoadMachineTab()
+        private void LoadMachineTab(QuanLyCuaHangGame.BLL.Services.ReportData data)
         {
-            chartGioMay.Series.Clear();
-            chartGioMay.AxisX.Clear();
-            chartGioMay.AxisY.Clear();
-
-            var rowSeries = new RowSeries
+            if (chartGioMay.Series.Count == 0)
             {
-                Title = "Giờ hoạt động",
-                Values = new ChartValues<double> { 120, 95, 110, 80, 150 },
-                Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(DashboardUIHelper.ThemeColor.R, DashboardUIHelper.ThemeColor.G, DashboardUIHelper.ThemeColor.B)),
-                DataLabels = true
-            };
+                chartGioMay.Series.Add(new RowSeries
+                {
+                    Title = "Giờ hoạt động",
+                    Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(DashboardUIHelper.ThemeColor.R, DashboardUIHelper.ThemeColor.G, DashboardUIHelper.ThemeColor.B)),
+                    DataLabels = true
+                });
+            }
+            chartGioMay.Series[0].Values = new ChartValues<double>(data.TopMachineHours.Select(k => Math.Round(k.Value, 1)));
 
-            chartGioMay.Series.Add(rowSeries);
-            chartGioMay.AxisY.Add(new Axis
+            if (chartGioMay.AxisY.Count == 0)
             {
-                Labels = new[] { "PC01", "PC02", "PC03", "PC04", "PC05" },
-                Separator = new Separator { IsEnabled = false }
-            });
+                chartGioMay.AxisY.Add(new Axis
+                {
+                    Separator = new Separator { IsEnabled = false }
+                });
+            }
+            chartGioMay.AxisY[0].Labels = data.TopMachineHours.Select(k => k.Key).ToArray();
 
             // Set cards for machine status
             cardTot.BackColor = Color.FromArgb(240, 253, 244);
             lblTot.ForeColor = Color.FromArgb(22, 163, 74);
-            lblTot.Text = "16 Máy Tốt";
+            lblTot.Text = $"{data.GoodMachines} Máy Tốt";
 
             cardDaSua.BackColor = Color.FromArgb(255, 247, 237);
             lblDaSua.ForeColor = Color.FromArgb(234, 88, 12);
-            lblDaSua.Text = "2 Đã sửa";
+            lblDaSua.Text = $"{data.RepairedMachines} Đã sửa";
 
             cardHong.BackColor = Color.FromArgb(254, 242, 242);
             lblHong.ForeColor = Color.FromArgb(220, 38, 38);
-            lblHong.Text = "2 Hỏng";
+            lblHong.Text = $"{data.BrokenMachines} Hỏng";
         }
 
-        private void LoadMemberTab()
+        private void LoadMemberTab(QuanLyCuaHangGame.BLL.Services.ReportData data)
         {
             lvHoiVien.Items.Clear();
             UICommon.AutoResizeListViewColumns(lvHoiVien, new double[] { 0.1, 0.3, 0.2, 0.2, 0.2 });
 
-            lvHoiVien.Items.Add(new ListViewItem(new[] { "1", "Phạm Quốc Huy", "1,500,000đ", "50h", "500,000đ" }));
-            lvHoiVien.Items.Add(new ListViewItem(new[] { "2", "Trần Minh Bình", "1,200,000đ", "40h", "300,000đ" }));
-            lvHoiVien.Items.Add(new ListViewItem(new[] { "3", "Lê Thanh Hải", "950,000đ", "32h", "200,000đ" }));
-            lvHoiVien.Items.Add(new ListViewItem(new[] { "4", "Nguyễn Văn A", "800,000đ", "25h", "150,000đ" }));
-            lvHoiVien.Items.Add(new ListViewItem(new[] { "5", "Trương Tấn B", "600,000đ", "20h", "100,000đ" }));
+            int index = 1;
+            foreach(var mem in data.TopMembers)
+            {
+                lvHoiVien.Items.Add(new ListViewItem(new[] { 
+                    index.ToString(), 
+                    mem.FullName, 
+                    mem.Balance.ToString("N0") + "đ", 
+                    Math.Round(mem.TotalHours, 1) + "h", 
+                    mem.TotalSpent.ToString("N0") + "đ" 
+                }));
+                index++;
+            }
         }
 
         private void FrmReport_SizeChanged(object sender, EventArgs e)
@@ -196,7 +283,7 @@ namespace QuanLyCuaHangGame
             int width = this.ClientSize.Width;
             int height = this.ClientSize.Height;
 
-            if (width < 800) return;
+            if (width < 200 || height < 200) return;
 
             // 1. Filter Panel Layout
             pnlFilter.SetBounds(pad, pad, width - (2 * pad), 60);
@@ -255,6 +342,10 @@ namespace QuanLyCuaHangGame
         private void cboKyBaoCao_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateDatePickerVisibility();
+            if (cboKyBaoCao.SelectedItem != null && cboKyBaoCao.SelectedItem.ToString() != "Tùy chỉnh")
+            {
+                LoadReportData();
+            }
         }
 
         private void UpdateDatePickerVisibility()

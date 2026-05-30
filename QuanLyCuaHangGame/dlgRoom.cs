@@ -101,7 +101,7 @@ namespace QuanLyCuaHangGame
             }
 
             var name = RoomStore.Rooms[_selectedIndex][0];
-            var confirm = MaterialSkin.Controls.MaterialMessageBox.Show(
+            var confirm = QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show(
                 $"Bạn có chắc muốn xóa \"{name}\"?",
                 "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 

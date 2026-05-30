@@ -27,7 +27,7 @@ namespace QuanLyCuaHangGame
 
         private System.Windows.Forms.Timer tmrRefresh;
         private System.Windows.Forms.DataGridView dgvPhien;
-        private System.Windows.Forms.Panel pnlChartFilter;
+
 
         // ── Snapshot KPI — làm mới cứ 30 giây ──
         private int     _activeMachineCount = 0;
@@ -56,6 +56,40 @@ namespace QuanLyCuaHangGame
         {
             InitializeModernDashboardUI();
             
+            tabPageDashboard.SizeChanged += (s, ev) =>
+            {
+                int margin = 13;
+                int gap = 16;
+                int totalWidth = tabPageDashboard.ClientSize.Width - (margin * 2);
+                if (totalWidth <= 0) return;
+
+                // 1. Resize Top 4 Cards
+                int topCardWidth = (totalWidth - (gap * 3)) / 4;
+                cardDoanhThu.Width = topCardWidth;
+                cardMay.Width = topCardWidth;
+                cardHoiVien.Width = topCardWidth;
+                cardXuLy.Width = topCardWidth;
+
+                cardMay.Left = cardDoanhThu.Right + gap;
+                cardHoiVien.Left = cardMay.Right + gap;
+                cardXuLy.Left = cardHoiVien.Right + gap;
+
+                // 2. Resize Middle 2 Cards (cardSoDo and cardChart)
+                int midCardWidth = (totalWidth - gap) / 2;
+                cardSoDo.Width = midCardWidth;
+                cardChart.Width = totalWidth - midCardWidth - gap; // prevent rounding error pixels
+                cardChart.Left = cardSoDo.Right + gap;
+
+                // 3. Resize Bottom Card
+                cardPhien.Width = totalWidth;
+                int bottomMargin = 13;
+                int newHeight = tabPageDashboard.ClientSize.Height - cardPhien.Top - bottomMargin;
+                if (newHeight > 50)
+                {
+                    cardPhien.Height = newHeight;
+                }
+            };
+
             // Ẩn thanh cuộn dọc mặc định của Windows nhưng vẫn cho phép cuộn bằng con lăn chuột (SaaS style)
             flpSoDo.Paint += (s, ev) => {
                 ShowScrollBar(flpSoDo.Handle, SB_VERT, false);
@@ -129,6 +163,49 @@ namespace QuanLyCuaHangGame
             DashboardUIHelper.ApplyGlobalModernStyle(this);
             LoadKPIData(); // Tải số liệu KPI thực từ DB
             
+            // Setup Sidebar Icons
+            ImageList imgList = new ImageList();
+            imgList.ImageSize = new Size(24, 24);
+            imgList.ColorDepth = ColorDepth.Depth32Bit;
+
+            string[] icons = { "\uE80F", "\uE81E", "\uE7F4", "\uE77B", "\uE719", "\uE8C7", "\uE9D9", "\uE713", "\uE7FC", "\uE7E8" };
+            string[] keys = { "Dashboard", "SoDo", "MayTinh", "HoiVien", "DichVu", "ThanhToan", "BaoCao", "TaiKhoan", "ThueMay", "DangXuat" };
+            
+            for (int i = 0; i < icons.Length; i++)
+            {
+                Bitmap bmp = new Bitmap(24, 24);
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+                    using (Font f = new Font("Segoe MDL2 Assets", 12))
+                    {
+                        StringFormat sf = new StringFormat();
+                        sf.Alignment = StringAlignment.Center;
+                        sf.LineAlignment = StringAlignment.Center;
+                        g.DrawString(icons[i], f, new SolidBrush(Color.FromArgb(64, 64, 64)), new Rectangle(0,0,24,24), sf); 
+                    }
+                }
+                imgList.Images.Add(keys[i], bmp);
+            }
+
+            mainTabControl.ImageList = imgList;
+            tabPageDashboard.ImageKey = "Dashboard";
+            tabPageSoDo.ImageKey = "SoDo";
+            tabPageMayTinh.ImageKey = "MayTinh";
+            tabPageHoiVien.ImageKey = "HoiVien";
+            tabPageDichVu.ImageKey = "DichVu";
+            tabPageThanhToan.ImageKey = "ThanhToan";
+            tabPageBaoCao.ImageKey = "BaoCao";
+            tabPageTaiKhoan.ImageKey = "TaiKhoan";
+            tabPageThueMay.ImageKey = "ThueMay";
+
+            TabPage tabPageDangXuat = new TabPage("Đăng xuất");
+            tabPageDangXuat.Name = "tabPageDangXuat";
+            tabPageDangXuat.ImageKey = "DangXuat";
+            mainTabControl.TabPages.Add(tabPageDangXuat);
+            
+            mainTabControl.Selecting += MainTabControl_Selecting;
+            
             mainTabControl.SelectedIndex = 0; // Đặt mặc định mở tab Dashboard đầu tiên khi khởi động
 
             // Add Coming Soon labels to empty tabs
@@ -178,29 +255,48 @@ namespace QuanLyCuaHangGame
                 var sessSvc   = new BLL.Services.SessionService();
                 var reportSvc = new BLL.Services.ReportService();
 
-                // ① Doanh thu hôm nay (Invoice đã thanh toán)
-                _revenueToday = reportSvc.GetTotalRevenue(DateTime.Today, DateTime.Now);
+                // ① Doanh thu hôm nay (Bao gồm Invoice và TopUp)
+                var dataToday = reportSvc.GetReportData(DateTime.Today, DateTime.Now);
+                _revenueToday = dataToday.TotalRevenue;
                 lblDoanhThuValue.Text = _revenueToday.ToString("N0") + "đ";
-                lblDoanhThuSub.Text   = "Hôm nay – " + DateTime.Today.ToString("dd/MM/yyyy");
+
+                var dataYesterday = reportSvc.GetReportData(DateTime.Today.AddDays(-1), DateTime.Today.AddDays(-1));
+                decimal revYesterday = dataYesterday.TotalRevenue;
+                if (revYesterday == 0)
+                {
+                    lblDoanhThuSub.Text = _revenueToday > 0 ? "+100% so với hôm qua" : "0% so với hôm qua";
+                    lblDoanhThuSub.ForeColor = _revenueToday > 0 ? Color.Green : Color.Gray;
+                }
+                else
+                {
+                    decimal percent = ((_revenueToday - revYesterday) / revYesterday) * 100;
+                    string sign = percent >= 0 ? "+" : "";
+                    lblDoanhThuSub.Text = $"{sign}{percent:N1}% so với hôm qua";
+                    lblDoanhThuSub.ForeColor = percent >= 0 ? Color.Green : Color.Red;
+                }
 
                 // ② Máy đang chạy / tổng số máy
                 var allComputers    = compSvc.GetAllComputers().ToList();
                 _totalMachineCount  = allComputers.Count;
+                _brokenCount = allComputers.Count(c => c.Condition == "Hỏng" || c.Status == "Dừng");
                 _activeMachineCount = sessSvc.GetActiveSessions().Count();
+                int emptyCount = _totalMachineCount - _activeMachineCount - _brokenCount;
+                if (emptyCount < 0) emptyCount = 0;
                 lblMayValue.Text = $"{_activeMachineCount}/{_totalMachineCount}";
-                lblMaySub.Text   = "máy đang hoạt động";
+                lblMaySub.Text   = $"{emptyCount} trống - {_brokenCount} hỏng";
 
                 // ③ Tổng hội viên
                 _memberCount = custSvc.GetAllCustomers().Count();
                 lblHoiVienValue.Text = _memberCount.ToString();
-                lblHoiVienSub.Text   = "hội viên đã đăng ký";
+                int activeGuests = sessSvc.GetActiveSessions().Count(s => s.CustomerId == null);
+                lblHoiVienSub.Text = $"{activeGuests} khách vãng lai";
 
                 // ④ Máy cần xử lý (Hỏng hoặc Dừng)
-                _brokenCount = allComputers.Count(c => c.Condition == "Hỏng" || c.Status == "Dừng");
                 lblXuLyValue.Text = _brokenCount.ToString();
                 lblXuLySub.Text   = _brokenCount > 0
-                    ? $"{_brokenCount} máy cần sửa chữa"
-                    : "Tất cả máy hoạt động tốt";
+                    ? "Cần kiểm tra ngay"
+                    : "Tất cả bình thường";
+                lblXuLySub.ForeColor = _brokenCount > 0 ? Color.Red : Color.Green;
 
                 // ⑤ Đồng bộ footer
                 UpdateFooter();
@@ -216,7 +312,7 @@ namespace QuanLyCuaHangGame
         {
             if (lblFooter == null) return;
             string userName = BLL.SessionContext.CurrentUserName ?? "Admin";
-            if (mainTabControl.SelectedIndex == 3) // Tab Quản lý máy tính
+            if (mainTabControl.SelectedIndex == 2) // Tab Quản lý máy tính
             {
                 lblFooter.Text = $"Tổng: {_totalMachineCount} máy    |    Hỏng: {_brokenCount}    |    Chế độ: {(BLL.SessionContext.IsAdmin ? "Admin – toàn quyền" : "Nhân viên")}";
             }
@@ -329,7 +425,7 @@ namespace QuanLyCuaHangGame
                     }
                     catch (Exception ex)
                     {
-                        MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi khi xử lý thanh toán: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Lỗi khi xử lý thanh toán: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             };
@@ -368,24 +464,21 @@ namespace QuanLyCuaHangGame
                     this.Text = "Sơ đồ phòng máy";
                     break;
                 case 2:
-                    this.Text = "Thuê máy";
-                    break;
-                case 3:
                     this.Text = "Quản lý máy tính — Chế độ: Admin";
                     break;
-                case 4:
+                case 3:
                     this.Text = "Quản lý hội viên";
                     break;
-                case 5:
+                case 4:
                     this.Text = "Quản lý dịch vụ";
                     break;
-                case 6:
+                case 5:
                     this.Text = "Thanh toán";
                     break;
-                case 7:
+                case 6:
                     this.Text = "Báo cáo";
                     break;
-                case 8:
+                case 7:
                     this.Text = "Quản lý tài khoản";
                     break;
                 default:
@@ -395,6 +488,19 @@ namespace QuanLyCuaHangGame
 
             // Cập nhật footer theo tab hiện tại với số liệu thực
             UpdateFooter();
+        }
+
+        private void MainTabControl_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (e.TabPage != null && e.TabPage.Name == "tabPageDangXuat")
+            {
+                e.Cancel = true;
+                var confirm = QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show(this, "Bạn có chắc chắn muốn đăng xuất không?", "Xác nhận đăng xuất", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (confirm == DialogResult.Yes)
+                {
+                    Application.Restart();
+                }
+            }
         }
 
         private void LoadSoDoPhongMay()
@@ -453,43 +559,123 @@ namespace QuanLyCuaHangGame
             }
         }
 
-        private void InitializeChartFilter()
+
+        
+        private void ChartFilterButton_Click(object sender, EventArgs e)
         {
-            if (pnlChartFilter != null) return;
+            Button clickedBtn = sender as Button;
+            if (clickedBtn == null) return;
 
-            pnlChartFilter = new Panel();
-            pnlChartFilter.Size = new Size(260, 32);
-            pnlChartFilter.BackColor = Color.FromArgb(243, 244, 246); // Light grey background #F3F4F6
-            pnlChartFilter.Region = new Region(UICommon.GetRoundedRectPath(new Rectangle(0, 0, pnlChartFilter.Width, pnlChartFilter.Height), 16));
-
-            string[] tabs = { "Ngày", "Tuần", "Tháng", "Năm" };
-            int btnW = 60;
-            for (int i = 0; i < tabs.Length; i++)
+            foreach (Control ctrl in pnlChartFilter.Controls)
             {
-                Button btn = new Button();
-                btn.Text = tabs[i];
-                btn.Size = new Size(btnW, 26);
-                btn.Location = new Point(3 + i * 64, 3);
-                btn.FlatStyle = FlatStyle.Flat;
-                btn.FlatAppearance.BorderSize = 0;
-                btn.Font = new Font("Inter", 9F, FontStyle.Bold);
-                
-                if (i == 0) // "Ngày" active
+                if (ctrl is Button btn)
                 {
-                    btn.BackColor = DashboardUIHelper.ThemeColor;
-                    btn.ForeColor = Color.White;
-                    btn.Region = new Region(UICommon.GetRoundedRectPath(new Rectangle(0, 0, btn.Width, btn.Height), 13));
+                    if (btn == clickedBtn)
+                    {
+                        btn.BackColor = DashboardUIHelper.ThemeColor;
+                        btn.ForeColor = Color.White;
+                    }
+                    else
+                    {
+                        btn.BackColor = Color.Transparent;
+                        btn.ForeColor = Color.Gray;
+                    }
                 }
-                else
-                {
-                    btn.BackColor = Color.Transparent;
-                    btn.ForeColor = Color.FromArgb(156, 163, 175); // Màu xám trung tính nhạt #9CA3AF
-                }
-
-                pnlChartFilter.Controls.Add(btn);
             }
 
-            cardChart.Controls.Add(pnlChartFilter);
+            LoadChartData(clickedBtn.Text);
+        }
+        
+        private void LoadChartData(string filter)
+        {
+            try
+            {
+                var reportSvc = new BLL.Services.ReportService();
+                DateTime to = DateTime.Now;
+                DateTime from = to;
+                List<string> labels = new List<string>();
+                ChartValues<double> colValues = new ChartValues<double>();
+                ChartValues<double> lineValues = new ChartValues<double>();
+
+                if (filter == "Ngày")
+                {
+                    from = to.Date.AddDays(-6);
+                    var data = reportSvc.GetReportData(from, to);
+                    for (DateTime d = from; d <= to.Date; d = d.AddDays(1))
+                    {
+                        labels.Add(d.ToString("dd/MM"));
+                        decimal val = data.RevenueByDay.ContainsKey(d.Date) ? data.RevenueByDay[d.Date] : 0;
+                        double valM = (double)val / 1000000.0;
+                        colValues.Add(valM);
+                        lineValues.Add(valM);
+                    }
+                }
+                else if (filter == "Tuần")
+                {
+                    from = to.Date.AddDays(-27);
+                    var data = reportSvc.GetReportData(from, to);
+                    for (int i = 3; i >= 0; i--)
+                    {
+                        DateTime weekStart = to.Date.AddDays(-i * 7 - 6);
+                        DateTime weekEnd = to.Date.AddDays(-i * 7);
+                        labels.Add($"Tuần {weekStart:dd/MM}");
+                        decimal weekTotal = 0;
+                        for (DateTime d = weekStart; d <= weekEnd; d = d.AddDays(1))
+                        {
+                            if (data.RevenueByDay.ContainsKey(d.Date)) weekTotal += data.RevenueByDay[d.Date];
+                        }
+                        double valM = (double)weekTotal / 1000000.0;
+                        colValues.Add(valM);
+                        lineValues.Add(valM);
+                    }
+                }
+                else if (filter == "Tháng")
+                {
+                    from = new DateTime(to.Year, to.Month, 1).AddMonths(-5);
+                    var data = reportSvc.GetReportData(from, to);
+                    for (int i = 5; i >= 0; i--)
+                    {
+                        DateTime monthDate = to.AddMonths(-i);
+                        labels.Add(monthDate.ToString("MM/yyyy"));
+                        decimal monthTotal = data.RevenueByDay.Where(k => k.Key.Month == monthDate.Month && k.Key.Year == monthDate.Year).Sum(k => k.Value);
+                        double valM = (double)monthTotal / 1000000.0;
+                        colValues.Add(valM);
+                        lineValues.Add(valM);
+                    }
+                }
+                else if (filter == "Năm")
+                {
+                    from = new DateTime(to.Year - 3, 1, 1);
+                    var data = reportSvc.GetReportData(from, to);
+                    for (int i = 3; i >= 0; i--)
+                    {
+                        int year = to.Year - i;
+                        labels.Add(year.ToString());
+                        decimal yearTotal = data.RevenueByDay.Where(k => k.Key.Year == year).Sum(k => k.Value);
+                        double valM = (double)yearTotal / 1000000.0;
+                        colValues.Add(valM);
+                        lineValues.Add(valM);
+                    }
+                }
+
+                if (chartDoanhThu.Series.Count >= 2)
+                {
+                    if (chartDoanhThu.Series[0] is ColumnSeries colSeries)
+                    {
+                        colSeries.Values = colValues;
+                    }
+                    if (chartDoanhThu.Series[1] is LineSeries lineSeries)
+                    {
+                        lineSeries.Values = lineValues;
+                    }
+                }
+                
+                if (chartDoanhThu.AxisX.Count > 0)
+                {
+                    chartDoanhThu.AxisX[0].Labels = labels;
+                }
+            }
+            catch { }
         }
 
         private void LoadChart()
@@ -527,14 +713,13 @@ namespace QuanLyCuaHangGame
                 lblCustomChartTitle.ForeColor = mainThemeColor;
             }
 
-            // Khởi tạo bộ lọc Ngày/Tuần/Tháng/Năm dạng Pill-tabs
-            InitializeChartFilter();
-
+            LoadChartData("Ngày");
+            
             // Cấu hình ColumnSeries (biểu đồ cột mờ nền bên dưới)
             var columnSeries = new ColumnSeries
             {
                 Title = "Doanh thu ngày",
-                Values = new ChartValues<double> { 6.8, 9.2, 6.7, 9.8, 8.8, 13.5, 5.1, 9.3, 6.8, 11.2 },
+                Values = new ChartValues<double> { 0, 0, 0, 0, 0, 0, 0 },
                 Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(35, wpfThemeColor.R, wpfThemeColor.G, wpfThemeColor.B)), // Cột mờ trong suốt theo màu chủ đạo
                 MaxColumnWidth = 45, // Tăng thêm độ rộng của cột to hơn nữa theo yêu cầu!
                 ColumnPadding = 8,
@@ -545,7 +730,7 @@ namespace QuanLyCuaHangGame
             var lineSeries = new LineSeries
             {
                 Title = "Doanh thu",
-                Values = new ChartValues<double> { 6.8, 9.2, 6.7, 9.8, 8.8, 13.5, 5.1, 9.3, 6.8, 11.2 },
+                Values = new ChartValues<double> { 0, 0, 0, 0, 0, 0, 0 },
                 LineSmoothness = 0.6, // Tạo đường cong spline mượt mà
                 PointGeometry = DefaultGeometries.Circle,
                 PointGeometrySize = 10,
@@ -571,7 +756,7 @@ namespace QuanLyCuaHangGame
             chartDoanhThu.AxisX.Add(new Axis
             {
                 Title = "",
-                Labels = new[] { "12/05", "13/05", "14/05", "15/05", "16/05", "17/05", "18/05", "19/05", "20/05", "21/05" },
+                Labels = new[] { "", "", "", "", "", "", "" },
                 Separator = new Separator
                 {
                     IsEnabled = false // Tắt đường lưới dọc để biểu đồ thông thoáng
@@ -594,6 +779,7 @@ namespace QuanLyCuaHangGame
                 }
             });
 
+            LoadChartData("Ngày");
             chartDoanhThu.Update(true, true);
         }
 

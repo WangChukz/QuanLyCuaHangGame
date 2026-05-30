@@ -1,12 +1,17 @@
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 using MaterialSkin;
 
 namespace QuanLyCuaHangGame.UIHelper
 {
     public static class DashboardUIHelper
     {
+        [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
+        public static extern int SetWindowTheme(IntPtr hWnd, string appName, string partList);
+
         // --- HỆ THỐNG MÀU CHỦ ĐẠO (THEME COLOR) ---
         // Sửa duy nhất mã màu dưới đây để thay đổi toàn bộ hệ thống (Header, Grid, Chart, Pills, Footer, v.v.)
         public static Color ThemeColor = Color.FromArgb(25, 118, 210); // Màu xanh dương đậm (#1976D2)
@@ -190,6 +195,7 @@ namespace QuanLyCuaHangGame.UIHelper
 
         public static void DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
         {
+            e.DrawDefault = false; // Prevent OS from overdrawing
             Color headerBg = ThemeColor; 
             
             using (SolidBrush brush = new SolidBrush(headerBg))
@@ -227,6 +233,7 @@ namespace QuanLyCuaHangGame.UIHelper
 
         public static void DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
+            e.DrawDefault = false; // Prevent OS from overdrawing subitems
             // Xen kẽ màu nền dòng: Dòng lẻ tím mờ mềm mại, dòng chẵn màu trắng
             Color rowBg = (e.ItemIndex % 2 == 0) ? ThemeColorAlternating : Color.White; 
             
@@ -423,6 +430,37 @@ namespace QuanLyCuaHangGame.UIHelper
                 var l = (ListView)s;
                 if (l.Tag is int cur && cur != -1) { l.Tag = -1; l.Invalidate(); }
             };
+
+            // Ngăn chặn Windows tự động vẽ đè header khi form mất tiêu điểm (mở Dialog)
+            DisableHeaderVisualStyles(lv);
+        }
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hwnd, int msg, IntPtr wp, IntPtr lp);
+
+        private const int LVM_GETHEADER = 0x101F;
+
+        private static void DisableHeaderVisualStyles(ListView lv)
+        {
+            if (lv.IsHandleCreated)
+            {
+                IntPtr headerHwnd = SendMessage(lv.Handle, LVM_GETHEADER, IntPtr.Zero, IntPtr.Zero);
+                if (headerHwnd != IntPtr.Zero)
+                {
+                    SetWindowTheme(headerHwnd, "", "");
+                }
+            }
+            else
+            {
+                lv.HandleCreated += (s, e) =>
+                {
+                    IntPtr headerHwnd = SendMessage(lv.Handle, LVM_GETHEADER, IntPtr.Zero, IntPtr.Zero);
+                    if (headerHwnd != IntPtr.Zero)
+                    {
+                        SetWindowTheme(headerHwnd, "", "");
+                    }
+                };
+            }
         }
 
         private static void Lv_DefaultSubItem(object sender, DrawListViewSubItemEventArgs e)

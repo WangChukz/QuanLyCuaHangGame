@@ -24,8 +24,6 @@ namespace QuanLyCuaHangGame
         {
             this.panelTop = new System.Windows.Forms.Panel();
             this.btnRegister = new MaterialSkin.Controls.MaterialButton();
-            this.btnNapTienTop = new MaterialSkin.Controls.MaterialButton();
-            this.btnHistoryTop = new MaterialSkin.Controls.MaterialButton();
             this.txtSearch = new MaterialSkin.Controls.MaterialTextBox();
             this.cardHoiVien = new MaterialSkin.Controls.MaterialCard();
             this.mlvHoiVien = new System.Windows.Forms.ListView();
@@ -66,8 +64,6 @@ namespace QuanLyCuaHangGame
             this.panelTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelTop.Controls.Add(this.btnRegister);
-            this.panelTop.Controls.Add(this.btnNapTienTop);
-            this.panelTop.Controls.Add(this.btnHistoryTop);
             this.panelTop.Controls.Add(this.txtSearch);
             this.panelTop.Location = new System.Drawing.Point(20, 114);
             this.panelTop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -95,46 +91,7 @@ namespace QuanLyCuaHangGame
             this.btnRegister.UseAccentColor = false;
             this.btnRegister.UseVisualStyleBackColor = true;
             // 
-            // btnNapTienTop
-            // 
-            this.btnNapTienTop.AutoSize = false;
-            this.btnNapTienTop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnNapTienTop.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnNapTienTop.Depth = 0;
-            this.btnNapTienTop.HighEmphasis = true;
-            this.btnNapTienTop.Icon = null;
-            this.btnNapTienTop.Location = new System.Drawing.Point(203, 5);
-            this.btnNapTienTop.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnNapTienTop.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnNapTienTop.Name = "btnNapTienTop";
-            this.btnNapTienTop.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnNapTienTop.Size = new System.Drawing.Size(160, 46);
-            this.btnNapTienTop.TabIndex = 3;
-            this.btnNapTienTop.Text = "💸 NẠP TIỀN";
-            this.btnNapTienTop.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnNapTienTop.UseAccentColor = false;
-            this.btnNapTienTop.UseVisualStyleBackColor = true;
-            // 
-            // btnHistoryTop
-            // 
-            this.btnHistoryTop.AutoSize = false;
-            this.btnHistoryTop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnHistoryTop.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnHistoryTop.Depth = 0;
-            this.btnHistoryTop.HighEmphasis = true;
-            this.btnHistoryTop.Icon = null;
-            this.btnHistoryTop.Location = new System.Drawing.Point(376, 5);
-            this.btnHistoryTop.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.btnHistoryTop.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnHistoryTop.Name = "btnHistoryTop";
-            this.btnHistoryTop.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnHistoryTop.Size = new System.Drawing.Size(207, 46);
-            this.btnHistoryTop.TabIndex = 4;
-            this.btnHistoryTop.Text = "📅 LỊCH SỬ GD";
-            this.btnHistoryTop.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            this.btnHistoryTop.UseAccentColor = false;
-            this.btnHistoryTop.UseVisualStyleBackColor = true;
-            // 
+
             // txtSearch
             // 
             this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -527,8 +484,6 @@ namespace QuanLyCuaHangGame
 
         private System.Windows.Forms.Panel panelTop;
         private MaterialSkin.Controls.MaterialButton btnRegister;
-        private MaterialSkin.Controls.MaterialButton btnNapTienTop;
-        private MaterialSkin.Controls.MaterialButton btnHistoryTop;
         private MaterialSkin.Controls.MaterialTextBox txtSearch;
         private MaterialSkin.Controls.MaterialCard cardHoiVien;
         private System.Windows.Forms.ListView mlvHoiVien;

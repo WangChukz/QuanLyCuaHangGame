@@ -40,7 +40,6 @@ namespace QuanLyCuaHangGame
             this.flpComputers = new System.Windows.Forms.FlowLayoutPanel();
             this.cardComputerDetails = new MaterialSkin.Controls.MaterialCard();
             this.flowButtons = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnHistory = new MaterialSkin.Controls.MaterialButton();
             this.btnPayment = new MaterialSkin.Controls.MaterialButton();
             this.btnOrderService = new MaterialSkin.Controls.MaterialButton();
             this.btnOpenSession = new MaterialSkin.Controls.MaterialButton();
@@ -224,7 +223,6 @@ namespace QuanLyCuaHangGame
             this.flowButtons.Controls.Add(this.btnOpenSession);
             this.flowButtons.Controls.Add(this.btnOrderService);
             this.flowButtons.Controls.Add(this.btnPayment);
-            this.flowButtons.Controls.Add(this.btnHistory);
             this.flowButtons.Location = new System.Drawing.Point(30, 250);
             this.flowButtons.Name = "flowButtons";
             this.flowButtons.Size = new System.Drawing.Size(1800, 60);
@@ -285,24 +283,7 @@ namespace QuanLyCuaHangGame
             this.btnPayment.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             this.btnPayment.UseAccentColor = true;
             this.btnPayment.UseVisualStyleBackColor = true;
-            // 
-            // btnHistory
-            // 
-            this.btnHistory.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnHistory.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            this.btnHistory.Depth = 0;
-            this.btnHistory.HighEmphasis = true;
-            this.btnHistory.Icon = null;
-            this.btnHistory.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
-            this.btnHistory.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnHistory.Name = "btnHistory";
-            this.btnHistory.NoAccentTextColor = System.Drawing.Color.Empty;
-            this.btnHistory.Size = new System.Drawing.Size(111, 36);
-            this.btnHistory.TabIndex = 3;
-            this.btnHistory.Text = "XEM LỊCH SỬ";
-            this.btnHistory.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Text;
-            this.btnHistory.UseAccentColor = false;
-            this.btnHistory.UseVisualStyleBackColor = true;
+
             // 
             // lblServiceInfo
             // 
@@ -431,8 +412,7 @@ namespace QuanLyCuaHangGame
         private System.Windows.Forms.Label lblServiceInfo;
         private MaterialSkin.Controls.MaterialButton btnOpenSession;
         private MaterialSkin.Controls.MaterialButton btnOrderService;
-        private MaterialSkin.Controls.MaterialButton btnPayment;
-        private MaterialSkin.Controls.MaterialButton btnHistory;
+            private MaterialSkin.Controls.MaterialButton btnPayment;
         private System.Windows.Forms.Timer tmrRefresh;
     }
 }

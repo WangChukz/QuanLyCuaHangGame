@@ -83,7 +83,7 @@ namespace QuanLyCuaHangGame
                 var details = _paymentBLL.GetPaymentDetails(_sessionId);
                 if (details == null)
                 {
-                    MaterialSkin.Controls.MaterialMessageBox.Show("Không tìm thấy phiên chơi!", "Lỗi",
+                    QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Không tìm thấy phiên chơi!", "Lỗi",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     this.Close();
                     return;
@@ -162,7 +162,7 @@ namespace QuanLyCuaHangGame
             }
             catch (Exception ex)
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show($"Lỗi khi tải dữ liệu thanh toán:\n{ex.Message}", "Lỗi",
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show($"Lỗi khi tải dữ liệu thanh toán:\n{ex.Message}", "Lỗi",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -229,14 +229,14 @@ namespace QuanLyCuaHangGame
 
             if (tongDaTra < _totalAmount)
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Số tiền thanh toán chưa đủ!\nVui lòng nhập thêm tiền mặt.",
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Số tiền thanh toán chưa đủ!\nVui lòng nhập thêm tiền mặt.",
                     "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             // Hỏi xác nhận
             string tenKhach = _session.Customer?.FullName ?? _session.GuestName ?? "Khách vãng lai";
-            var dr = MaterialSkin.Controls.MaterialMessageBox.Show(
+            var dr = QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show(
                 $"Xác nhận thanh toán:\n\n" +
                 $"Khách: {tenKhach}\n" +
                 $"Tổng: {_totalAmount:N0}đ\n" +
@@ -265,14 +265,14 @@ namespace QuanLyCuaHangGame
                 btnXacNhan.Enabled = false;
                 btnHuy.Text        = "ĐÓNG";
 
-                MaterialSkin.Controls.MaterialMessageBox.Show(
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show(
                     $"✓ Thanh toán thành công!\nHóa đơn #{invoice.Id} đã được tạo.\n\nBạn có thể bấm IN HÓA ĐƠN hoặc ĐÓNG.",
                     "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 btnXacNhan.Enabled = true;
-                MaterialSkin.Controls.MaterialMessageBox.Show($"Lỗi khi xử lý thanh toán:\n{ex.Message}",
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show($"Lỗi khi xử lý thanh toán:\n{ex.Message}",
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -281,7 +281,7 @@ namespace QuanLyCuaHangGame
         {
             if (_session == null)
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Không có dữ liệu phiên để in hóa đơn!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Không có dữ liệu phiên để in hóa đơn!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -314,7 +314,7 @@ namespace QuanLyCuaHangGame
                     }
                     catch (Exception ex)
                     {
-                        MaterialSkin.Controls.MaterialMessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -330,7 +330,7 @@ namespace QuanLyCuaHangGame
             }
             else
             {
-                if (MaterialSkin.Controls.MaterialMessageBox.Show("Bạn có chắc muốn hủy thanh toán?", "Xác nhận",
+                if (QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Bạn có chắc muốn hủy thanh toán?", "Xác nhận",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     this.DialogResult = DialogResult.Cancel;

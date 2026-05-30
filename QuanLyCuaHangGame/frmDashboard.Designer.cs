@@ -48,6 +48,11 @@ namespace QuanLyCuaHangGame
             this.flpSoDo = new System.Windows.Forms.FlowLayoutPanel();
             this.lblSoDoTitle = new MaterialSkin.Controls.MaterialLabel();
             this.cardChart = new MaterialSkin.Controls.MaterialCard();
+            this.pnlChartFilter = new System.Windows.Forms.Panel();
+            this.btnFilterNgay = new System.Windows.Forms.Button();
+            this.btnFilterTuan = new System.Windows.Forms.Button();
+            this.btnFilterThang = new System.Windows.Forms.Button();
+            this.btnFilterNam = new System.Windows.Forms.Button();
             this.chartDoanhThu = new LiveCharts.WinForms.CartesianChart();
             this.lblChartTitle = new MaterialSkin.Controls.MaterialLabel();
             this.cardPhien = new MaterialSkin.Controls.MaterialCard();
@@ -64,21 +69,22 @@ namespace QuanLyCuaHangGame
             this.pnlFooter = new System.Windows.Forms.Panel();
             this.lblFooter = new System.Windows.Forms.Label();
             this.mainTabControl = new MaterialSkin.Controls.MaterialTabControl();
-            this.tabPageTaiKhoan = new System.Windows.Forms.TabPage();
             this.tabPageDashboard = new System.Windows.Forms.TabPage();
             this.tabPageSoDo = new System.Windows.Forms.TabPage();
-            this.tabPageThueMay = new System.Windows.Forms.TabPage();
-            this.tabPageThanhToan = new System.Windows.Forms.TabPage();
-            this.tabPageHoiVien = new System.Windows.Forms.TabPage();
             this.tabPageMayTinh = new System.Windows.Forms.TabPage();
+            this.tabPageHoiVien = new System.Windows.Forms.TabPage();
             this.tabPageDichVu = new System.Windows.Forms.TabPage();
+            this.tabPageThanhToan = new System.Windows.Forms.TabPage();
             this.tabPageBaoCao = new System.Windows.Forms.TabPage();
+            this.tabPageTaiKhoan = new System.Windows.Forms.TabPage();
+            this.tabPageThueMay = new System.Windows.Forms.TabPage();
             this.cardDoanhThu.SuspendLayout();
             this.cardMay.SuspendLayout();
             this.cardHoiVien.SuspendLayout();
             this.cardXuLy.SuspendLayout();
             this.cardSoDo.SuspendLayout();
             this.cardChart.SuspendLayout();
+            this.pnlChartFilter.SuspendLayout();
             this.cardPhien.SuspendLayout();
             this.pnlFooter.SuspendLayout();
             this.mainTabControl.SuspendLayout();
@@ -301,8 +307,8 @@ namespace QuanLyCuaHangGame
             // 
             // flpSoDo
             // 
-            this.flpSoDo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.flpSoDo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpSoDo.AutoScroll = true;
             this.flpSoDo.Location = new System.Drawing.Point(17, 45);
@@ -325,6 +331,7 @@ namespace QuanLyCuaHangGame
             // cardChart
             // 
             this.cardChart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.cardChart.Controls.Add(this.pnlChartFilter);
             this.cardChart.Controls.Add(this.chartDoanhThu);
             this.cardChart.Controls.Add(this.lblChartTitle);
             this.cardChart.Depth = 0;
@@ -337,14 +344,83 @@ namespace QuanLyCuaHangGame
             this.cardChart.Size = new System.Drawing.Size(518, 320);
             this.cardChart.TabIndex = 5;
             // 
+            // pnlChartFilter
+            // 
+            this.pnlChartFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlChartFilter.BackColor = System.Drawing.Color.Transparent;
+            this.pnlChartFilter.Controls.Add(this.btnFilterNgay);
+            this.pnlChartFilter.Controls.Add(this.btnFilterTuan);
+            this.pnlChartFilter.Controls.Add(this.btnFilterThang);
+            this.pnlChartFilter.Controls.Add(this.btnFilterNam);
+            this.pnlChartFilter.Location = new System.Drawing.Point(242, 8);
+            this.pnlChartFilter.Name = "pnlChartFilter";
+            this.pnlChartFilter.Size = new System.Drawing.Size(270, 42);
+            this.pnlChartFilter.TabIndex = 2;
+            // 
+            // btnFilterNgay
+            // 
+            this.btnFilterNgay.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFilterNgay.FlatAppearance.BorderSize = 0;
+            this.btnFilterNgay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFilterNgay.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.btnFilterNgay.Location = new System.Drawing.Point(3, 3);
+            this.btnFilterNgay.Name = "btnFilterNgay";
+            this.btnFilterNgay.Size = new System.Drawing.Size(60, 36);
+            this.btnFilterNgay.TabIndex = 0;
+            this.btnFilterNgay.Text = "Ngày";
+            this.btnFilterNgay.UseVisualStyleBackColor = true;
+            this.btnFilterNgay.Click += new System.EventHandler(this.ChartFilterButton_Click);
+            // 
+            // btnFilterTuan
+            // 
+            this.btnFilterTuan.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFilterTuan.FlatAppearance.BorderSize = 0;
+            this.btnFilterTuan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFilterTuan.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.btnFilterTuan.Location = new System.Drawing.Point(67, 3);
+            this.btnFilterTuan.Name = "btnFilterTuan";
+            this.btnFilterTuan.Size = new System.Drawing.Size(60, 36);
+            this.btnFilterTuan.TabIndex = 1;
+            this.btnFilterTuan.Text = "Tuần";
+            this.btnFilterTuan.UseVisualStyleBackColor = true;
+            this.btnFilterTuan.Click += new System.EventHandler(this.ChartFilterButton_Click);
+            // 
+            // btnFilterThang
+            // 
+            this.btnFilterThang.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFilterThang.FlatAppearance.BorderSize = 0;
+            this.btnFilterThang.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFilterThang.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.btnFilterThang.Location = new System.Drawing.Point(131, 3);
+            this.btnFilterThang.Name = "btnFilterThang";
+            this.btnFilterThang.Size = new System.Drawing.Size(60, 36);
+            this.btnFilterThang.TabIndex = 2;
+            this.btnFilterThang.Text = "Tháng";
+            this.btnFilterThang.UseVisualStyleBackColor = true;
+            this.btnFilterThang.Click += new System.EventHandler(this.ChartFilterButton_Click);
+            // 
+            // btnFilterNam
+            // 
+            this.btnFilterNam.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFilterNam.FlatAppearance.BorderSize = 0;
+            this.btnFilterNam.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFilterNam.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.btnFilterNam.Location = new System.Drawing.Point(195, 3);
+            this.btnFilterNam.Name = "btnFilterNam";
+            this.btnFilterNam.Size = new System.Drawing.Size(60, 36);
+            this.btnFilterNam.TabIndex = 3;
+            this.btnFilterNam.Text = "Năm";
+            this.btnFilterNam.UseVisualStyleBackColor = true;
+            this.btnFilterNam.Click += new System.EventHandler(this.ChartFilterButton_Click);
+            // 
             // chartDoanhThu
             // 
-            this.chartDoanhThu.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.chartDoanhThu.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.chartDoanhThu.Location = new System.Drawing.Point(17, 45);
+            this.chartDoanhThu.Location = new System.Drawing.Point(17, 57);
             this.chartDoanhThu.Name = "chartDoanhThu";
-            this.chartDoanhThu.Size = new System.Drawing.Size(484, 258);
+            this.chartDoanhThu.Size = new System.Drawing.Size(484, 246);
             this.chartDoanhThu.TabIndex = 1;
             this.chartDoanhThu.Text = "cartesianChart1";
             // 
@@ -377,8 +453,8 @@ namespace QuanLyCuaHangGame
             // 
             // lvPhien
             // 
-            this.lvPhien.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.lvPhien.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lvPhien.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.lvPhien.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -466,6 +542,7 @@ namespace QuanLyCuaHangGame
             // 
             // lblFooter
             // 
+            this.lblFooter.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.lblFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblFooter.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFooter.ForeColor = System.Drawing.Color.White;
@@ -482,7 +559,6 @@ namespace QuanLyCuaHangGame
             // 
             this.mainTabControl.Controls.Add(this.tabPageDashboard);
             this.mainTabControl.Controls.Add(this.tabPageSoDo);
-            this.mainTabControl.Controls.Add(this.tabPageThueMay);
             this.mainTabControl.Controls.Add(this.tabPageMayTinh);
             this.mainTabControl.Controls.Add(this.tabPageHoiVien);
             this.mainTabControl.Controls.Add(this.tabPageDichVu);
@@ -498,17 +574,6 @@ namespace QuanLyCuaHangGame
             this.mainTabControl.SelectedIndex = 2;
             this.mainTabControl.Size = new System.Drawing.Size(1094, 721);
             this.mainTabControl.TabIndex = 8;
-
-            // 
-            // tabPageTaiKhoan
-            // 
-            this.tabPageTaiKhoan.Location = new System.Drawing.Point(4, 22);
-            this.tabPageTaiKhoan.Name = "tabPageTaiKhoan";
-            this.tabPageTaiKhoan.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTaiKhoan.Size = new System.Drawing.Size(1086, 695);
-            this.tabPageTaiKhoan.TabIndex = 1;
-            this.tabPageTaiKhoan.Text = "Tài khoản";
-            this.tabPageTaiKhoan.UseVisualStyleBackColor = true;
             // 
             // tabPageDashboard
             // 
@@ -526,7 +591,7 @@ namespace QuanLyCuaHangGame
             this.tabPageDashboard.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageDashboard.Size = new System.Drawing.Size(1086, 695);
             this.tabPageDashboard.TabIndex = 2;
-            this.tabPageDashboard.Text = "Dashboard";
+            this.tabPageDashboard.Text = "Trang chủ";
             // 
             // tabPageSoDo
             // 
@@ -537,36 +602,6 @@ namespace QuanLyCuaHangGame
             this.tabPageSoDo.TabIndex = 3;
             this.tabPageSoDo.Text = "Sơ đồ";
             this.tabPageSoDo.UseVisualStyleBackColor = true;
-            // 
-            // tabPageThueMay
-            // 
-            this.tabPageThueMay.Location = new System.Drawing.Point(4, 22);
-            this.tabPageThueMay.Name = "tabPageThueMay";
-            this.tabPageThueMay.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageThueMay.Size = new System.Drawing.Size(1086, 695);
-            this.tabPageThueMay.TabIndex = 4;
-            this.tabPageThueMay.Text = "Thuê máy";
-            this.tabPageThueMay.UseVisualStyleBackColor = true;
-            // 
-            // tabPageThanhToan
-            // 
-            this.tabPageThanhToan.Location = new System.Drawing.Point(4, 22);
-            this.tabPageThanhToan.Name = "tabPageThanhToan";
-            this.tabPageThanhToan.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageThanhToan.Size = new System.Drawing.Size(1086, 695);
-            this.tabPageThanhToan.TabIndex = 5;
-            this.tabPageThanhToan.Text = "Thanh toán";
-            this.tabPageThanhToan.UseVisualStyleBackColor = true;
-            // 
-            // tabPageHoiVien
-            // 
-            this.tabPageHoiVien.Location = new System.Drawing.Point(4, 22);
-            this.tabPageHoiVien.Name = "tabPageHoiVien";
-            this.tabPageHoiVien.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageHoiVien.Size = new System.Drawing.Size(1086, 695);
-            this.tabPageHoiVien.TabIndex = 6;
-            this.tabPageHoiVien.Text = "Hội viên";
-            this.tabPageHoiVien.UseVisualStyleBackColor = true;
             // 
             // tabPageMayTinh
             // 
@@ -579,6 +614,16 @@ namespace QuanLyCuaHangGame
             this.tabPageMayTinh.Text = "Máy tính";
             this.tabPageMayTinh.UseVisualStyleBackColor = true;
             // 
+            // tabPageHoiVien
+            // 
+            this.tabPageHoiVien.Location = new System.Drawing.Point(4, 22);
+            this.tabPageHoiVien.Name = "tabPageHoiVien";
+            this.tabPageHoiVien.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageHoiVien.Size = new System.Drawing.Size(1086, 695);
+            this.tabPageHoiVien.TabIndex = 6;
+            this.tabPageHoiVien.Text = "Hội viên";
+            this.tabPageHoiVien.UseVisualStyleBackColor = true;
+            // 
             // tabPageDichVu
             // 
             this.tabPageDichVu.Location = new System.Drawing.Point(4, 22);
@@ -588,6 +633,16 @@ namespace QuanLyCuaHangGame
             this.tabPageDichVu.TabIndex = 8;
             this.tabPageDichVu.Text = "Dịch vụ";
             this.tabPageDichVu.UseVisualStyleBackColor = true;
+            // 
+            // tabPageThanhToan
+            // 
+            this.tabPageThanhToan.Location = new System.Drawing.Point(4, 22);
+            this.tabPageThanhToan.Name = "tabPageThanhToan";
+            this.tabPageThanhToan.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageThanhToan.Size = new System.Drawing.Size(1086, 695);
+            this.tabPageThanhToan.TabIndex = 5;
+            this.tabPageThanhToan.Text = "Thanh toán";
+            this.tabPageThanhToan.UseVisualStyleBackColor = true;
             // 
             // tabPageBaoCao
             // 
@@ -599,16 +654,38 @@ namespace QuanLyCuaHangGame
             this.tabPageBaoCao.Text = "Báo cáo";
             this.tabPageBaoCao.UseVisualStyleBackColor = true;
             // 
+            // tabPageTaiKhoan
+            // 
+            this.tabPageTaiKhoan.Location = new System.Drawing.Point(4, 22);
+            this.tabPageTaiKhoan.Name = "tabPageTaiKhoan";
+            this.tabPageTaiKhoan.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageTaiKhoan.Size = new System.Drawing.Size(1086, 695);
+            this.tabPageTaiKhoan.TabIndex = 1;
+            this.tabPageTaiKhoan.Text = "Tài khoản";
+            this.tabPageTaiKhoan.UseVisualStyleBackColor = true;
+            // 
+            // tabPageThueMay
+            // 
+            this.tabPageThueMay.Location = new System.Drawing.Point(4, 22);
+            this.tabPageThueMay.Name = "tabPageThueMay";
+            this.tabPageThueMay.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageThueMay.Size = new System.Drawing.Size(1086, 695);
+            this.tabPageThueMay.TabIndex = 4;
+            this.tabPageThueMay.Text = "Thuê máy";
+            this.tabPageThueMay.UseVisualStyleBackColor = true;
+            // 
             // frmDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1100, 788);
             this.Controls.Add(this.mainTabControl);
+            this.DrawerHighlightWithAccent = false;
             this.DrawerTabControl = this.mainTabControl;
+            this.DrawerWidth = 280;
             this.MinimumSize = new System.Drawing.Size(1100, 766);
             this.Name = "frmDashboard";
-            this.Text = "Dashboard – Tổng quan hệ thống";
+            this.Text = "Trang chủ – Tổng quan hệ thống";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.cardDoanhThu.ResumeLayout(false);
             this.cardDoanhThu.PerformLayout();
@@ -622,6 +699,7 @@ namespace QuanLyCuaHangGame
             this.cardSoDo.PerformLayout();
             this.cardChart.ResumeLayout(false);
             this.cardChart.PerformLayout();
+            this.pnlChartFilter.ResumeLayout(false);
             this.cardPhien.ResumeLayout(false);
             this.cardPhien.PerformLayout();
             this.pnlFooter.ResumeLayout(false);
@@ -687,5 +765,10 @@ namespace QuanLyCuaHangGame
         private System.Windows.Forms.TabPage tabPageMayTinh;
         private System.Windows.Forms.TabPage tabPageDichVu;
         private System.Windows.Forms.TabPage tabPageBaoCao;
+        private System.Windows.Forms.Panel pnlChartFilter;
+        private System.Windows.Forms.Button btnFilterNgay;
+        private System.Windows.Forms.Button btnFilterTuan;
+        private System.Windows.Forms.Button btnFilterThang;
+        private System.Windows.Forms.Button btnFilterNam;
     }
 }
