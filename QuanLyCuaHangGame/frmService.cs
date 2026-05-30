@@ -76,7 +76,7 @@ namespace QuanLyCuaHangGame.GUI
             }
             catch (Exception ex)
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi tải form: " + ex.Message, "Lỗi");
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Lỗi tải form: " + ex.Message, "Lỗi");
             }
         }
 
@@ -138,7 +138,7 @@ namespace QuanLyCuaHangGame.GUI
             }
             catch (Exception ex)
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi tải dữ liệu: " + ex.Message, "Lỗi");
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Lỗi tải dữ liệu: " + ex.Message, "Lỗi");
             }
         }
 
@@ -208,7 +208,7 @@ namespace QuanLyCuaHangGame.GUI
         {
             if (lvServices.SelectedItems.Count == 0)
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng chọn dịch vụ để sửa!", "Thông báo");
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Vui lòng chọn dịch vụ để sửa!", "Thông báo");
                 return;
             }
 
@@ -238,25 +238,25 @@ namespace QuanLyCuaHangGame.GUI
         {
             if (lvServices.SelectedItems.Count == 0)
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng chọn dịch vụ để xóa!", "Thông báo");
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Vui lòng chọn dịch vụ để xóa!", "Thông báo");
                 return;
             }
 
-            if (MaterialSkin.Controls.MaterialMessageBox.Show("Bạn có chắc muốn xóa dịch vụ này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Bạn có chắc muốn xóa dịch vụ này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 try
                 {
                     int serviceId = (int)lvServices.SelectedItems[0].Tag;
                     serviceItemService.DeleteService(serviceId);
 
-                    MaterialSkin.Controls.MaterialMessageBox.Show("Xóa thành công!", "Thành công");
+                    QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Xóa thành công!", "Thành công");
                     LoadServices();
                     ClearForm();
                     UpdateStatusBar();
                 }
                 catch (Exception ex)
                 {
-                    MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi: " + ex.Message, "Lỗi");
+                    QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Lỗi: " + ex.Message, "Lỗi");
                 }
             }
         }
@@ -271,21 +271,21 @@ namespace QuanLyCuaHangGame.GUI
                 // Kiểm tra dữ liệu
                 if (string.IsNullOrWhiteSpace(txtName.Text))
                 {
-                    MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng nhập tên dịch vụ!", "Lỗi");
+                    QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Vui lòng nhập tên dịch vụ!", "Lỗi");
                     txtName.Focus();
                     return;
                 }
 
                 if (!decimal.TryParse(txtPrice.Text, out decimal price) || price <= 0)
                 {
-                    MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng nhập giá hợp lệ (> 0)!", "Lỗi");
+                    QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Vui lòng nhập giá hợp lệ (> 0)!", "Lỗi");
                     txtPrice.Focus();
                     return;
                 }
 
                 if (cboCategory.SelectedItem == null)
                 {
-                    MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng chọn danh mục!", "Lỗi");
+                    QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Vui lòng chọn danh mục!", "Lỗi");
                     return;
                 }
 
@@ -301,7 +301,7 @@ namespace QuanLyCuaHangGame.GUI
                     };
 
                     serviceItemService.AddService(newService);
-                    MaterialSkin.Controls.MaterialMessageBox.Show("Thêm dịch vụ thành công!", "Thành công");
+                    QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Thêm dịch vụ thành công!", "Thành công");
                 }
                 else
                 {
@@ -315,7 +315,7 @@ namespace QuanLyCuaHangGame.GUI
                         service.IsAvailable = chkAvailable.Checked;
 
                         serviceItemService.UpdateService(service);
-                        MaterialSkin.Controls.MaterialMessageBox.Show("Cập nhật dịch vụ thành công!", "Thành công");
+                        QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Cập nhật dịch vụ thành công!", "Thành công");
                     }
                 }
 
@@ -325,7 +325,7 @@ namespace QuanLyCuaHangGame.GUI
             }
             catch (Exception ex)
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi: " + ex.Message, "Lỗi");
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Lỗi: " + ex.Message, "Lỗi");
             }
         }
 
@@ -385,7 +385,7 @@ namespace QuanLyCuaHangGame.GUI
             }
             catch (Exception ex)
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi: " + ex.Message, "Lỗi");
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Lỗi: " + ex.Message, "Lỗi");
             }
         }
 

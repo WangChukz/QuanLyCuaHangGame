@@ -44,12 +44,11 @@ namespace QuanLyCuaHangGame.GUI
             MessageBoxButtons btns,
             MessageBoxIcon icon)
         {
-            var result = UIHelper.GameZoneDialog.Show(
+            var result = QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show(
                 text,
                 title,
                 btns,
-                icon,
-                owner: this);
+                icon);
 
             ReApplyLabelColors();
 

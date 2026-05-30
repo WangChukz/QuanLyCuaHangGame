@@ -71,7 +71,7 @@ namespace QuanLyCuaHangGame.GUI
             }
             catch (Exception ex)
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi tải danh sách dịch vụ: " + ex.Message);
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Lỗi tải danh sách dịch vụ: " + ex.Message);
             }
         }
 
@@ -217,7 +217,7 @@ namespace QuanLyCuaHangGame.GUI
             int itemsCount = _selectedQuantities.Sum(q => q.Value);
             if (itemsCount == 0)
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng chọn ít nhất một dịch vụ!", "Thông báo");
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Vui lòng chọn ít nhất một dịch vụ!", "Thông báo");
                 return;
             }
 
@@ -232,13 +232,13 @@ namespace QuanLyCuaHangGame.GUI
                     }
                 }
                 
-                MaterialSkin.Controls.MaterialMessageBox.Show("Đã gọi dịch vụ thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Đã gọi dịch vụ thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi khi thêm dịch vụ: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Lỗi khi thêm dịch vụ: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

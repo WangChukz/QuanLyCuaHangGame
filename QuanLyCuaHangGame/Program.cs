@@ -27,7 +27,7 @@ namespace QuanLyCuaHangGame.GUI
                 if (ex.InnerException != null) msg += "\nInner: " + ex.InnerException.Message;
                 if (ex.InnerException?.InnerException != null) msg += "\nInner2: " + ex.InnerException.InnerException.Message;
                 System.IO.File.WriteAllText("error.txt", msg);
-                MaterialSkin.Controls.MaterialMessageBox.Show("Không thể khởi tạo CSDL: " + msg, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Không thể khởi tạo CSDL: " + msg, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             Application.Run(new frmLogin());

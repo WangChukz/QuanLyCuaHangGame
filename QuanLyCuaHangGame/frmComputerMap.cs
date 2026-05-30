@@ -28,9 +28,9 @@ namespace QuanLyCuaHangGame
                 System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
                 null, flpComputers, new object[] { true });
             this.DoubleBuffered = true;
-
-            // Áp dụng theme chuẩn của nhóm
-            UIHelper.UICommon.ApplyTheme(this);
+            var materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(this);
+            UIHelper.UICommon.ApplyTheme(this, true);
 
             // Thiết lập lại màu sắc cho phần chú thích trạng thái để tránh bị theme ghi đè
             lblLegendIdle.ForeColor = Color.FromArgb(46, 125, 50);
@@ -86,7 +86,7 @@ namespace QuanLyCuaHangGame
             }
             catch (Exception ex)
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi khi tải danh sách phòng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Lỗi khi tải danh sách phòng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -164,7 +164,7 @@ namespace QuanLyCuaHangGame
             }
             catch (Exception ex)
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi khi tải sơ đồ máy: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Lỗi khi tải sơ đồ máy: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -278,7 +278,6 @@ namespace QuanLyCuaHangGame
             btnOpenSession.Click += BtnOpenSession_Click;
             btnPayment.Click += BtnPayment_Click;
             btnOrderService.Click += BtnOrderService_Click;
-            btnHistory.Click += BtnHistory_Click;
         }
 
         private void BtnOpenSession_Click(object sender, EventArgs e)
@@ -305,7 +304,7 @@ namespace QuanLyCuaHangGame
 
             if (activeSession == null)
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Không tìm thấy phiên hoạt động của máy đang chọn!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Không tìm thấy phiên hoạt động của máy đang chọn!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -329,7 +328,7 @@ namespace QuanLyCuaHangGame
 
             if (activeSession == null)
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Không tìm thấy phiên hoạt động của máy đang chọn!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Không tìm thấy phiên hoạt động của máy đang chọn!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -343,10 +342,6 @@ namespace QuanLyCuaHangGame
             }
         }
 
-        private void BtnHistory_Click(object sender, EventArgs e)
-        {
-            MaterialSkin.Controls.MaterialMessageBox.Show("Tính năng xem lịch sử phiên máy đang được phát triển!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
     }
 
     public class ComputerButton : Button

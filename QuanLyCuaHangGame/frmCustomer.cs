@@ -20,7 +20,7 @@ namespace QuanLyCuaHangGame
 
             var materialSkinManager = MaterialSkinManager.Instance;
             materialSkinManager.AddFormToManage(this);
-            UIHelper.UICommon.ApplyTheme(this);
+            UIHelper.UICommon.ApplyTheme(this, true);
 
             _customerBLL = new CustomerBLL();
 
@@ -29,8 +29,7 @@ namespace QuanLyCuaHangGame
             txtSearch.TextChanged += TxtSearch_TextChanged;
             mlvHoiVien.SelectedIndexChanged += MlvHoiVien_SelectedIndexChanged;
             btnNapTien.Click += BtnNapTien_Click;
-            if (btnNapTienTop != null) btnNapTienTop.Click += (s, e) => { txtMoney.Focus(); };
-            if (btnHistoryTop != null) btnHistoryTop.Click += (s, e) => { mlvHistory.Focus(); };
+            if (btnRegister != null) btnRegister.Click += BtnRegister_Click;
 
             // Áp dụng style bảng đồng bộ Dashboard cho cả 2 ListView
             UIHelper.DashboardUIHelper.StyleListView(mlvHoiVien, DrawSubItem_HoiVien);
@@ -60,8 +59,19 @@ namespace QuanLyCuaHangGame
             lblCardRegDate.ForeColor = Color.White;
             lblCardPin.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblCardPin.ForeColor = Color.White;
+            Color cardBg = Color.FromArgb(25, 118, 210);
+            cardUser.BackColorChanged += (s, ev) => { if (cardUser.BackColor != cardBg) cardUser.BackColor = cardBg; };
+
             foreach (Control ctrl in cardUser.Controls)
-                if (ctrl is Label lbl) lbl.BackColor = Color.Transparent;
+            {
+                if (ctrl is Label lbl)
+                {
+                    lbl.BackColor = cardBg;
+                    Color initialFg = lbl.ForeColor;
+                    lbl.BackColorChanged += (s, ev) => { if (lbl.BackColor != cardBg) lbl.BackColor = cardBg; };
+                    lbl.ForeColorChanged += (s, ev) => { if (lbl.ForeColor != initialFg) lbl.ForeColor = initialFg; };
+                }
+            }
 
             LoadCustomerList("");
             ClearCustomerDetails();
@@ -137,17 +147,28 @@ namespace QuanLyCuaHangGame
             mlvHistory.Items.Clear();
         }
 
+        private void BtnRegister_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new QuanLyCuaHangGame.dlgRegisterCustomer())
+            {
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    LoadCustomerList(txtSearch.Text);
+                }
+            }
+        }
+
         private void BtnNapTien_Click(object sender, EventArgs e)
         {
             if (_selectedCustomerId <= 0)
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng chọn khách hàng để nạp tiền.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Vui lòng chọn khách hàng để nạp tiền.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if(txtMoney.Text.Trim() == "")
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng nhập số tiền cần nạp.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Vui lòng nhập số tiền cần nạp.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -158,7 +179,7 @@ namespace QuanLyCuaHangGame
                     int currentUserId = SessionContext.CurrentUserId;
                     _customerBLL.TopUp(_selectedCustomerId, amount, txtNote.Text, currentUserId);
                     
-                    MaterialSkin.Controls.MaterialMessageBox.Show("Nạp tiền thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Nạp tiền thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     
                     // Refresh data
                     LoadCustomerDetails(_selectedCustomerId);
@@ -178,12 +199,12 @@ namespace QuanLyCuaHangGame
                 }
                 catch (Exception ex)
                 {
-                    MaterialSkin.Controls.MaterialMessageBox.Show($"Lỗi khi nạp tiền: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show($"Lỗi khi nạp tiền: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng nhập số tiền hợp lệ (> 0).", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Vui lòng nhập số tiền hợp lệ (> 0).", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -276,6 +297,7 @@ namespace QuanLyCuaHangGame
         private void CardUser_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            e.Graphics.Clear(Color.FromArgb(25, 118, 210)); // Force blue background
             using (SolidBrush brush = new SolidBrush(Color.FromArgb(40, 255, 255, 255)))
             {
                 Rectangle r1 = lblCardRegDate.Bounds;

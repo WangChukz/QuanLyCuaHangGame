@@ -65,7 +65,7 @@ namespace QuanLyCuaHangGame
             }
             catch (Exception ex)
             {
-                MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi khi tải thông tin máy tính: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Lỗi khi tải thông tin máy tính: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -172,27 +172,27 @@ namespace QuanLyCuaHangGame
                 {
                     if (_selectedCustomer == null)
                     {
-                        MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng chọn một hội viên trong danh sách!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Vui lòng chọn một hội viên trong danh sách!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
                     if (string.IsNullOrEmpty(txtPin.Text))
                     {
-                        MaterialSkin.Controls.MaterialMessageBox.Show("Vui lòng nhập mã PIN xác nhận của hội viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Vui lòng nhập mã PIN xác nhận của hội viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
                     // Xác thực mã PIN
                     if (txtPin.Text != _selectedCustomer.PinCode)
                     {
-                        MaterialSkin.Controls.MaterialMessageBox.Show("Mã PIN xác nhận không đúng! Vui lòng kiểm tra lại.", "Lỗi xác thực", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Mã PIN xác nhận không đúng! Vui lòng kiểm tra lại.", "Lỗi xác thực", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
 
                     // Kiểm tra số dư tài khoản chơi game
                     if (_selectedCustomer.Balance <= 0)
                     {
-                        MaterialSkin.Controls.MaterialMessageBox.Show("Tài khoản hội viên không đủ số dư để mở máy! Vui lòng nạp tiền trước.", "Tài khoản hết tiền", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Tài khoản hội viên không đủ số dư để mở máy! Vui lòng nạp tiền trước.", "Tài khoản hết tiền", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -200,7 +200,7 @@ namespace QuanLyCuaHangGame
                     var activeSessions = _sessionService.GetActiveSessions();
                     if (activeSessions.Any(s => s.CustomerId == _selectedCustomer.Id))
                     {
-                        MaterialSkin.Controls.MaterialMessageBox.Show($"Hội viên {_selectedCustomer.FullName} đang sử dụng một máy khác trong hệ thống! Không thể mở nhiều máy cùng lúc.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show($"Hội viên {_selectedCustomer.FullName} đang sử dụng một máy khác trong hệ thống! Không thể mở nhiều máy cùng lúc.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -208,13 +208,13 @@ namespace QuanLyCuaHangGame
                     var session = _sessionService.OpenSession(_computerId, SessionContext.CurrentUserId, _selectedCustomer.Id, null, pricePerHour);
                     if (session != null)
                     {
-                        MaterialSkin.Controls.MaterialMessageBox.Show($"✓ Đã mở máy {_computer.Code} thành công cho hội viên {_selectedCustomer.FullName}!", "Mở máy thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show($"✓ Đã mở máy {_computer.Code} thành công cho hội viên {_selectedCustomer.FullName}!", "Mở máy thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.DialogResult = DialogResult.OK;
                         this.Close();
                     }
                     else
                     {
-                        MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi: Máy tính hiện tại không ở trạng thái Trống để mở!", "Mở máy thất bại", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Lỗi: Máy tính hiện tại không ở trạng thái Trống để mở!", "Mở máy thất bại", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 // TAB KHÁCH VÃNG LAI
@@ -229,13 +229,13 @@ namespace QuanLyCuaHangGame
                     var session = _sessionService.OpenSession(_computerId, SessionContext.CurrentUserId, null, guestName, pricePerHour);
                     if (session != null)
                     {
-                        MaterialSkin.Controls.MaterialMessageBox.Show($"✓ Đã mở máy {_computer.Code} thành công cho Khách vãng lai!", "Mở máy thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show($"✓ Đã mở máy {_computer.Code} thành công cho Khách vãng lai!", "Mở máy thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.DialogResult = DialogResult.OK;
                         this.Close();
                     }
                     else
                     {
-                        MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi: Máy tính hiện tại không ở trạng thái Trống để mở!", "Mở máy thất bại", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Lỗi: Máy tính hiện tại không ở trạng thái Trống để mở!", "Mở máy thất bại", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -250,7 +250,7 @@ namespace QuanLyCuaHangGame
                         msg += "\nChi tiết thêm: " + ex.InnerException.InnerException.Message;
                     }
                 }
-                MaterialSkin.Controls.MaterialMessageBox.Show("Lỗi hệ thống khi mở máy: " + msg, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                QuanLyCuaHangGame.UIHelper.GameZoneMessageBox.Show("Lỗi hệ thống khi mở máy: " + msg, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
